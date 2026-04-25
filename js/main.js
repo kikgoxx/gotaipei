@@ -1,0 +1,1 @@
+/* Gotaipei Main Scripts - placeholder for future development */
