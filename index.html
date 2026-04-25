@@ -4,181 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Go Taipei – Van & Car charter in Taiwan</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+:root {
+  --bg: #0d0d0d;
+  --bg-card: #1a1a1a;
+  --bg-lighter: #252525;
+  --accent: #F59E0B;
+  --accent-light: #FBBF24;
+  --red: #EF4444;
+  --text: #ffffff;
+  --text-muted: #9ca3af;
+  --border: #2a2a2a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Noto Sans Thai', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+/* HEADER */
+header { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+.logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--text); text-decoration: none; }
+.logo span { color: var(--accent); }
+nav { display: flex; gap: 28px; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+nav a:hover, nav a.active { color: var(--accent); }
+.header-contact { display: flex; align-items: center; gap: 8px; background: var(--accent); color: #000; font-weight: 600; padding: 8px 18px; border-radius: 6px; font-size: 13px; text-decoration: none; transition: background 0.2s; }
+.header-contact:hover { background: var(--accent-light); }
+
+/* HERO */
+.hero { position: relative; background: var(--bg); min-height: 420px; display: flex; align-items: center; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,13,13,0.97) 0%, rgba(26,26,26,0.8) 50%, rgba(245,158,11,0.12) 100%), repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(245,158,11,0.02) 40px, rgba(245,158,11,0.02) 41px); }
+.hero-img { position: absolute; inset: 0; background: linear-gradient(135deg, #0d2540 0%, #1a3a5c 40%, #0d2a3d 70%, #1a2a1a 100%); opacity: 0.55; }
+.hero-content { position: relative; z-index: 1; padding: 60px 80px; max-width: 820px; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.25); color: var(--accent); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 20px; }
+.hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 700; color: var(--text); line-height: 1.15; margin-bottom: 16px; }
+.hero h1 em { color: var(--accent); font-style: italic; }
+.hero-desc { font-size: 15px; color: var(--text-muted); line-height: 1.8; max-width: 580px; }
+.hero-badges { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--bg-card); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 12px; color: var(--text-muted); }
+
+/* WRAP */
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+/* SECTIONS */
+.section-wrap { padding: 56px 0; }
+.section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; color: var(--text); }
+.section-header h2 span { color: var(--accent); }
+.section-header .section-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+/* TOUR CARDS */
+.tour-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.tour-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.tour-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(245,158,11,0.1); }
+.tour-card.closed { opacity: 0.5; }
+.tour-card.closed:hover { border-color: var(--border); transform: none; box-shadow: none; }
+.tour-img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; overflow: hidden; }
+.tour-img.sea { background: linear-gradient(135deg, #0d2a3d, #1a4a6a, #0d3a4a); }
+.tour-img.lake { background: linear-gradient(135deg, #0d2a2a, #1a4a3a, #0d3a3a); }
+.tour-img.mountain { background: linear-gradient(135deg, #1a2a1a, #2a4a2a, #1a3a1a); }
+.tour-img.night { background: linear-gradient(135deg, #1a1a2e, #2a2a4e, #1a1a3e); }
+.tour-img.closed-bg { background: linear-gradient(135deg, #1a1a1a, #252525, #1a1a1a); }
+.tour-badge { position: absolute; top: 12px; left: 12px; background: var(--accent); color: #000; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; }
+.tour-badge.closed-badge { background: #555; color: #999; }
+.tour-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+.tour-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.tour-route { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+.tour-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; flex: 1; margin-bottom: 16px; }
+.tour-footer { display: flex; align-items: center; justify-content: space-between; }
+.tour-price { font-size: 13px; color: var(--text-muted); }
+.tour-price strong { color: var(--accent); font-size: 18px; font-weight: 600; }
+.btn-detail { font-size: 12px; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: 5px 14px; border-radius: 20px; transition: background 0.2s, color 0.2s; }
+.tour-card:hover .btn-detail { background: var(--accent); color: #000; }
+
+/* VEHICLES */
+#vehicles { background: var(--bg); }
+.vehicles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.vehicle-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; transition: border-color 0.2s; }
+.vehicle-card:hover { border-color: var(--accent); }
+.vehicle-icon { font-size: 48px; margin-bottom: 12px; }
+.vehicle-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.vehicle-capacity { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+.vehicle-price { font-size: 16px; color: var(--accent); font-weight: 600; }
+.vehicle-note { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+/* WHY */
+#why { background: var(--bg-card); }
+.why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+.why-item { text-align: center; padding: 28px 20px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; transition: border-color 0.2s; }
+.why-item:hover { border-color: var(--accent); }
+.why-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+.why-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.why-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+/* CONTACT */
+#contact { background: var(--bg-lighter); border-top: 1px solid var(--border); }
+.contact-inner { text-align: center; padding: 60px 40px; }
+.contact-inner h2 { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--text); margin-bottom: 8px; }
+.contact-inner h2 span { color: var(--accent); }
+.contact-inner p { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+.contact-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+.contact-btn { display: flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
+.contact-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+.contact-btn.line { background: #06C755; color: white; }
+.contact-btn.fb { background: #1877F2; color: white; }
+.contact-btn.tel { background: var(--accent); color: #000; }
+
+/* FOOTER */
+footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--text); }
+.footer-logo span { color: var(--accent); }
+.footer-info { font-size: 12px; color: var(--text-muted); line-height: 1.8; text-align: right; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  header { padding: 0 20px; flex-wrap: wrap; height: auto; min-height: 64px; }
+  nav { display: none; }
+  .hero-content { padding: 40px 24px; }
+  .wrap { padding: 0 20px; }
+  .tour-grid { grid-template-columns: 1fr; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .contact-inner { padding: 40px 20px; }
+  footer { flex-direction: column; text-align: center; }
+  .footer-info { text-align: center; }
+}
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            <a href="https://gotaipei.net/">Go Taipei เที่ยวไต้หวัน เช่ารถพร้อมคนขับ</a>
+
+<header>
+  <div class="logo">Go <span>Taipei</span></div>
+  <nav>
+    <a href="#tours">ทัวร์</a>
+    <a href="#vehicles">รถและราคา</a>
+    <a href="#why">ทำไมต้อง Go Taipei</a>
+    <a href="#contact">ติดต่อ</a>
+  </nav>
+  <a href="http://page.line.me/966kmony" class="header-contact">💬 ติดต่อ Line</a>
+</header>
+
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">✦ เช่ารถพร้อมคนขับ ไทเป & ไต้หวัน</div>
+    <h1>เที่ยวไทเป <em>สไตล์ครอบครัว</em></h1>
+    <p class="hero-desc">บริการเช่ารถพร้อมคนขับ รับ-ส่งสนามบิน ทัวร์ต่างจังหวัด ดูแลเหมือนครอบครัว ภาษาไทย ภาษาอังกฤษ ภาษาจีน</p>
+    <div class="hero-badges">
+      <span class="hero-badge">✅ ราคาโปร่งใส</span>
+      <span class="hero-badge">🚗 รถสะอาด ปลอดภัย</span>
+      <span class="hero-badge">👨‍✈️ ไกด์-คนขับ เป็นมืออาชีพ</span>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+
+    <!-- TOURS -->
+    <div id="tours" class="section-wrap">
+      <div class="section-header">
+        <div>
+          <h2>ทัวร์<span> แนะนำ</span></h2>
+          <p class="section-sub">เส้นทางยอดนิยม ดูแลเหมือนครอบครัว</p>
         </div>
-        <nav>
-            <a href="#">ทัวร์ทั้งหมด</a>
-            <a href="#">รถและราคา</a>
-            <a href="#">รับส่งสนามบิน</a>
-            <a href="#">ติดต่อ</a>
-        </nav>
-        <a href="https://line.me/R/ti/p/@966kmony" class="btn-line">สอบถาม / จองทัวร์ผ่าน LINE</a>
-    </header>
+      </div>
+      <div class="tour-grid">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Go Taipei – Van & Car charter in Taiwan</h1>
-        <h3>Go Taipei Tour · ทัวร์ไต้หวัน สำหรับคนไทย</h3>
-    </section>
-
-    <!-- Main Content -->
-    <main>
-        <h1>เที่ยวไต้หวันแบบส่วนตัว ดูแลเหมือนครอบครัว</h1>
-        <p>จัดทริปไพรเวท รถส่วนตัว คนขับพูดไทยและอังกฤษ ดูแลตลอดการเดินทาง รับจากโรงแรม โอนจ่ายเป็นเงินไทยได้</p>
-
-        <ul class="features">
-            <li>คนขับพูดไทย (จำนวนจำกัด)</li>
-            <li>คนขับพูดอังกฤษ</li>
-            <li>โอนจ่ายเงินไทยได้</li>
-            <li>เดินทางได้ทุกวัน</li>
-            <li>10+ เส้นทางทัวร์</li>
-            <li>5 ประเภทรถ</li>
-            <li>24/7 ติดต่อได้</li>
-        </ul>
-
-        <h2>โปรแกรมทัวร์ยอดนิยม</h2>
-        <p>ทัวร์ส่วนตัว รับ-ส่งโรงแรม ปรับเส้นทางได้ตามความต้องการ</p>
-
-        <!-- Tour Cards -->
-        <div class="tour-list">
-            <!-- Tour 1: Jiufen -->
-            <div class="tour-card">
-                <a href="https://gotaipei.net/jiufen-tour">
-                    <h3>1 วัน ยอดนิยม ไทเป → เยว่หลิว → จีหลง → จิ่วเฟิ่น → สือเฟิน</h3>
-                    <p><strong>อุทยานหินเยว่หลิว • จิ่วเฟิ่น • สือเฟิน</strong></p>
-                    <p>ชมหินงอกเยว่หลิว ถ่ายรูปตึกสีท่าเรือ เดินถนนโบราณจิ่วเฟิ่น ชมโรงน้ำชา A-Mei และปล่อยโคมลอยอธิษฐานที่สือเฟิน</p>
-                    <p>หินเยว่หลิว | จิ่วเฟิ่น | ปล่อยโคมลอย | ตึกสี</p>
-                    <p><strong>ราคาเริ่มต้น 4,500 NTD/8ชั่วโมง</strong> รถเก๋ง ไม่เกิน 4 ท่าน</p>
-                    <span class="btn-detail">ดูรายละเอียด →</span>
-                </a>
-            </div>
-
-            <!-- Tour 2: Sun Moon Lake -->
-            <div class="tour-card">
-                <a href="https://gotaipei.net/sunmoonlake-tour">
-                    <h3>1 วัน ยอดนิยม ไทเป → ซันมูนเลค</h3>
-                    <p><strong>ทะเลสาบสุริยันจันทรา (12 ชม.)</strong></p>
-                    <p>ทะเลสาบน้ำจืดใหญ่ที่สุดของไต้หวัน ล่องเรือ ไห้พระ ช้อปตลาด Ita Thao และขึ้นกระเช้าชมวิว</p>
-                    <p>ล่องเรือ | วัดพระถังซัมจั๋ง | กระเช้า Ita Thao</p>
-                    <p><strong>ราคาเริ่มต้น 7,000 NTD/12ชั่วโมง</strong> รถเก๋ง ไม่เกิน 4 ท่าน</p>
-                    <span class="btn-detail">ดูรายละเอียด →</span>
-                </a>
-            </div>
-
-            <!-- Tour 3: Alishan 2 days -->
-            <div class="tour-card">
-                <a href="#">
-                    <h3>✧ 2 วัน 1 คืน ใหม่ ไทเป → ซันมูนเลค → เจียอี้ → อาลีซาน</h3>
-                    <p><strong>ซันมูนเลค • อุทยานอาลีซาน</strong></p>
-                    <p>เดินทาง 2 วัน ล่องเรือทะเลสาบ สัมผัสป่าสนพันปี ทะเลหมอกบนยอดเขา</p>
-                    <p>พักค้างคืน | ป่าสนยักษ์ | ทะเลหมอก | รถไฟสายคลาสสิค</p>
-                    <p><strong>ราคาเริ่มต้น 7,000 NTD/วัน</strong> รถเก๋ง ไม่เกิน 4 ท่าน</p>
-                    <span class="btn-detail">ดูรายละเอียด →</span>
-                </a>
-            </div>
-
-            <!-- Tour 4: City Tour -->
-            <div class="tour-card">
-                <a href="#">
-                    <h3>◆ 1 วัน ไทเป → แลนด์มาร์คในเมือง</h3>
-                    <p><strong>ซิตี้ทัวร์ไทเป</strong></p>
-                    <p>ตึก 101, วัดหลงซาน, อนุสรณ์สถานเจียงไคเช็ค, ตลาดปลา, หยังมิงซาน, น้ำพุร้อนเป่ยโถว และอื่นๆ อีกมากมาย</p>
-                    <p>ตึก 101 | วัดหลงซาน | ตั้นสุย | หยางหมิงซาน</p>
-                    <p><strong>ราคาเริ่มต้น 4,500 NTD/8ชั่วโมง</strong> รถเก๋ง ไม่เกิน 4 ท่าน</p>
-                    <span class="btn-detail">ดูรายละเอียด →</span>
-                </a>
-            </div>
-
-            <!-- Tour 5: Taipingshan -->
-            <div class="tour-card">
-                <a href="#">
-                    <h3>✧ 1 วัน ไทเป → อุทยานไท่ผิงซาน</h3>
-                    <p><strong>อุทยานไท่ผิงซาน Taipingshan</strong></p>
-                    <p>ป่าอุทยานบนเขาสูง ทะเลหมอกสวยงาม คู่กับสะพานแขวนและนั่งรถไฟโบราณ</p>
-                    <p>ป่าอุทยาน | ทะเลหมอก | สะพานแขวน</p>
-                    <p><strong>ราคาเริ่มต้น 7,000 NTD/12ชั่วโมง</strong> รถเก๋ง ไม่เกิน 4 ท่าน</p>
-                    <span class="btn-detail">ดูรายละเอียด →</span>
-                </a>
-            </div>
-
-            <!-- Tour 6: Taroko (Closed) -->
-            <div class="tour-card closed">
-                <a href="#">
-                    <h3>◆ 1 วัน ปิดชั่วคราว ไทเป → อุทยานทาโรโกะ</h3>
-                    <p><strong>อุทยานทาโรโกะ Taroko</strong></p>
-                    <p>ปิดซ่อมชั่วคราวเนื่องจากแผ่นดินไหว แจ้งเพื่อเช็คสถานะการเปิดให้บริการอีกครั้ง</p>
-                    <p>หุบเขา | ไฟแอ่วขหินอ่อง | หุบเขาหินอ่อน</p>
-                    <p><strong>สถานะ: ปิดชั่วคราว (แผ่นดินไหว เมษายน 2567)</strong> สอบถาม →</p>
-                </a>
-            </div>
-        </div>
-
-        <!-- Vehicle Section -->
-        <h2>ยานพาหนะทุกขนาด เลือกรถให้เหมาะกับขนาดกลุ่มของคุณ</h2>
-        <p>ทุกคันรวมค่าน้ำมัน ทางด่วน จอดรถ ที่พัก(กรณีค้างคืน) และอาหารคนขับแล้ว</p>
-        
-        <div class="vehicle-list">
-            <div class="vehicle-card">
-                <h4>รถเก๋ง 5 ที่นั่ง</h4>
-                <p>ไม่เกิน 4 ผู้โดยสาร</p>
-                <p>Toyota Cross / Altis</p>
-            </div>
-            <div class="vehicle-card">
-                <h4>รถเก๋ง 7 ที่นั่ง</h4>
-                <p>ไม่เกิน 6 ผู้โดยสาร</p>
-                <p>Toyota Wish / Sienta</p>
-            </div>
-            <div class="vehicle-card">
-                <h4>รถตู้ 9 ที่นั่ง</h4>
-                <p>ไม่เกิน 8 ผู้โดยสาร</p>
-                <p>VW Caravelle / Benz Vito / H1</p>
-            </div>
-            <div class="vehicle-card">
-                <h4>รถมินิบัส</h4>
-                <p>ไม่เกิน 20 ท่าน</p>
-                <p>เหมาะสำหรับกลุ่มใหญ่</p>
-            </div>
-            <div class="vehicle-card">
-                <h4>รถบัส</h4>
-                <p>ไม่เกิน 40 ท่าน</p>
-                <p>เหมาะสำหรับทัวร์กรุ๊ปใหญ่</p>
-            </div>
-        </div>
-
-        <!-- Why Choose Us -->
-        <h2>ทำไมต้องเลือก Go Taipei?</h2>
-        <ul class="why-list">
-            <li>▶ คนขับพูดไทย & อังกฤษ สื่อสารได้ตลอดการเดินทาง ไม่ต้องกังวลเรื่องภาษา</li>
-            <li>▶ โอนจ่ายเงินไทย จ่ายเป็นเงินบาท ไม่ต้องแลกเงินตรา</li>
-            <li>▶ รถส่วนตัว ไม่ต้องนั่งรถเมล์หรือรถบัส ไป-กลับตามสะดวก</li>
-            <li>▶ ยืดหยุ่นได้ ปรับเวลาและเส้นทางได้ตามไลน์กลุ่ม</li>
-            <li>▶ เหมาะทุกกลุ่ม คู่รัก, ครอบครัว, กลุ่มเพื่อน, ทัวร์อินเซนติฟ</li>
-        </ul>
-
-        <!-- Contact Section -->
-        <h2>สนใจติดต่อได้เลยครับ</h2>
-        <p>เช็คคิว สอบถามราคา หรือจองทัวร์ได้เลยครับ ดูแลเหมือนครอบครัว</p>
-        
-        <div class="contact-buttons">
-            <a href="http://page.line.me/966kmony" class="btn-contact">LINE</a>
-            <a href="http://www.facebook.com/gotaipeitour" class="btn-contact">Facebook</a>
-            <a href="tel:+886968817739" class="btn-contact">+886 96-881-7739</a>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>Go Taipei</p>
-        <p>Line: gotaipeitour</p>
-        <p>[email protected]</p>
-    </footer>
-
-    <script src="js/main.js"></script>
-</body>
-</html>
+        <a href="taipei-daytour.html" class="tour-card">
+          <div class="tour-img sea">🌊</div>
+          <div class="tour-badge">ยอดฮิต</div>
+          <div class="tour-body">
+            <div class="tour-title">ไทเป 1 วัน</div>
+            <div class="tour-route">ไทเป → เยว่หลิว → จีหลง → จิ่วเฟิ่น → สือเฟิ่น</div>
+            <p class="tour-desc">เส้นทางยอดนิยม รวม 4 สถานที่สำคัญในไทเป ขึ้นยอดเขาฮุ่ยซาน ชมวิวตึก 101 เดินตลาดราตรีสือเฟิ่น</p>
+            <div class="tour-footer">
+              <div class="tour-price">จาก <strong>4,500
