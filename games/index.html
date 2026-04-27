@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎮 Games – Go Taipei</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Noto+Sans+Thai:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1b2a;
+  --bg-card: #1e3a5f;
+  --bg-lighter: #2a4a73;
+  --accent: #ff6b35;
+  --accent-light: #ff8c5a;
+  --text: #ffffff;
+  --text-muted: #a0aec0;
+  --border: #2a4a73;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans Thai', sans-serif;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* HEADER */
+header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--text); text-decoration: none; }
+.logo span { color: var(--accent); }
+.header-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.header-back:hover { border-color: var(--accent); color: var(--accent); }
+
+/* MAIN */
+main { max-width: 960px; margin: 0 auto; }
+
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin: 48px 0 8px;
+}
+.page-title span { color: var(--accent); }
+.page-sub {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 48px;
+}
+
+/* GAME GRID */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.game-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.game-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(255,107,53,0.15);
+}
+.game-card:active {
+  transform: translateY(-2px);
+}
+
+.game-icon { font-size: 64px; }
+.game-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+.game-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.game-status {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.status-playable { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
+.status-soon { background: linear-gradient(135deg, #636e72, #b2bec3); color: #fff; }
+
+.play-btn {
+  margin-top: 8px;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+.game-card:hover .play-btn { background: var(--accent-light); transform: translateY(-1px); }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 48px 20px 32px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+footer a { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 768px) {
+  header { padding: 0 20px; }
+  .game-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .game-card { padding: 24px 16px; }
+  .game-icon { font-size: 48px; }
+  .game-name { font-size: 18px; }
+}
+@media (max-width: 480px) {
+  .game-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">Go <span>Taipei</span></a>
+  <a href="../index.html" class="header-back">← กลับหน้าหลัก</a>
+</header>
+
+<main>
+  <h1 class="page-title">🎮 <span>Games</span></h1>
+  <p class="page-sub">เกมที่สร้างโดย Panya & Ada 🦕</p>
+
+  <div class="game-grid">
+
+    <!-- Train Snake -->
+    <a href="train.html" class="game-card">
+      <div class="game-icon">🚂</div>
+      <div class="game-name">Train Snake</div>
+      <div class="game-desc">เกมงูบนรางรถไฟ เล่นง่าย ควบคุมงูกินของเพิ่มคะแนน<br>หลีกเลี่ยงการชนตัวเอง</div>
+      <span class="game-status status-playable">▶ เล่นได้เลย</span>
+      <span class="play-btn">เปิดเกม →</span>
+    </a>
+
+    <!-- More games placeholder -->
+    <div class="game-card" style="cursor: default;">
+      <div class="game-icon">🎮</div>
+      <div class="game-name">???</div>
+      <div class="game-desc">เกมต่อไปกำลังมาเร็วๆ นี้<br>ติดตามได้เลย!</div>
+      <span class="game-status status-soon">🔜 เร็วๆ นี้</span>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  Made by Panya & Ada 🦕
+</footer>
+
+</body>
+</html>
