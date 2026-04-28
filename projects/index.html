@@ -16,81 +16,144 @@
   h1 {
     text-align: center;
     color: #fff;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 300;
-    margin-bottom: 40px;
+    margin-bottom: 6px;
     letter-spacing: 2px;
   }
-  .list {
-    max-width: 600px;
-    margin: 0 auto;
+  .subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 12px;
+    margin-bottom: 36px;
   }
-  .item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 24px;
+  .section {
     background: #1a1a1a;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    color: #e0e0e0;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
     border: 1px solid #2a2a2a;
   }
-  .item:hover {
-    background: #222;
-    border-color: #444;
-    transform: translateX(4px);
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
   }
-  .item-icon { font-size: 28px; }
-  .item-info { flex: 1; }
-  .item-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-  .item-desc { color: #666; font-size: 13px; }
-  .item-arrow { color: #444; font-size: 18px; }
-  .item:hover .item-arrow { color: #888; }
+  .section-icon { font-size: 32px; }
+  .section-title { font-size: 17px; font-weight: 600; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: 8px;
+  }
+  .badge-active { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
+  .badge-wip { background: linear-gradient(135deg, #feca57, #ff6b35); color: #fff; }
+  .badge-ideas { background: linear-gradient(135deg, #636e72, #b2bec3); color: #fff; }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 5px 0; border-bottom: 1px solid #ffffff0a; font-size: 13px; color: #aaa; }
+  td:first-child { color: #666; width: 90px; }
+  td:last-child { color: #ccc; }
+  .log-entry { margin-bottom: 10px; }
+  .log-date { color: #555; font-size: 11px; }
+  .log-text { color: #999; font-size: 12px; margin-top: 1px; }
+  .view-more {
+    display: inline-block;
+    margin-top: 14px;
+    color: #74b9ff;
+    font-size: 13px;
+    text-decoration: none;
+  }
+  .view-more:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 <h1>PROJECTS</h1>
+<p class="subtitle">อัปเดต 28/04/2026</p>
 
-<div class="list">
-  <a class="item" href="gaming.html">
-    <div class="item-icon">🎮</div>
-    <div class="item-info">
-      <div class="item-name">Gaming</div>
-      <div class="item-desc">Train Snake, Rail Rush และเกมอื่นๆ</div>
+<!-- Gaming -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon">🎮</div>
+    <div>
+      <div class="section-title">Gaming</div>
+      <span class="badge badge-active">Active</span>
     </div>
-    <div class="item-arrow">→</div>
-  </a>
-
-  <a class="item" href="gotaipei.html">
-    <div class="item-icon">🌐</div>
-    <div class="item-info">
-      <div class="item-name">Go Taipei</div>
-      <div class="item-desc">เว็บรวมสถานที่ท่องเที่ยวในไทเป</div>
-    </div>
-    <div class="item-arrow">→</div>
-  </a>
-
-  <a class="item" href="trading-bot.html">
-    <div class="item-icon">📈</div>
-    <div class="item-info">
-      <div class="item-name">Trading Bot</div>
-      <div class="item-desc">ระบบเทรดอัตโนมัติ</div>
-    </div>
-    <div class="item-arrow">→</div>
-  </a>
-
-  <a class="item" href="coding-lessons.html">
-    <div class="item-icon">📚</div>
-    <div class="item-info">
-      <div class="item-name">Coding Lessons</div>
-      <div class="item-desc">บันทึกการเรียนรู้การเขียนโค้ด</div>
-    </div>
-    <div class="item-arrow">→</div>
-  </a>
+  </div>
+  <table>
+    <tr><td>เป้าหมาย</td><td>เกมบนเว็บสะสมแต้มแลกของรางวัล</td></tr>
+    <tr><td>เกมแรก</td><td>Train Snake — ✅ เสร็จแล้ว</td></tr>
+    <tr><td>Features</td><td>3 โหมด, 5 themes, 3 power-ups, BGM+SFX, Leaderboard</td></tr>
+  </table>
+  <div style="margin-top:12px;">
+    <div class="log-date">28/04 — เพิ่มระบบใส่ชื่อผู้เล่นใน Leaderboard</div>
+    <div class="log-date">28/04 — เพิ่ม Time Attack โหมด</div>
+    <div class="log-date">28/04 — เพิ่ม 5 themes, 3 power-ups, BGM+SFX</div>
+  </div>
+  <a class="view-more" href="gaming.html">ดูรายละเอียด →</a>
 </div>
+
+<!-- Go Taipei -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon">🌐</div>
+    <div>
+      <div class="section-title">Go Taipei</div>
+      <span class="badge badge-wip">In Progress</span>
+    </div>
+  </div>
+  <table>
+    <tr><td>เป้าหมาย</td><td>เว็บรวบรวมสถานที่ท่องเที่ยวในไทเป</td></tr>
+    <tr><td>สถานะ</td><td>ออกแบบ UI เบื้องต้นแล้ว</td></tr>
+    <tr><td>ข้อมูล</td><td>6 tours, vehicles, why section, CTA contact</td></tr>
+  </table>
+  <div style="margin-top:12px;">
+    <div class="log-date">25/04 — ออกแบบ dark theme with amber accent</div>
+    <div class="log-date">25/04 — Initial commit — Go Taipei website prototype</div>
+  </div>
+  <a class="view-more" href="gotaipei.html">ดูรายละเอียด →</a>
+</div>
+
+<!-- Trading Bot -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon">📈</div>
+    <div>
+      <div class="section-title">Trading Bot</div>
+      <span class="badge badge-wip">In Progress</span>
+    </div>
+  </div>
+  <table>
+    <tr><td>เป้าหมาย</td><td>ระบบเทรดอัตโนมัติ ดูพอร์ตแบบ real-time</td></tr>
+    <tr><td>Exchange</td><td>Binance — API พร้อมแล้ว</td></tr>
+    <tr><td>Stack</td><td>JavaScript + Binance API</td></tr>
+  </table>
+  <div style="margin-top:12px;">
+    <div class="log-date">28/04 — เก็บ Binance API Key แล้ว</div>
+    <div class="log-date">28/04 — เริ่มพัฒนา trading monitor</div>
+  </div>
+  <a class="view-more" href="trading-bot.html">ดูรายละเอียด →</a>
+</div>
+
+<!-- Coding Lessons -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon">📚</div>
+    <div>
+      <div class="section-title">Coding Lessons</div>
+      <span class="badge badge-ideas">Ideas</span>
+    </div>
+  </div>
+  <table>
+    <tr><td>เป้าหมาย</td><td>บันทึกการเรียนรู้การเขียนโค้ด</td></tr>
+    <tr><td>สถานะ</td><td>รอเริ่มต้น</td></tr>
+    <tr><td>ไอเดีย</td><td>snippet, เทคนิค, บทเรียน</td></tr>
+  </table>
+  <a class="view-more" href="coding-lessons.html">ดูรายละเอียด →</a>
+</div>
+
 </body>
 </html>
