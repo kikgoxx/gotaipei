@@ -2,7 +2,9 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Rail Rush 🚂</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,6 +17,13 @@
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
     color: #fff;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100dvh;
+    width: 100vw;
+    overscroll-behavior: none;
+    touch-action: none;
   }
   h2 { color: #ff6b35; margin-bottom: 6px; text-shadow: 0 0 20px #ff6b3555; font-size: 22px; text-align: center; }
   #info {
@@ -40,6 +49,11 @@
     border-radius: 12px;
     box-shadow: 0 0 30px #ff6b3533, inset 0 0 60px #00000055;
     display: block;
+    width: min(560px, calc(100vw - 16px));
+    height: auto;
+    max-height: 70vh;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
   }
   #msg {
     margin-top: 8px;
@@ -58,11 +72,14 @@
   }
   .controls-row { display: flex; gap: 4px; }
   button {
-    padding: 6px 14px;
-    font-size: 14px;
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
     background: linear-gradient(135deg, #ff6b35, #ff2e63);
     color: #fff;
     transition: all 0.2s;
@@ -72,6 +89,27 @@
   button:disabled { background: #444; box-shadow: none; transform: none; }
   button.active { background: linear-gradient(135deg, #00b894, #00cec9); }
   .hint { margin-top: 6px; font-size: 11px; color: #555; }
+  #btnUp, #btnDown, #btnLeft, #btnRight {
+    width: 72px !important;
+    height: 72px !important;
+    font-size: 26px !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+    margin: 3px;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .controls { margin-top: 12px; }
+  .controls-row { display: flex; gap: 4px; justify-content: center; }
+  #startBtn { font-size: 18px !important; padding: 12px 36px !important; }
+  @media (max-width: 480px) {
+    #btnUp, #btnDown, #btnLeft, #btnRight {
+      width: 82px !important;
+      height: 82px !important;
+      font-size: 30px !important;
+    }
+  }
 
   /* Challenge bar */
   #challengeBar {
@@ -152,6 +190,7 @@
 </style>
 </head>
 <body>
+<div id="gameWrap" style="overflow:hidden;position:fixed;inset:0;touch-action:none;-webkit-user-select:none;user-select:none;overscroll-behavior:none;">
 <h2>🚂 RAIL RUSH</h2>
 <div id="mode-tag">⚡ Challenge</div>
 
@@ -170,7 +209,7 @@
   <span class="lives" id="livesDisplay">❤️❤️❤️</span>
 </div>
 
-<canvas id="c" width="560" height="460"></canvas>
+<canvas id="c" width="560" height="460" style="touch-action:none;"></canvas>
 
 <div id="msg"></div>
 
@@ -1137,6 +1176,33 @@ modeTimeAttackBtn.addEventListener('click', () => {
 modeDiv.append(modeChallengeBtn, modeTimeAttackBtn, modeClassicBtn);
 document.body.insertBefore(modeDiv, canvas);
 
+// Touch / Swipe controls
+let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+
+canvas.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  touchStartTime = Date.now();
+  e.preventDefault();
+}, { passive: false });
+
+canvas.addEventListener('touchend', e => {
+  if (gameOver) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  const dt = Date.now() - touchStartTime;
+  if (dt > 500) return; // long press = skip
+  const absDx = Math.abs(dx);
+  const absDy = Math.abs(dy);
+  if (Math.max(absDx, absDy) < 30) return; // too short
+  if (absDx > absDy) {
+    if (dir.x !== -dx / absDx) dir = { x: dx > 0 ? 1 : -1, y: 0 };
+  } else {
+    if (dir.y !== -dy / absDy) dir = { x: 0, y: dy > 0 ? 1 : -1 };
+  }
+  e.preventDefault();
+}, { passive: false });
+
 // Keyboard
 document.addEventListener('keydown', e => {
   if (gameOver) return;
@@ -1192,5 +1258,6 @@ function showNameModal(mode, finalScore) {
   document.getElementById('nameOverlay').onclick = () => { saveLB(mode, finalScore, 'Anonymous'); closeNameModal(); };
 }
 </script>
+</div>
 </body>
 </html>
