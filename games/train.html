@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rail Rush ≡ƒÜé</title>
+<title>Rail Rush 🚂</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -152,8 +152,8 @@
 </style>
 </head>
 <body>
-<h2>≡ƒÜé RAIL RUSH</h2>
-<div id="mode-tag">ΓÜí Challenge</div>
+<h2>🚂 RAIL RUSH</h2>
+<div id="mode-tag">⚡ Challenge</div>
 
 <div id="info">
   <span>SCORE: <b id="score">0</b></span>
@@ -164,10 +164,10 @@
 <div id="powerupDisplay"></div>
 
 <div id="challengeBar" style="display:none;">
-  <span class="label">ΓÅ▒</span>
+  <span class="label">⏱</span>
   <div id="timerBar"><div id="timerFill" style="width:100%"></div></div>
   <span class="label">LIVES:</span>
-  <span class="lives" id="livesDisplay">Γ¥ñ∩╕ÅΓ¥ñ∩╕ÅΓ¥ñ∩╕Å</span>
+  <span class="lives" id="livesDisplay">❤️❤️❤️</span>
 </div>
 
 <canvas id="c" width="560" height="460"></canvas>
@@ -175,37 +175,37 @@
 <div id="msg"></div>
 
 <div class="controls">
-  <div class="controls-row"><button id="btnUp">Γû▓</button></div>
+  <div class="controls-row"><button id="btnUp">▲</button></div>
   <div class="controls-row">
-    <button id="btnLeft">ΓùÇ</button>
-    <button id="btnDown">Γû╝</button>
-    <button id="btnRight">Γû╢</button>
+    <button id="btnLeft">◀</button>
+    <button id="btnDown">▼</button>
+    <button id="btnRight">▶</button>
   </div>
 </div>
-<button id="startBtn" style="margin-top:10px;">START Γû╢</button>
+<button id="startBtn" style="margin-top:10px;">START ▶</button>
 <div style="display:flex;gap:8px;margin-top:8px;">
-  <button id="lbBtn" style="background:#0984e3;font-size:13px;padding:5px 14px;">≡ƒÅå Leaderboard</button>
-  <button id="muteBtn" style="background:#555;font-size:13px;padding:5px 14px;">≡ƒöè Sound</button>
+  <button id="lbBtn" style="background:#0984e3;font-size:13px;padding:5px 14px;">🏆 Leaderboard</button>
+  <button id="muteBtn" style="background:#555;font-size:13px;padding:5px 14px;">🔊 Sound</button>
 </div>
-<div class="hint">Arrow keys / WASD &nbsp;|&nbsp; α╣äα╕¡α╣Çα╕ùα╕íα╕₧α╕┤α╣Çα╕¿α╕⌐α╕êα╕░α╕éα╕╢α╣ëα╕Öα╣üα╕Üα╕Üα╕¬α╕╕α╣êα╕í!</div>
+<div class="hint">Arrow keys / WASD &nbsp;|&nbsp; ไอเทมพิเศษจะขึ้นแบบสุ่ม!</div>
 
 <div class="lb-overlay" id="lbOverlay"></div>
 <div id="lbPanel">
-  <h3>≡ƒÅå Leaderboard</h3>
+  <h3>🏆 Leaderboard</h3>
   <table id="lbTable"><tbody></tbody></table>
-  <button id="lbClose">α╕¢α╕┤α╕ö</button>
+  <button id="lbClose">ปิด</button>
 </div>
 
 <div id="nameModal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1e3a5f;border:2px solid #ff6b35;border-radius:16px;padding:24px 32px;z-index:200;min-width:280px;box-shadow:0 0 40px #0008;text-align:center;">
-  <h3 style="color:#ff6b35;margin-bottom:12px;">≡ƒÆÇ Game Over!</h3>
+  <h3 style="color:#ff6b35;margin-bottom:12px;">💀 Game Over!</h3>
   <p id="nameScoreText" style="color:#ccc;margin-bottom:16px;font-size:16px;"></p>
-  <input id="playerNameInput" type="text" maxlength="16" placeholder="α╣âα╕¬α╣êα╕èα╕╖α╣êα╕¡α╕éα╕¡α╕çα╕äα╕╕α╕ô..." style="width:100%;padding:8px 12px;border-radius:8px;border:2px solid #ff6b35;background:#0d1b2a;color:#fff;font-size:16px;text-align:center;outline:none;box-sizing:border-box;" />
-  <div style="display:flex;gap:8px;margin-top:12px;"><button id="nameSubmit" style="flex:1;padding:8px;background:linear-gradient(135deg,#ff6b35,#ff2e63);border:none;border-radius:8px;color:#fff;font-size:15px;cursor:pointer;">α╕Üα╕▒α╕Öα╕ùα╕╢α╕ü</button><button id="nameSkip" style="flex:1;padding:8px;background:#444;border:none;border-radius:8px;color:#aaa;font-size:15px;cursor:pointer;">α╕éα╣ëα╕▓α╕í</button></div>
+  <input id="playerNameInput" type="text" maxlength="16" placeholder="ใส่ชื่อของคุณ..." style="width:100%;padding:8px 12px;border-radius:8px;border:2px solid #ff6b35;background:#0d1b2a;color:#fff;font-size:16px;text-align:center;outline:none;box-sizing:border-box;" />
+  <div style="display:flex;gap:8px;margin-top:12px;"><button id="nameSubmit" style="flex:1;padding:8px;background:linear-gradient(135deg,#ff6b35,#ff2e63);border:none;border-radius:8px;color:#fff;font-size:15px;cursor:pointer;">บันทึก</button><button id="nameSkip" style="flex:1;padding:8px;background:#444;border:none;border-radius:8px;color:#aaa;font-size:15px;cursor:pointer;">ข้าม</button></div>
 </div>
 <div id="nameOverlay" style="display:none;position:fixed;inset:0;background:#0006;z-index:199;"></div>
 
 <script>
-// ΓöÇΓöÇΓöÇ AUDIO ENGINE ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── AUDIO ENGINE ────────────────────────────────────────────────────────────
 let audioCtx = null;
 let muted = false;
 let bgmGain, bgmOsc;
@@ -297,7 +297,7 @@ function stopBGM() {
   bgmPlaying = false;
 }
 
-// ΓöÇΓöÇΓöÇ THEMES ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── THEMES ─────────────────────────────────────────────────────────────────
 const THEMES = {
   classic:  { bg: '#1e3a5f', grid: 'rgba(255,255,255,0.05)', accent: '#ff6b35', food: '#feca57', powerup: '#a29bfe', particle: ['#ff6b35','#feca57','#ff2e63'] },
   ocean:    { bg: '#0a1628', grid: 'rgba(52,152,219,0.08)', accent: '#3498db', food: '#74b9ff', powerup: '#00cec9', particle: ['#3498db','#74b9ff','#00cec9'] },
@@ -307,7 +307,7 @@ const THEMES = {
 };
 let currentTheme = 'classic';
 
-// ΓöÇΓöÇΓöÇ GAME STATE ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── GAME STATE ─────────────────────────────────────────────────────────────
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
 const scoreEl = document.getElementById('score');
@@ -327,17 +327,17 @@ const ROWS = Math.floor(canvas.height / GRID);
 const OFFSET_X = (canvas.width - COLS * GRID) / 2;
 const OFFSET_Y = (canvas.height - ROWS * GRID) / 2;
 
-// ΓöÇΓöÇΓöÇ MODES ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── MODES ───────────────────────────────────────────────────────────────────
 let gameMode = 'challenge'; // classic | challenge | timeAttack
 let challengeLevel = 1;
 let lives = 3;
 let timeLeft = 0; // for timeAttack
-let timeMax = 120; // 2 α╕Öα╕▓α╕ùα╕╡
+let timeMax = 120; // 2 นาที
 let timerInterval = null;
 
 const CLASSIC_LEVELS = [0, 5, 10, 15, 20, 30, 40, 55, 70, 90]; // score thresholds
 
-// ΓöÇΓöÇΓöÇ LEADERBOARD ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── LEADERBOARD ─────────────────────────────────────────────────────────────
 const LB_KEY = 'trainLB';
 function getLB() {
   try { return JSON.parse(localStorage.getItem(LB_KEY) || '[]'); } catch { return []; }
@@ -354,13 +354,13 @@ function showLB(modeFilter) {
   const tbody = document.querySelector('#lbTable tbody');
   tbody.innerHTML = '';
   if (lb.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#666;padding:20px;">α╕óα╕▒α╕çα╣äα╕íα╣êα╕íα╕╡α╕äα╕░α╣üα╕Öα╕Ö</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#666;padding:20px;">ยังไม่มีคะแนน</td></tr>';
   } else {
     lb.slice(0, 10).forEach((e, i) => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td class="rank">${i === 0 ? '≡ƒÑç' : i === 1 ? '≡ƒÑê' : i === 2 ? '≡ƒÑë' : (i+1)}</td>
+      tr.innerHTML = `<td class="rank">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)}</td>
         <td style="color:#fff;font-size:13px;">${e.name || 'Anonymous'}</td>
-        <td><span class="mode-tag" style="background:${e.mode==='timeAttack'?'#d63031':e.mode==='challenge'?'#6c5ce7':'#0984e3'};color:#fff;font-size:10px;padding:1px 6px;border-radius:8px;">${e.mode==='timeAttack'?'ΓÅ▒':e.mode==='challenge'?'≡ƒÅå':'≡ƒÉì'}</span></td>
+        <td><span class="mode-tag" style="background:${e.mode==='timeAttack'?'#d63031':e.mode==='challenge'?'#6c5ce7':'#0984e3'};color:#fff;font-size:10px;padding:1px 6px;border-radius:8px;">${e.mode==='timeAttack'?'⏱':e.mode==='challenge'?'🏆':'🐍'}</span></td>
         <td class="score">${e.score}</td>`;
       tbody.appendChild(tr);
     });
@@ -380,12 +380,12 @@ document.getElementById('lbOverlay').addEventListener('click', () => {
 
 document.getElementById('muteBtn').addEventListener('click', () => {
   muted = !muted;
-  document.getElementById('muteBtn').textContent = muted ? '≡ƒöç Muted' : '≡ƒöè Sound';
+  document.getElementById('muteBtn').textContent = muted ? '🔇 Muted' : '🔊 Sound';
   document.getElementById('muteBtn').style.background = muted ? '#e17055' : '#555';
   if (muted) stopBGM(); else startBGM();
 });
 
-// ΓöÇΓöÇΓöÇ GAME VARIABLES ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// ─── GAME VARIABLES ─────────────────────────────────────────────────────────
 let snake, dir, food, score, gameOver, interval, tickSpeed, particles;
 let powerups, activePowerups;
 let enemies; // for challenge mode
@@ -408,10 +408,9 @@ function init() {
   scoreEl.textContent = '0';
   powerupDisplay.innerHTML = '';
   levelEl.textContent = challengeLevel;
-  placeFood();
   if (gameMode === 'challenge') {
     lives = 3;
-    livesDisplay.textContent = 'Γ¥ñ∩╕Å'.repeat(lives);
+    livesDisplay.textContent = '❤️'.repeat(lives);
     challengeBar.style.display = 'flex';
     spawnEnemies();
   } else if (gameMode === 'timeAttack') {
@@ -527,10 +526,10 @@ function activatePowerup(type) {
 
 function renderPowerupBadges() {
   const badges = [];
-  if (activePowerups.slow) badges.push('<span class="powerup-badge slow">≡ƒÉî α╕èα╣ëα╕▓α╕Ñα╕ç</span>');
-  if (activePowerups.shrink) badges.push('<span class="powerup-badge shrink">≡ƒö¼ α╕ïα╕╣α╣êα╕éα╕Öα╕▓α╕ö</span>');
-  if (activePowerups.invincible) badges.push('<span class="powerup-badge invincible">Γ¡É α╕¡α╕┤α╕íα╕íα╕¡α╕úα╣îα╕ùα╕▒α╕Ñ</span>');
-  if (activePowerups.timebonus) badges.push('<span class="powerup-badge time">ΓÅ▒ +15α╕ºα╕┤</span>');
+  if (activePowerups.slow) badges.push('<span class="powerup-badge slow">🐌 ช้าลง</span>');
+  if (activePowerups.shrink) badges.push('<span class="powerup-badge shrink">🔬 ซู่ขนาด</span>');
+  if (activePowerups.invincible) badges.push('<span class="powerup-badge invincible">⭐ อิมมอร์ทัล</span>');
+  if (activePowerups.timebonus) badges.push('<span class="powerup-badge time">⏱ +15วิ</span>');
   powerupDisplay.innerHTML = badges.join('');
 }
 
@@ -810,7 +809,7 @@ function drawPowerups() {
     ctx.fill();
 
     // Icon
-    const icons = { slow: '≡ƒÉî', shrink: '≡ƒö¼', invincible: 'Γ¡É', timebonus: 'ΓÅ▒' };
+    const icons = { slow: '🐌', shrink: '🔬', invincible: '⭐', timebonus: '⏱' };
     ctx.fillStyle = '#fff';
     ctx.font = '11px sans-serif';
     ctx.textAlign = 'center';
@@ -842,7 +841,7 @@ function drawEnemies() {
     ctx.font = '11px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('≡ƒÆÇ', px + wobble, py);
+    ctx.fillText('💀', px + wobble, py);
   });
 }
 
@@ -1004,7 +1003,7 @@ function tick() {
 function loseLife() {
   playSFX('die');
   lives--;
-  livesDisplay.textContent = 'Γ¥ñ∩╕Å'.repeat(Math.max(0, lives));
+  livesDisplay.textContent = '❤️'.repeat(Math.max(0, lives));
   addParticles(snake[0].x, snake[0].y, '#ff0000');
   if (lives <= 0) {
     endGame();
@@ -1032,13 +1031,13 @@ function endGame() {
     best = score;
     localStorage.setItem('trainBest2', best);
     bestEl.textContent = best;
-    msgEl.textContent = '≡ƒÄë NEW RECORD: ' + score;
+    msgEl.textContent = '🎉 NEW RECORD: ' + score;
   } else {
-    msgEl.textContent = '≡ƒÆÇ Game Over! Score: ' + score;
+    msgEl.textContent = '💀 Game Over! Score: ' + score;
   }
   showNameModal(gameMode, score);
   startBtn.disabled = false;
-  startBtn.textContent = 'PLAY AGAIN Γû╢';
+  startBtn.textContent = 'PLAY AGAIN ▶';
 }
 
 function start() {
@@ -1055,9 +1054,9 @@ function start() {
 
 // Theme switching
 const modeBtns = [
-  { id: 'modeClassic', mode: 'classic', label: '≡ƒÉì Classic' },
-  { id: 'modeChallenge', mode: 'challenge', label: '≡ƒÅå Challenge' },
-  { id: 'modeTimeAttack', mode: 'timeAttack', label: 'ΓÅ▒ Time Attack' }
+  { id: 'modeClassic', mode: 'classic', label: '🐍 Classic' },
+  { id: 'modeChallenge', mode: 'challenge', label: '🏆 Challenge' },
+  { id: 'modeTimeAttack', mode: 'timeAttack', label: '⏱ Time Attack' }
 ];
 
 // Add mode buttons
@@ -1081,11 +1080,11 @@ const btnStyle = (active) => ({
 });
 
 const modeClassicBtn = document.createElement('button');
-modeClassicBtn.textContent = '≡ƒÉì Classic';
+modeClassicBtn.textContent = '🐍 Classic';
 Object.assign(modeClassicBtn.style, btnStyle(false)); // gray (not default)
 modeClassicBtn.addEventListener('click', () => {
   gameMode = 'classic';
-  modeTag.textContent = '≡ƒÉì Classic';
+  modeTag.textContent = '🐍 Classic';
   modeClassicBtn.style.background = 'linear-gradient(135deg, #ff6b35, #ff2e63)';
   modeClassicBtn.style.boxShadow = '0 3px 10px #ff6b3566';
   modeChallengeBtn.style.background = 'linear-gradient(135deg, #2d3436, #636e72)';
@@ -1095,11 +1094,11 @@ modeClassicBtn.addEventListener('click', () => {
 });
 
 const modeChallengeBtn = document.createElement('button');
-modeChallengeBtn.textContent = 'ΓÜí Challenge';
+modeChallengeBtn.textContent = '⚡ Challenge';
 Object.assign(modeChallengeBtn.style, btnStyle(true)); // accent (default active)
 modeChallengeBtn.addEventListener('click', () => {
   gameMode = 'challenge';
-  modeTag.textContent = 'ΓÜí Challenge';
+  modeTag.textContent = '⚡ Challenge';
   modeChallengeBtn.style.background = 'linear-gradient(135deg, #ff6b35, #ff2e63)';
   modeChallengeBtn.style.boxShadow = '0 3px 10px #ff6b3566';
   modeClassicBtn.style.background = 'linear-gradient(135deg, #2d3436, #636e72)';
@@ -1109,11 +1108,11 @@ modeChallengeBtn.addEventListener('click', () => {
 });
 
 const modeTimeAttackBtn = document.createElement('button');
-modeTimeAttackBtn.textContent = 'ΓÅ▒ Time Attack';
+modeTimeAttackBtn.textContent = '⏱ Time Attack';
 Object.assign(modeTimeAttackBtn.style, btnStyle(false)); // gray
 modeTimeAttackBtn.addEventListener('click', () => {
   gameMode = 'timeAttack';
-  modeTag.textContent = 'ΓÅ▒ Time Attack';
+  modeTag.textContent = '⏱ Time Attack';
   modeTimeAttackBtn.style.background = 'linear-gradient(135deg, #ff6b35, #ff2e63)';
   modeTimeAttackBtn.style.boxShadow = '0 3px 10px #ff6b3566';
   modeClassicBtn.style.background = 'linear-gradient(135deg, #2d3436, #636e72)';
@@ -1156,7 +1155,7 @@ if (lbData.length > 0 && lbData[0].score > best) {
 init(); draw();
 
 function showNameModal(mode, finalScore) {
-  document.getElementById('nameScoreText').innerHTML = `α╕äα╕░α╣üα╕Öα╕Ö: <b style="color:#ff6b35;font-size:20px;">${finalScore}</b>`;
+  document.getElementById('nameScoreText').innerHTML = `คะแนน: <b style="color:#ff6b35;font-size:20px;">${finalScore}</b>`;
   document.getElementById('playerNameInput').value = localStorage.getItem('trainPlayerName') || '';
   document.getElementById('nameOverlay').style.display = 'block';
   document.getElementById('nameModal').style.display = 'block';
