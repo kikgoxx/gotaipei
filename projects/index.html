@@ -3,169 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📂 Projects</title>
+<title>📊 Project Dashboard</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    background: #0f0f0f;
-    color: #e0e0e0;
+    background: #0d1b2a;
+    color: #fff;
     font-family: 'Segoe UI', sans-serif;
     min-height: 100vh;
     padding: 40px 20px;
   }
   h1 {
     text-align: center;
-    color: #fff;
-    font-size: 22px;
-    font-weight: 300;
-    margin-bottom: 6px;
-    letter-spacing: 2px;
+    color: #ff6b35;
+    font-size: 28px;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px #ff6b3544;
   }
   .subtitle {
     text-align: center;
-    color: #555;
-    font-size: 12px;
-    margin-bottom: 36px;
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 14px;
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    max-width: 1100px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 960px;
     margin: 0 auto;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 700px) {
     .grid { grid-template-columns: 1fr; }
   }
   .card {
-    background: #1a1a1a;
-    border-radius: 14px;
-    padding: 22px 20px;
-    border: 1px solid #2a2a2a;
+    background: #1e3a5f;
+    border-radius: 16px;
+    padding: 24px;
+    border: 2px solid transparent;
+    transition: all 0.25s;
   }
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px #0005;
+    border-color: #ff6b35;
   }
-  .card-icon { font-size: 30px; }
-  .card-title { font-size: 16px; font-weight: 600; }
-  .badge {
+  .card-icon { font-size: 40px; margin-bottom: 12px; }
+  .card-title { font-size: 18px; font-weight: bold; margin-bottom: 6px; }
+  .card-desc { color: #aaa; font-size: 13px; line-height: 1.5; margin-bottom: 12px; }
+  .card-status {
     display: inline-block;
-    padding: 2px 9px;
+    padding: 3px 10px;
     border-radius: 20px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: bold;
   }
-  .badge-active { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
-  .badge-wip { background: linear-gradient(135deg, #feca57, #ff6b35); color: #fff; }
-  .badge-ideas { background: linear-gradient(135deg, #636e72, #b2bec3); color: #fff; }
-  .row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
+  .status-active { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
+  .status-wip { background: linear-gradient(135deg, #feca57, #ff6b35); color: #fff; }
+  .status-ideas { background: linear-gradient(135deg, #636e72, #b2bec3); color: #fff; }
+  .card-detail { color: #ccc; font-size: 13px; line-height: 1.6; margin-top: 8px; }
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #444;
     font-size: 12px;
   }
-  .row-label { color: #555; min-width: 55px; }
-  .row-value { color: #999; }
-  .divider { border: none; border-top: 1px solid #2a2a2a; margin: 12px 0; }
-  .log-title { color: #555; font-size: 11px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
-  .log-entry { margin-bottom: 6px; }
-  .log-date { color: #444; font-size: 10px; }
-  .log-text { color: #777; font-size: 11px; margin-top: 1px; }
-  .card-link {
-    display: inline-block;
-    margin-top: 14px;
-    color: #74b9ff;
-    font-size: 12px;
-    text-decoration: none;
-  }
-  .card-link:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
-<h1>PROJECTS</h1>
-<p class="subtitle">อัปเดต 28/04/2026</p>
+<h1>📊 Project Dashboard</h1>
+<p class="subtitle">สถานะโปรเจคทั้งหมด — อัปเดต 28/04/2026</p>
 
 <div class="grid">
-
-  <!-- Gaming -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🎮</div>
-      <div>
-        <div class="card-title">Gaming</div>
-        <span class="badge badge-active">Active</span>
-      </div>
+    <div class="card-icon">🎮</div>
+    <div class="card-title">Gaming</div>
+    <div class="card-desc">เกมบนเว็บสะสมแต้มแลกของรางวัล<br>Train Snake — เสร็จแล้ว!</div>
+    <div class="card-detail">
+      3 โหมด, 5 themes, 3 power-ups<br>
+      BGM+SFX, Leaderboard
     </div>
-    <div class="row"><span class="row-label">เป้าหมาย</span><span class="row-value">เกมบนเว็บสะสมแต้มแลกของรางวัล</span></div>
-    <div class="row"><span class="row-label">เกมแรก</span><span class="row-value">Train Snake — ✅ เสร็จแล้ว</span></div>
-    <div class="row"><span class="row-label">Features</span><span class="row-value">3 โหมด, 5 themes, 3 power-ups, BGM+SFX, Leaderboard</span></div>
-    <hr class="divider">
-    <div class="log-title">Recent Logs</div>
-    <div class="log-entry"><div class="log-date">28/04</div><div class="log-text">เพิ่มระบบใส่ชื่อผู้เล่นใน Leaderboard</div></div>
-    <div class="log-entry"><div class="log-date">28/04</div><div class="log-text">เพิ่ม Time Attack โหมด (+15วิ/ครั้ง)</div></div>
-    <div class="log-entry"><div class="log-date">28/04</div><div class="log-text">เพิ่ม 5 themes, 3 power-ups, BGM+SFX</div></div>
-    <a class="card-link" href="gaming.html">ดูทั้งหมด →</a>
+    <span class="card-status status-active">Active</span>
   </div>
 
-  <!-- Go Taipei -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">🌐</div>
-      <div>
-        <div class="card-title">Go Taipei</div>
-        <span class="badge badge-wip">In Progress</span>
-      </div>
+    <div class="card-icon">🌐</div>
+    <div class="card-title">Go Taipei</div>
+    <div class="card-desc">เว็บรวบรวมสถานที่ท่องเที่ยวในไทเป<br>รอปรับปรุงต่อ</div>
+    <div class="card-detail">
+      UI เบื้องต้นเสร็จแล้ว<br>
+      6 tours, vehicles, why section
     </div>
-    <div class="row"><span class="row-label">เป้าหมาย</span><span class="row-value">เว็บรวบรวมสถานที่ท่องเที่ยวในไทเป</span></div>
-    <div class="row"><span class="row-label">สถานะ</span><span class="row-value">UI เบื้องต้นเสร็จแล้ว</span></div>
-    <div class="row"><span class="row-label">ข้อมูล</span><span class="row-value">6 tours, vehicles, why section, CTA</span></div>
-    <hr class="divider">
-    <div class="log-title">Recent Logs</div>
-    <div class="log-entry"><div class="log-date">25/04</div><div class="log-text">ออกแบบ dark theme with amber accent colors</div></div>
-    <div class="log-entry"><div class="log-date">25/04</div><div class="log-text">Initial commit — Go Taipei website prototype</div></div>
-    <a class="card-link" href="gotaipei.html">ดูทั้งหมด →</a>
+    <span class="card-status status-wip">In Progress</span>
   </div>
 
-  <!-- Trading Bot -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">📈</div>
-      <div>
-        <div class="card-title">Trading Bot</div>
-        <span class="badge badge-wip">In Progress</span>
-      </div>
+    <div class="card-icon">📈</div>
+    <div class="card-title">Trading Bot</div>
+    <div class="card-desc">ระบบเทรดอัตโนมัติ ดูพอร์ตแบบ real-time<br>กำลังเชื่อมต่อ exchange</div>
+    <div class="card-detail">
+      Binance API พร้อมแล้ว<br>
+      JavaScript + Binance API
     </div>
-    <div class="row"><span class="row-label">เป้าหมาย</span><span class="row-value">ระบบเทรดอัตโนมัติ ดูพอร์ต real-time</span></div>
-    <div class="row"><span class="row-label">Exchange</span><span class="row-value">Binance — API พร้อมแล้ว</span></div>
-    <div class="row"><span class="row-label">Stack</span><span class="row-value">JavaScript + Binance API</span></div>
-    <hr class="divider">
-    <div class="log-title">Recent Logs</div>
-    <div class="log-entry"><div class="log-date">28/04</div><div class="log-text">เก็บ Binance API Key แล้ว</div></div>
-    <div class="log-entry"><div class="log-date">28/04</div><div class="log-text">เริ่มพัฒนา trading monitor</div></div>
-    <a class="card-link" href="trading-bot.html">ดูทั้งหมด →</a>
+    <span class="card-status status-wip">In Progress</span>
   </div>
 
-  <!-- Coding Lessons -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">📚</div>
-      <div>
-        <div class="card-title">Coding Lessons</div>
-        <span class="badge badge-ideas">Ideas</span>
-      </div>
+    <div class="card-icon">📚</div>
+    <div class="card-title">Coding Lessons</div>
+    <div class="card-desc">บันทึกการเรียนรู้การเขียนโค้ดของคุณหนุ่ม<br>สะสมเทคนิคและ snippet ต่างๆ</div>
+    <div class="card-detail">
+      snippet, เทคนิค, บทเรียน<br>
+      รอเริ่มต้น
     </div>
-    <div class="row"><span class="row-label">เป้าหมาย</span><span class="row-value">บันทึกการเรียนรู้การเขียนโค้ด</span></div>
-    <div class="row"><span class="row-label">สถานะ</span><span class="row-value">รอเริ่มต้น</span></div>
-    <div class="row"><span class="row-label">เนื้อหา</span><span class="row-value">snippet, เทคนิค, บทเรียน</span></div>
-    <hr class="divider">
-    <div class="log-title">Recent Logs</div>
-    <div class="log-entry"><div class="log-date">28/04</div><div class="log-text">สร้างโฟลเดอร์ projects และ dashboard</div></div>
-    <a class="card-link" href="coding-lessons.html">ดูทั้งหมด →</a>
+    <span class="card-status status-ideas">Ideas</span>
   </div>
+</div>
 
+<div class="footer">
+  Last updated by Ada 🦕
 </div>
 </body>
 </html>
