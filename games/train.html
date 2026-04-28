@@ -170,10 +170,6 @@
   <span class="lives" id="livesDisplay">❤️❤️❤️</span>
 </div>
 
-<div style="text-align:center;margin-bottom:8px;">
-  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;background:#1e3a5f;color:#a0aec0;padding:6px 14px;border-radius:20px;font-size:12px;text-decoration:none;border:1px solid #2a4a73;transition:all 0.2s;" onmouseover="this.style.borderColor='#ff6b35';this.style.color='#ff6b35'" onmouseout="this.style.borderColor='#2a4a73';this.style.color='#a0aec0'">← หน้ารวมเกม</a>
-</div>
-
 <canvas id="c" width="560" height="460"></canvas>
 
 <div id="msg"></div>
@@ -192,6 +188,10 @@
   <button id="muteBtn" style="background:#555;font-size:13px;padding:5px 14px;">🔊 Sound</button>
 </div>
 <div class="hint">Arrow keys / WASD &nbsp;|&nbsp; ไอเทมพิเศษจะขึ้นแบบสุ่ม!</div>
+
+<div style="text-align:center;margin-top:12px;">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;background:#1e3a5f;color:#a0aec0;padding:6px 14px;border-radius:20px;font-size:12px;text-decoration:none;border:1px solid #2a4a73;transition:all 0.2s;" onmouseover="this.style.borderColor='#ff6b35';this.style.color='#ff6b35'" onmouseout="this.style.borderColor='#2a4a73';this.style.color='#a0aec0'">← หน้ารวมเกม</a>
+</div>
 
 <div class="lb-overlay" id="lbOverlay"></div>
 <div id="lbPanel">
@@ -927,18 +927,30 @@ function tick() {
   const head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
 
   if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
-    if (!activePowerups.invincible) return handleDie();
+    if (!activePowerups.invincible) {
+      if (gameMode === 'challenge') {
+        loseLife(); // challenge mode: ลดหัวใจก่อน
+        return;
+      } else {
+        endGame(); // classic/timeAttack: ตายทันที
+        return;
+      }
+    }
     head.x = (head.x + COLS) % COLS;
     head.y = (head.y + ROWS) % ROWS;
   }
   if (snake.some(s => s.x === head.x && s.y === head.y)) {
-    if (!activePowerups.invincible) return handleDie();
+    if (!activePowerups.invincible) {
+      if (gameMode === 'challenge') { loseLife(); return; }
+      else { endGame(); return; }
+    }
   }
 
   // Enemy body collision
   for (let i = 1; i < snake.length; i++) {
     if (snake[i].x === head.x && snake[i].y === head.y && !activePowerups.invincible) {
-      return handleDie();
+      if (gameMode === 'challenge') { loseLife(); return; }
+      else { endGame(); return; }
     }
   }
 
@@ -1023,7 +1035,11 @@ function loseLife() {
 
 function handleDie() {
   playSFX('die');
-  endGame();
+  if (gameMode === 'challenge') {
+    loseLife(); // challenge mode: ลดหัวใจก่อน
+  } else {
+    endGame(); // classic/timeAttack: ตายทันที
+  }
 }
 
 function endGame() {
