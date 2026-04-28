@@ -73,25 +73,6 @@
   button.active { background: linear-gradient(135deg, #00b894, #00cec9); }
   .hint { margin-top: 6px; font-size: 11px; color: #555; }
 
-  /* Theme selector */
-  #themeSelector {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .theme-btn {
-    padding: 4px 12px;
-    font-size: 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: all 0.2s;
-  }
-  .theme-btn:hover { border-color: #fff4; }
-  .theme-btn.selected { border-color: #fff; }
-
   /* Challenge bar */
   #challengeBar {
     display: flex;
@@ -187,14 +168,6 @@
   <div id="timerBar"><div id="timerFill" style="width:100%"></div></div>
   <span class="label">LIVES:</span>
   <span class="lives" id="livesDisplay">❤️❤️❤️</span>
-</div>
-
-<div id="themeSelector">
-  <div class="theme-btn selected" style="background:#ff6b35;color:#fff;" data-theme="classic">🚂 Classic</div>
-  <div class="theme-btn" style="background:#0984e3;color:#fff;" data-theme="ocean">🌊 Ocean</div>
-  <div class="theme-btn" style="background:#6c5ce7;color:#fff;" data-theme="space">🌌 Space</div>
-  <div class="theme-btn" style="background:#00b894;color:#fff;" data-theme="forest">🌲 Forest</div>
-  <div class="theme-btn" style="background:#d63031;color:#fff;" data-theme="volcano">🌋 Volcano</div>
 </div>
 
 <canvas id="c" width="560" height="460"></canvas>
@@ -1080,17 +1053,6 @@ function start() {
 }
 
 // Theme switching
-document.querySelectorAll('.theme-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    currentTheme = btn.dataset.theme;
-    drawBackground();
-    draw();
-  });
-});
-
-// Mode switching
 const modeBtns = [
   { id: 'modeClassic', mode: 'classic', label: '🐍 Classic' },
   { id: 'modeChallenge', mode: 'challenge', label: '🏆 Challenge' },
