@@ -408,6 +408,7 @@ function init() {
   scoreEl.textContent = '0';
   powerupDisplay.innerHTML = '';
   levelEl.textContent = challengeLevel;
+  placeFood();
   if (gameMode === 'challenge') {
     lives = 3;
     livesDisplay.textContent = 'Γ¥ñ∩╕Å'.repeat(lives);
