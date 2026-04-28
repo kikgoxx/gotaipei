@@ -416,6 +416,7 @@ function init() {
     lives = 3;
     livesDisplay.textContent = '❤️'.repeat(lives);
     challengeBar.style.display = 'flex';
+    placeFood();
     spawnEnemies();
   } else if (gameMode === 'timeAttack') {
     timeLeft = timeMax;
