@@ -61,7 +61,7 @@
     </div>
     <div class="log-entry">
       <div class="log-date">28/04/2026 — เช้า</div>
-      <div class="log-text"><span class="done">✓</span> วิเคราะห์ RSI, MACD, EMA 50/200, Support/Resistance, Volume Alert</div>
+      <div class="log-text"><span class="done">✓</span> วิเคราะห์ RSI, MACD, EMA 50/200, Bollinger Bands, ADX, Support/Resistance, Volume</div>
     </div>
     <div class="log-entry">
       <div class="log-date">28/04/2026 — เช้า</div>
@@ -84,8 +84,10 @@
   <div class="section">
     <div class="section-title">📊 Indicators ที่ใช้</div>
     <table>
-      <tr><td>RSI 14</td><td>Overbought >70 / Oversold <30</td></tr>
+      <tr><td>RSI 14</td><td>Overbought >70 / Oversold &lt;30</td></tr>
       <tr><td>MACD</td><td>Golden Cross / Death Cross detection</td></tr>
+      <tr><td>Bollinger Bands</td><td>Upper/Middle/Lower band + %B position</td></tr>
+      <tr><td>ADX</td><td>Trend strength (>25 = trending, >40 = strong)</td></tr>
       <tr><td>EMA</td><td>EMA 50 vs EMA 200 (trend direction)</td></tr>
       <tr><td>Support/Resistance</td><td>30-period high/low</td></tr>
       <tr><td>Volume</td><td>Alert ถ้า volume > 1.5x หรือ < 0.5x เทียบ avg 14 วัน</td></tr>
@@ -94,6 +96,10 @@
 
   <div class="section">
     <div class="section-title">📝 Discussion Log</div>
+    <div class="log-entry">
+      <div class="log-date">28/04/2026 — 17:10</div>
+      <div class="log-text">เพิ่ม Bollinger Bands (BB) + ADX indicators สำหรับทุกเหรียญ</div>
+    </div>
     <div class="log-entry">
       <div class="log-date">28/04/2026 — 15:20</div>
       <div class="log-text">เพิ่ม XAU/USDT (ทองคำ) จาก Binance Futures + แก้ Telegram HTML parse issue</div>
