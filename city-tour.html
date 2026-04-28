@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ทัวร์ซันมูนเลค ทะเลสาบสุรินจินแทน – Go Taipei</title>
+    <title>ซิตี้ทัวร์ไทเป – Go Taipei</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
 :root {
@@ -32,7 +32,7 @@ nav a:hover { color: var(--accent); }
 /* HERO */
 .hero { position: relative; background: var(--bg); min-height: 280px; display: flex; align-items: center; overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,27,42,0.97) 0%, rgba(30,58,95,0.85) 50%, rgba(255,107,53,0.1) 100%); }
-.hero-img { position: absolute; inset: 0; background: linear-gradient(135deg, #0a2a1a 0%, #1a4a2a 40%, #0d3a2a 100%); opacity: 0.65; }
+.hero-img { position: absolute; inset: 0; background: linear-gradient(135deg, #1a2a3d 0%, #2a3a5a 40%, #0d1b2a 100%); opacity: 0.65; }
 .hero-content { position: relative; z-index: 1; padding: 40px 60px; max-width: 780px; }
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,107,53,0.15); border: 1px solid rgba(255,107,53,0.3); color: var(--accent); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 5px 12px; border-radius: 2px; margin-bottom: 14px; }
 .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 12px; }
@@ -76,7 +76,6 @@ nav a:hover { color: var(--accent); }
 .price-table tr:last-child td { border-bottom: none; }
 
 /* FOOD SECTION */
-.food-section { padding: 40px 0; }
 .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
 .food-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
 .food-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
@@ -139,11 +138,11 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
   <div class="hero-img"></div>
   <div class="hero-bg"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">✦ วันเดย์ทริป · หนานโทว์</div>
-    <h1>ทะเลสาบสุรินจินแทน <em>• ซันมูนเลค • เงอเตย์ชา</em></h1>
-    <p class="hero-desc">เส้นทางที่ได้รับความนิยมที่สุดในไต้หวัน ชมทะเลสาบซันมูนเลคที่สวยที่สุดในเวลาพระอาทิตย์ขึ้น ชมวัดเหวินจื้อหลิว พระใหญ่องค์เดียว ล่องเรือชมทัศนียภาพรอบทะเลสาบ และจบที่ชานมเงอเตย์ชาและหมู่บ้านชาวหยูชาน</p>
+    <div class="hero-eyebrow">✦ ซิตี้ทัวร์ · ไทเป</div>
+    <h1>เที่ยวไทเป<span> ในเมือง</span></h1>
+    <p class="hero-desc">แลนด์มาร์คไทเปทุกที่ ตึก 101 วัดหลงซาน ตลาดปลา หยังมิงซาน น้ำพุร้อนเป่ยโถว ครบในวันเดียว</p>
     <div class="hero-badges">
-      <span class="hero-badge">⏱ 8-10 ชั่วโมง</span>
+      <span class="hero-badge">⏱ 8 ชั่วโมง</span>
       <span class="hero-badge">🚗 รถเก๋ง / รถตู้</span>
       <span class="hero-badge">✅ ราคารวมทุกอย่าง</span>
     </div>
@@ -158,11 +157,11 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
       <h2 class="section-title">โปรแกรม<span> ทัวร์</span></h2>
 
       <div class="itinerary-item">
-        <div class="itinerary-time">07:00</div>
+        <div class="itinerary-time">08:00</div>
         <div class="itinerary-dot"></div>
         <div class="itinerary-content">
           <h3>รับจากโรงแรมในไทเป</h3>
-          <p>นัดรถมารับที่โรงแรม เดินทางประมาณ 2 ชั่วโมง</p>
+          <p>นัดรถมารับที่โรงแรม เริ่มเที่ยวไทเป</p>
         </div>
       </div>
 
@@ -170,17 +169,26 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
         <div class="itinerary-time">09:00</div>
         <div class="itinerary-dot"></div>
         <div class="itinerary-content">
-          <h3>วัดเหวินจื้อหลิว <span class="highlight">Wenxian Temple</span></h3>
-          <p>ชมพระใหญ่องค์เดียวประดิษฐานกลางภูเขา บรรยากาศศักดิ์สิทธิ์ สงบร่มรื่น</p>
+          <h3>ตึกไทเป 101 <span class="highlight">Taipei 101</span></h3>
+          <p>ถ่ายรูปตึกที่สูงที่สุดในไต้หวัน ชั้นใต้ดินเป็นฟู้ดคอร์ท มีของฝากเยอะ</p>
         </div>
       </div>
 
       <div class="itinerary-item">
-        <div class="itinerary-time">10:30</div>
+        <div class="itinerary-time">10:00</div>
         <div class="itinerary-dot"></div>
         <div class="itinerary-content">
-          <h3>ทะเลสาบซันมูนเลค <span class="highlight">Sun Moon Lake</span></h3>
-          <p>ล่องเรือชมทัศนียภาพรอบทะเลสาบ ชมทั้งทะเลสาบรูปเดือนและรูปพระอาทิตย์ ระยะทางรอบทะเลสาบประมาณ 35 กม. ค่าเรือ <span class="highlight">300 NTD/ท่าน</span></p>
+          <h3>วัดหลงซาน <span class="highlight">Longshan Temple</span></h3>
+          <p>วัดเก่าแก่ศักดิ์สิทธิ์ ไหว้พระขอพร สัมผัสบรรยากาศวัดจีนโบราณ</p>
+        </div>
+      </div>
+
+      <div class="itinerary-item">
+        <div class="itinerary-time">11:00</div>
+        <div class="itinerary-dot"></div>
+        <div class="itinerary-content">
+          <h3>อนุสรณ์สถานเจียงไคเช็ค <span class="highlight">Chiang Kai-shek Memorial</span></h3>
+          <p>ชมความยิ่งใหญ่ของอนุสรณ์สถาน พระราชวังจีน-ยุโรป สวนสวย ชมการเปลี่ยนกะรันทหาร</p>
         </div>
       </div>
 
@@ -188,8 +196,8 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
         <div class="itinerary-time">12:00</div>
         <div class="itinerary-dot"></div>
         <div class="itinerary-content">
-          <h3>อาหารกลางวัน ริมทะเลสาบ</h3>
-          <p>ร้านอาหารริมน้ำบรรยากาศดี อาหารท้องถิ่นรสชาติอร่อย</p>
+          <h3>อาหารกลางวัน</h3>
+          <p>แวะฟู้ดคอร์ทตึก 101 หรือตลาดอาหารใกล้เคียง</p>
         </div>
       </div>
 
@@ -197,26 +205,35 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
         <div class="itinerary-time">13:30</div>
         <div class="itinerary-dot"></div>
         <div class="itinerary-content">
-          <h3>ชานมเงอเตย์ชา <span class="highlight">Nantou / Puli</span></h3>
-          <p>แวะร้านชานมเบอร์ดัง ชิมชานมหอมเนื่องจากเป็นแหล่งปลูกชาชั้นนำของไต้หวัน</p>
+          <h3>ตลาดปลาไทเป <span class="highlight">Taipei Fish Market</span></h3>
+          <p>ตลาดปลาสดใหญ่ที่สุด ชมปลาหลากสายพันธุ์ ซื้ออาหารทะเลสดราคาถูก</p>
         </div>
       </div>
 
       <div class="itinerary-item">
-        <div class="itinerary-time">14:30</div>
+        <div class="itinerary-time">15:00</div>
         <div class="itinerary-dot"></div>
         <div class="itinerary-content">
-          <h3>หมู่บ้านชาวหยูชา <span class="highlight">Yuchi / Puli</span></h3>
-          <p>ชมวัฒนธรรมชาวหยูชา สัมผัสวิถีชีวิตและประเพณีดั้งเดิม</p>
+          <h3>น้ำพุร้อนเป่ยโถว <span class="highlight">Beitou Hot Springs</span></h3>
+          <p>แช่เท้าน้ำพุร้อนธรรมชาติ ผ่อนคลาย บรรยากาศดี</p>
         </div>
       </div>
 
       <div class="itinerary-item">
-        <div class="itinerary-time">16:00</div>
+        <div class="itinerary-time">16:30</div>
         <div class="itinerary-dot"></div>
         <div class="itinerary-content">
-          <h3>กลับถึงไทเป</h3>
-          <p>ส่งที่โรงแรม ประมาณ 17:00 - 18:00</p>
+          <h3>Ximending / ถนนคนเดิน</h3>
+          <p>เดินช็อปปิ้งย่านคนเดิน แหล่งรวมแฟชั่น เครื่องดื่ม อาหาร</p>
+        </div>
+      </div>
+
+      <div class="itinerary-item">
+        <div class="itinerary-time">18:00</div>
+        <div class="itinerary-dot"></div>
+        <div class="itinerary-content">
+          <h3>กลับถึงโรงแรม</h3>
+          <p>ส่งที่โรงแรม ประมาณ 18:00</p>
         </div>
       </div>
 
@@ -228,69 +245,69 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
       <div class="food-grid">
         <div class="food-card">
           <div class="food-card-header">
-            <span class="food-icon">🧋</span>
-            <div>
-              <div class="food-name">ชานมไข่มุกเงอเตย์ชา</div>
-              <div class="food-location">เงอเตย์ชา ร้านดัง</div>
-            </div>
-          </div>
-          <p class="food-desc">แหล่งปลูกชาชั้นนำของไต้หวัน ชานมเข้มข้นหอมมัน ไข่มุกเด้งสดใส ร้านเบอร์ดังมีคิวยาว</p>
-          <div class="food-price-tag">≈ <span>60-100 NTD</span> /แก้ว</div>
-        </div>
-        <div class="food-card">
-          <div class="food-card-header">
-            <span class="food-icon">🐟</span>
-            <div>
-              <div class="food-name">ปลาซ่าทะเลสาบย่างเกลือ</div>
-              <div class="food-location">ริมทะเลสาบซันมูนเลค</div>
-            </div>
-          </div>
-          <p class="food-desc">ปลาสดจากทะเลสาบ ย่างเกลือหอมๆ ผิวกรอบเนื้อนุ่ม ร้านริมน้ำบรรยากาศดีมาก</p>
-          <div class="food-price-tag">≈ <span>300-500 NTD</span> /ตัว</div>
-        </div>
-        <div class="food-card">
-          <div class="food-card-header">
-            <span class="food-icon">🍲</span>
-            <div>
-              <div class="food-name">ซุปสาหร่ายทะเลสาบ</div>
-              <div class="food-location">ริมทะเลสาบ</div>
-            </div>
-          </div>
-          <p class="food-desc">สาหร่ายสดจากทะเลสาบ ต้มซุปใสร้อนๆ รับประทานกับข้าว อร่อยแบบท้องถิ่น</p>
-          <div class="food-price-tag">≈ <span>150-250 NTD</span> /ชาม</div>
-        </div>
-        <div class="food-card">
-          <div class="food-card-header">
-            <span class="food-icon">🍵</span>
-            <div>
-              <div class="food-name">ชาหอมร้อนๆ ริมทะเลสาบ</div>
-              <div class="food-location">ร้านชาข้างทะเลสาบ</div>
-            </div>
-          </div>
-          <p class="food-desc">นั่งดื่มชาชมวิวทะเลสาบซันมูนเลค ชาหอมหวานจากแหล่งปลูกชาแก้วตาว บรรยากาศดีสุด</p>
-          <div class="food-price-tag">≈ <span>100-200 NTD</span> /เหยือก</div>
-        </div>
-        <div class="food-card">
-          <div class="food-card-header">
             <span class="food-icon">🥟</span>
             <div>
-              <div class="food-name">เกี๊ยวซ่าซุปใส</div>
-              <div class="food-location">หนานโถว / Puli</div>
+              <div class="food-name">ซ่าหยิ่วหมินจิ่วเจียว</div>
+              <div class="food-location">ตึก 101 ชั้นใต้ดิน</div>
             </div>
           </div>
-          <p class="food-desc">เกี๊ยวซ่าหนังบางนุ่ม ใส่ซุปร้อนๆ กุ้งสดหวาน ร้านเล็กๆ รสชาติจัดจ้าน</p>
-          <div class="food-price-tag">≈ <span>80-120 NTD</span> /ชาม</div>
+          <p class="food-desc">ซ่าหยิ่วหมินชุบแป้งทอด หนังกรอบไส้เด้ง ร้านดังมีคิวตลอด ขายดีมาก</p>
+          <div class="food-price-tag">≈ <span>80-120 NTD</span> /ชิ้น</div>
         </div>
         <div class="food-card">
           <div class="food-card-header">
-            <span class="food-icon">🍠</span>
+            <span class="food-icon">🍜</span>
             <div>
-              <div class="food-name">มันเทศเชื่อมร้อนๆ</div>
-              <div class="food-location">ข้างทางสู่ซันมูนเลค</div>
+              <div class="food-name">บะหมี่เกาลัดไชน่าทาวน์</div>
+              <div class="food-location">ไชน่าทาวน์ (โซนตึก 101)</div>
             </div>
           </div>
-          <p class="food-desc">มันเทศเชื่อมหวานนิ่ม ขายตามแผงริมทาง อร่อยทั้งร้อนและเย็น ขนมขบเคี้ยวยอดนิยม</p>
-          <div class="food-price-tag">≈ <span>30-50 NTD</span> /ชิ้น</div>
+          <p class="food-desc">บะหมี่น้ำใสรสจัดจ้าน เนื้อสัตว์เยอะ ร้านเล็กแต่อร่อยมาก ตั้งอยู่ในซอยไชน่าทาวน์</p>
+          <div class="food-price-tag">≈ <span>100-150 NTD</span> /ชาม</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🧋</span>
+            <div>
+              <div class="food-name">ชานมไข่มุก Ten Ren</div>
+              <div class="food-location">ไชน่าทาวน์ / Ximending</div>
+            </div>
+          </div>
+          <p class="food-desc">ชานมเข้มข้นหอมหวาน ไข่มุกเด้งสดจากโรงงานชาแห่งแรกของไต้หวัน ร้านดังมีหลายสาขา</p>
+          <div class="food-price-tag">≈ <span>60-90 NTD</span> /แก้ว</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🍢</span>
+            <div>
+              <div class="food-name">ปิ้งย่างหอมนางพญา</div>
+              <div class="food-location">หนี้ฮว่าชิงจื้อ (Ningxia Night Market)</div>
+            </div>
+          </div>
+          <p class="food-desc">ปิ้งย่างหลากหลายสูตร หอมกรอบอร่อย ตลาดกลางคืนย่านหนี้ฮว่าชิงจื้อ ชาวไต้หวันนิยมมาก</p>
+          <div class="food-price-tag">≈ <span>50-100 NTD</span> /ไม้</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🥚</span>
+            <div>
+              <div class="food-name">ไข่นึ่งลูกโต</div>
+              <div class="food-location">ตลาดหนี้ฮว่าชิงจื้อ</div>
+            </div>
+          </div>
+          <p class="food-desc">ไข่นึ่งนุ่มละมุน ใส่กุ้งเคียงหอย ร้านเล็กๆ แต่อร่อยมาก ขายดีเป็นพิเศษ</p>
+          <div class="food-price-tag">≈ <span>60-80 NTD</span> /ลูก</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🍨</span>
+            <div>
+              <div class="food-name">ไอศกรีมสตอเบอร์รี่แม่โข่</div>
+              <div class="food-location">หน้าอนุสรณ์สถาน</div>
+            </div>
+          </div>
+          <p class="food-desc">ไอศกรีมสตอเบอร์รี่สดเกษตรอินทรีย์ ร้อนๆ นุ่มๆ รสหวานอมเปรี้ยว ขายดีมากทุกฤดู</p>
+          <div class="food-price-tag">≈ <span>80-120 NTD</span> /กล่อง</div>
         </div>
       </div>
     </div>
@@ -309,12 +326,12 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
           </tr>
           <tr>
             <td>🚗 รถเก๋ง</td>
-            <td class="price">7,000 NTD</td>
+            <td class="price">4,500 - 5,000 NTD</td>
             <td>4 ท่าน</td>
           </tr>
           <tr>
             <td>🚐 รถตู้</td>
-            <td class="price">9,000 NTD</td>
+            <td class="price">6,000 NTD</td>
             <td>8 ท่าน</td>
           </tr>
         </table>
@@ -344,10 +361,9 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
       <div class="notes">
         <h4>📝 หมายเหตุ</h4>
         <ul>
-          <li>ระยะทางไกล ใช้เวลาเดินทางประมาณ 2 ชม. จากไทเป</li>
-          <li>ค่าเรือล่องทะเลสาบซันมูนเลค ท่านละ 300 NTD (จ่ายเอง ณ ที่)</li>
-          <li>อาหารกลางวัน - ค่าอาหารท่านละประมาณ 300-600 NTD (จ่ายเอง)</li>
-          <li>สามารถสลับสถานที่ได้ตามความเหมาะสม</li>
+          <li>สามารถปรับเส้นทางได้ตามความต้องการ</li>
+          <li>ค่าเข้าชมสถานที่ (ถ้ามี) จ่ายเอง ณ ที่</li>
+          <li>อาหารกลางวัน — ค่าอาหารท่านละประมาณ 300-600 NTD (จ่ายเอง)</li>
           <li>รถเก๋ง รถตู้ ไม่บังคับทิป ให้หรือไม่ให้ก็ได้ ตามความสมัครใจ</li>
         </ul>
       </div>

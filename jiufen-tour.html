@@ -74,6 +74,18 @@ nav a:hover { color: var(--accent); }
 .price-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 14px; }
 .price-table tr:last-child td { border-bottom: none; }
 
+/* FOOD SECTION */
+.food-section { padding: 40px 0; }
+.food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+.food-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.food-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.food-icon { font-size: 28px; }
+.food-name { font-size: 15px; font-weight: 600; color: var(--text); }
+.food-location { font-size: 12px; color: var(--accent); margin-top: 2px; }
+.food-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+.food-price-tag { display: inline-block; background: var(--bg-lighter); border-radius: 6px; padding: 4px 10px; font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+.food-price-tag span { color: var(--accent); font-weight: 600; }
+
 /* NOTES */
 .notes { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
 .notes h4 { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
@@ -216,6 +228,79 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
         </div>
       </div>
 
+    </div>
+
+    <!-- FOOD -->
+    <div class="section-wrap">
+      <h2 class="section-title">🍜 ร้านเด็ด<span> ห้ามพลาด</span></h2>
+      <div class="food-grid">
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🧋</span>
+            <div>
+              <div class="food-name">ชานมไข่มุกจิ่วเฟิ่น</div>
+              <div class="food-location">จิ่วเฟิ่น ถนนโบราณ</div>
+            </div>
+          </div>
+          <p class="food-desc">ชานมเข้มข้น ไข่มุกเด้งสดใส ร้านดังมีคิวยาว หอมนัวเนียว ไต้หวันต้องดื่ม</p>
+          <div class="food-price-tag">≈ <span>50-80 NTD</span> /แก้ว</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🍡</span>
+            <div>
+              <div class="food-name">เค้กมันเส้าเตี่ยวซาน</div>
+              <div class="food-location">จิ่วเฟิ่น ร้านดัง</div>
+            </div>
+          </div>
+          <p class="food-desc">เค้กมันเส้านุ่มนวล หอมกระเทียม ร้านเล็กๆ สู่ตำนานหลายสิบปี ขายหมดเร็วมาก</p>
+          <div class="food-price-tag">≈ <span>30-50 NTD</span> / ชิ้น</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🍗</span>
+            <div>
+              <div class="food-name">ไก่ทอดป๊อบคอร์น</div>
+              <div class="food-location">สือเฟิ่น ริมถนน</div>
+            </div>
+          </div>
+          <p class="food-desc">ไก่กรอบนอกนุ่มใน ซอสพริกไทยอร่อย ขายตามแผงเล็กๆ ริมทางเดิน กระเช้า</p>
+          <div class="food-price-tag">≈ <span>60-100 NTD</span> / กล่อง</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🦴</span>
+            <div>
+              <div class="food-name">ซุปกระดูกหมูใส่ผักบุ้ง</div>
+              <div class="food-location">ตลาดจีหลง</div>
+            </div>
+          </div>
+          <p class="food-desc">ซุปใสร้อนๆ กระดูกหวานมัน ผักบุ้งสด ร้านตลาดริมท่าเรือจีหลง บรรยากาศดี</p>
+          <div class="food-price-tag">≈ <span>80-120 NTD</span> / ชาม</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🍜</span>
+            <div>
+              <div class="food-name">บะหมี่หน้าต่างประตู</div>
+              <div class="food-location">ตลาดจีหลง ท่าเรือ</div>
+            </div>
+          </div>
+          <p class="food-desc">บะหมี่น้ำใสแบบเยอรมันนี หน้าต่างประตูเป็นเอกลักษณ์ กุ้งสดใส ร้านเล็กติดท่าเรือ</p>
+          <div class="food-price-tag">≈ <span>100-150 NTD</span> / ชาม</div>
+        </div>
+        <div class="food-card">
+          <div class="food-card-header">
+            <span class="food-icon">🥚</span>
+            <div>
+              <div class="food-name">ไข่ต้มร้อนๆ ใบชะเอี่ยม</div>
+              <div class="food-location">สือเฟิ่น ริมแม่น้ำ</div>
+            </div>
+          </div>
+          <p class="food-desc">ไข่ต้มแกะใส่ใบชะเอี่ยมหอม ขายตามแผงริมแม่น้ำ เป็นเอกลักษณ์ของสือเฟิ่น อร่อยล้าน</p>
+          <div class="food-price-tag">≈ <span>30-50 NTD</span> / ฟอง</div>
+        </div>
+      </div>
     </div>
 
     <!-- PRICE -->
