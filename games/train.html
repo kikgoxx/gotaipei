@@ -11,12 +11,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
     color: #fff;
+    padding: 20px 10px;
   }
-  h2 { color: #ff6b35; margin-bottom: 6px; text-shadow: 0 0 20px #ff6b3555; font-size: 22px; }
+  h2 { color: #ff6b35; margin-bottom: 6px; text-shadow: 0 0 20px #ff6b3555; font-size: 22px; text-align: center; }
   #info {
     display: flex;
     gap: 20px;
@@ -72,6 +73,22 @@
   button:disabled { background: #444; box-shadow: none; transform: none; }
   button.active { background: linear-gradient(135deg, #00b894, #00cec9); }
   .hint { margin-top: 6px; font-size: 11px; color: #555; }
+
+  /* Game area - side by side */
+  #gameArea {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  #rightPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 120px;
+  }
+  #msg { margin-top: 4px; font-size: 18px; color: #ff6b35; min-height: 24px; text-shadow: 0 0 10px #ff6b3566; text-align: center; }
 
   /* Theme selector */
   #themeSelector {
@@ -172,7 +189,7 @@
 </head>
 <body>
 <h2>🚂 RAIL RUSH</h2>
-<div id="mode-tag">🐍 Classic</div>
+<div id="mode-tag">⚡ Challenge</div>
 
 <div id="info">
   <span>SCORE: <b id="score">0</b></span>
@@ -197,22 +214,28 @@
   <div class="theme-btn" style="background:#d63031;color:#fff;" data-theme="volcano">🌋 Volcano</div>
 </div>
 
+<div id="gameArea">
 <canvas id="c" width="560" height="460"></canvas>
-<div id="msg"></div>
-<div class="controls">
-  <div class="controls-row"><button id="btnUp">▲</button></div>
-  <div class="controls-row">
-    <button id="btnLeft">◀</button>
-    <button id="btnDown">▼</button>
-    <button id="btnRight">▶</button>
+
+<div id="rightPanel">
+  <div class="controls">
+    <div class="controls-row"><button id="btnUp">▲</button></div>
+    <div class="controls-row">
+      <button id="btnLeft">◀</button>
+      <button id="btnDown">▼</button>
+      <button id="btnRight">▶</button>
+    </div>
   </div>
+  <button id="startBtn">START ▶</button>
+  <div style="display:flex;gap:8px;margin-top:8px;">
+    <button id="lbBtn" style="background:#0984e3;font-size:13px;padding:5px 14px;">🏆 Leaderboard</button>
+    <button id="muteBtn" style="background:#555;font-size:13px;padding:5px 14px;">🔊 Sound</button>
+  </div>
+  <div class="hint">Arrow keys / WASD &nbsp;|&nbsp; ไอเทมพิเศษจะขึ้นแบบสุ่ม!</div>
 </div>
-<button id="startBtn" style="margin-top:10px;">START ▶</button>
-<div style="display:flex;gap:8px;margin-top:8px;">
-  <button id="lbBtn" style="background:#0984e3;font-size:13px;padding:5px 14px;">🏆 Leaderboard</button>
-  <button id="muteBtn" style="background:#555;font-size:13px;padding:5px 14px;">🔊 Sound</button>
 </div>
-<div class="hint">Arrow keys / WASD &nbsp;|&nbsp; ไอเทมพิเศษจะขึ้นแบบสุ่ม!</div>
+
+<div id="msg"></div>
 
 <div class="lb-overlay" id="lbOverlay"></div>
 <div id="lbPanel">
@@ -353,7 +376,7 @@ const OFFSET_X = (canvas.width - COLS * GRID) / 2;
 const OFFSET_Y = (canvas.height - ROWS * GRID) / 2;
 
 // ─── MODES ───────────────────────────────────────────────────────────────────
-let gameMode = 'classic'; // classic | challenge | timeAttack
+let gameMode = 'challenge'; // classic | challenge | timeAttack
 let challengeLevel = 1;
 let lives = 3;
 let timeLeft = 0; // for timeAttack
@@ -1117,7 +1140,7 @@ const btnStyle = (active) => ({
 
 const modeClassicBtn = document.createElement('button');
 modeClassicBtn.textContent = '🐍 Classic';
-Object.assign(modeClassicBtn.style, btnStyle(true));
+Object.assign(modeClassicBtn.style, btnStyle(false)); // gray (not default)
 modeClassicBtn.addEventListener('click', () => {
   gameMode = 'classic';
   modeTag.textContent = '🐍 Classic';
@@ -1130,11 +1153,11 @@ modeClassicBtn.addEventListener('click', () => {
 });
 
 const modeChallengeBtn = document.createElement('button');
-modeChallengeBtn.textContent = '🏆 Challenge';
-Object.assign(modeChallengeBtn.style, btnStyle(false));
+modeChallengeBtn.textContent = '⚡ Challenge';
+Object.assign(modeChallengeBtn.style, btnStyle(true)); // accent (default active)
 modeChallengeBtn.addEventListener('click', () => {
   gameMode = 'challenge';
-  modeTag.textContent = '🏆 Challenge';
+  modeTag.textContent = '⚡ Challenge';
   modeChallengeBtn.style.background = 'linear-gradient(135deg, #ff6b35, #ff2e63)';
   modeChallengeBtn.style.boxShadow = '0 3px 10px #ff6b3566';
   modeClassicBtn.style.background = 'linear-gradient(135deg, #2d3436, #636e72)';
@@ -1145,7 +1168,7 @@ modeChallengeBtn.addEventListener('click', () => {
 
 const modeTimeAttackBtn = document.createElement('button');
 modeTimeAttackBtn.textContent = '⏱ Time Attack';
-Object.assign(modeTimeAttackBtn.style, btnStyle(false));
+Object.assign(modeTimeAttackBtn.style, btnStyle(false)); // gray
 modeTimeAttackBtn.addEventListener('click', () => {
   gameMode = 'timeAttack';
   modeTag.textContent = '⏱ Time Attack';
@@ -1157,7 +1180,7 @@ modeTimeAttackBtn.addEventListener('click', () => {
   modeChallengeBtn.style.boxShadow = 'none';
 });
 
-modeDiv.append(modeClassicBtn, modeChallengeBtn, modeTimeAttackBtn);
+modeDiv.append(modeChallengeBtn, modeTimeAttackBtn, modeClassicBtn);
 document.body.insertBefore(modeDiv, canvas);
 
 // Keyboard
