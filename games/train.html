@@ -412,11 +412,16 @@ function init() {
   scoreEl.textContent = '0';
   powerupDisplay.innerHTML = '';
   levelEl.textContent = challengeLevel;
+
+  // Ensure canvas has background color set immediately
+  ctx.fillStyle = '#1e3a5f';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   if (gameMode === 'challenge') {
     lives = 3;
-    livesDisplay.textContent = '❤️'.repeat(lives);
+    livesDisplay.textContent = '❤️❤️❤️';
     challengeBar.style.display = 'flex';
-    spawnEnemies();
+    if (enemies) { enemies = []; spawnEnemies(); }
   } else if (gameMode === 'timeAttack') {
     timeLeft = timeMax;
     challengeBar.style.display = 'flex';
