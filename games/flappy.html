@@ -366,7 +366,7 @@ let pipes = [];
 const PIPE_WIDTH = 60;
 const PIPE_GAP = 240;
 let pipeTimer = 0;
-const PIPE_INTERVAL = 360;
+const PIPE_INTERVAL = 480;
 
 // Ground scroll
 let groundX = 0;
@@ -406,8 +406,8 @@ function flap() {
 }
 
 function spawnPipe() {
-  const minTop = 80;
-  const maxTop = 300;
+  const minTop = 60;
+  const maxTop = 280;
   const top = minTop + Math.random() * (maxTop - minTop);
   pipes.push({
     x: 430,
