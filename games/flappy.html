@@ -341,7 +341,6 @@ function startGame() {
     pipes = []; pipeTimer = 0;
     score = 0; scoreEl.textContent = 0;
     groundX = 0;
-    lastTime = 0;
   }
   state = 'playing';
   msgEl.textContent = '';
@@ -386,25 +385,25 @@ canvas.addEventListener('touchstart', e => {
 
 // Loop
 function loop() {
-  if (state === 'playing') {
-    bird.vy += G;
-    bird.y += bird.vy;
-    groundX -= PIPE_SPEED;
-    clouds.forEach(c => { c.x -= c.speed; if (c.x + c.w < 0) c.x = canvas.width + c.w; });
-    pipeTimer++;
-    if (pipeTimer >= PIPE_SPAWN / 16.67) { pipeTimer = 0; spawnPipe(); }
-    pipes.forEach(p => { p.x -= PIPE_SPEED; });
-    pipes = pipes.filter(p => p.x + PIPE_W > -10);
-    if (bird.y + bird.h >= GROUND_Y) { draw(); gameOver(); requestAnimationFrame(loop); return; }
-    pipes.forEach(p => {
-      if (bird.x + bird.w > p.x && bird.x < p.x + PIPE_W) {
-        if (bird.y < p.topH || bird.y + bird.h > p.botY) { draw(); gameOver(); requestAnimationFrame(loop); return; }
-      }
-      if (!p.passed && p.x + PIPE_W < bird.x) { p.passed = true; score++; scoreEl.textContent = score; play('score'); }
-    });
-  }
-  draw();
   requestAnimationFrame(loop);
+  if (state !== 'playing') { draw(); return; }
+
+  bird.vy += G;
+  bird.y += bird.vy;
+  groundX -= PIPE_SPEED;
+  clouds.forEach(c => { c.x -= c.speed; if (c.x + c.w < 0) c.x = canvas.width + c.w; });
+  pipeTimer++;
+  if (pipeTimer >= PIPE_SPAWN / 16.67) { pipeTimer = 0; spawnPipe(); }
+  pipes.forEach(p => { p.x -= PIPE_SPEED; });
+  pipes = pipes.filter(p => p.x + PIPE_W > -10);
+  if (bird.y + bird.h >= GROUND_Y) { draw(); gameOver(); return; }
+  pipes.forEach(p => {
+    if (bird.x + bird.w > p.x && bird.x < p.x + PIPE_W) {
+      if (bird.y < p.topH || bird.y + bird.h > p.botY) { draw(); gameOver(); return; }
+    }
+    if (!p.passed && p.x + PIPE_W < bird.x) { p.passed = true; score++; scoreEl.textContent = score; play('score'); }
+  });
+  draw();
 }
 
 // Init
