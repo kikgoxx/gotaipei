@@ -666,11 +666,7 @@ document.addEventListener('keydown', e => {
   if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
     e.preventDefault();
     if (gameState === 'idle' || gameState === 'dead') {
-      if (gameState === 'dead' && document.getElementById('nameModal').style.display === 'none') {
-        startGame();
-      } else if (gameState === 'idle') {
-        startGame();
-      }
+      startGame();
     } else if (gameState === 'playing') {
       flap();
     }
@@ -679,7 +675,7 @@ document.addEventListener('keydown', e => {
 
 canvas.addEventListener('click', () => {
   initAudio();
-  if (gameState === 'idle') { startGame(); }
+  if (gameState === 'idle' || gameState === 'dead') { startGame(); }
   else if (gameState === 'playing') { flap(); }
 });
 
@@ -687,11 +683,7 @@ tapBtn.addEventListener('click', e => {
   e.stopPropagation();
   initAudio();
   if (gameState === 'idle' || gameState === 'dead') {
-    if (gameState === 'dead' && document.getElementById('nameModal').style.display === 'none') {
-      startGame();
-    } else if (gameState === 'idle') {
-      startGame();
-    }
+    startGame();
   } else if (gameState === 'playing') {
     flap();
   }
@@ -701,7 +693,7 @@ tapBtn.addEventListener('click', e => {
 canvas.addEventListener('touchstart', e => {
   e.preventDefault();
   initAudio();
-  if (gameState === 'idle') { startGame(); }
+  if (gameState === 'idle' || gameState === 'dead') { startGame(); }
   else if (gameState === 'playing') { flap(); }
 }, { passive: false });
 
