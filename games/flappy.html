@@ -393,6 +393,7 @@ function initClouds() {
 initClouds();
 
 function reset() {
+  console.log('reset called, gameState:', gameState);
   bird.y = 220;
   bird.vy = 0;
   bird.angle = 0;
@@ -401,6 +402,7 @@ function reset() {
   gameScore = 0;
   scoreEl.textContent = 0;
   groundX = 0;
+  initClouds();
 }
 
 function flap() {
@@ -610,6 +612,7 @@ function loop(ts) {
 
 function gameOver() {
   gameState = 'dead';
+  console.log('gameOver called, score:', gameScore);
   playSFX('die');
 
   if (gameScore > best) {
@@ -638,10 +641,14 @@ function gameOver() {
 }
 
 function startGame() {
+  console.log('startGame called, current state:', gameState);
   initAudio();
   document.getElementById('nameModal').style.display = 'none';
   document.getElementById('nameOverlay').style.display = 'none';
-  if (gameState === 'dead') reset();
+  if (gameState === 'dead') {
+    console.log('resetting game...');
+    reset();
+  }
   gameState = 'playing';
   msgEl.textContent = '';
   startBtn.textContent = 'PLAYING...';
