@@ -234,7 +234,7 @@ function reset() {
 function flap() {
   initAudio();
   bird.vy = FLAP;
-  wingFlap = 0; // reset to full flap animation
+  wingFlap = 12; // big flap
   play('flap');
 }
 
@@ -282,12 +282,16 @@ function drawBird() {
   ctx.ellipse(cx, cy, bird.w / 2, bird.h / 2, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  // Wing flap animation
-  const flapPhase = Math.sin(wingFlap * 0.5) * 0.6;
-  const wingY = cy + Math.sin(flapPhase) * 6;
+  // Wing flap animation - larger wing on top of body
+  const flapOffset = Math.abs(Math.sin(wingFlap * 0.4)) * 10;
   ctx.fillStyle = '#f9ca24';
   ctx.beginPath();
-  ctx.ellipse(cx - 4, wingY + 2, 12, 7, flapPhase * 0.5, 0, Math.PI * 2);
+  ctx.ellipse(cx - 2, cy - flapOffset, 14, 9, -0.4, 0, Math.PI * 2);
+  ctx.fill();
+  // Wing highlight
+  ctx.fillStyle = '#ffe066';
+  ctx.beginPath();
+  ctx.ellipse(cx - 2, cy - flapOffset, 8, 5, -0.4, 0, Math.PI * 2);
   ctx.fill();
 
   // Beak
