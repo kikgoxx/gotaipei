@@ -3,162 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📂 Projects</title>
+<title>📊 Project Dashboard</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    background: #0f0f0f;
-    color: #e0e0e0;
+    background: #0d1b2a;
+    color: #fff;
     font-family: 'Segoe UI', sans-serif;
     min-height: 100vh;
     padding: 40px 20px;
   }
   h1 {
     text-align: center;
-    color: #fff;
-    font-size: 22px;
-    font-weight: 300;
-    margin-bottom: 6px;
-    letter-spacing: 2px;
+    color: #ff6b35;
+    font-size: 28px;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px #ff6b3544;
   }
   .subtitle {
     text-align: center;
-    color: #555;
-    font-size: 12px;
-    margin-bottom: 36px;
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 14px;
   }
-  .section {
-    background: #1a1a1a;
-    border-radius: 14px;
-    padding: 22px 24px;
-    margin-bottom: 14px;
-    border: 1px solid #2a2a2a;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 960px;
+    margin: 0 auto;
   }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
+  .card {
+    background: #1e3a5f;
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    border: 2px solid transparent;
+    text-decoration: none;
+    color: #fff;
+    display: block;
   }
-  .section-icon { font-size: 32px; }
-  .section-title { font-size: 17px; font-weight: 600; }
-  .badge {
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px #0005;
+    border-color: #ff6b35;
+  }
+  .card-icon { font-size: 40px; margin-bottom: 12px; }
+  .card-title { font-size: 18px; font-weight: bold; margin-bottom: 6px; }
+  .card-desc { color: #aaa; font-size: 13px; line-height: 1.5; margin-bottom: 12px; }
+  .card-status {
     display: inline-block;
     padding: 3px 10px;
     border-radius: 20px;
     font-size: 11px;
     font-weight: bold;
-    margin-left: 8px;
   }
-  .badge-active { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
-  .badge-wip { background: linear-gradient(135deg, #feca57, #ff6b35); color: #fff; }
-  .badge-ideas { background: linear-gradient(135deg, #636e72, #b2bec3); color: #fff; }
-  table { width: 100%; border-collapse: collapse; }
-  td { padding: 5px 0; border-bottom: 1px solid #ffffff0a; font-size: 13px; color: #aaa; }
-  td:first-child { color: #666; width: 90px; }
-  td:last-child { color: #ccc; }
-  .log-entry { margin-bottom: 10px; }
-  .log-date { color: #555; font-size: 11px; }
-  .log-text { color: #999; font-size: 12px; margin-top: 1px; }
-  .view-more {
-    display: inline-block;
-    margin-top: 14px;
-    color: #74b9ff;
-    font-size: 13px;
-    text-decoration: none;
+  .status-active { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
+  .status-wip { background: linear-gradient(135deg, #feca57, #ff6b35); color: #fff; }
+  .status-ideas { background: linear-gradient(135deg, #636e72, #b2bec3); color: #fff; }
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #444;
+    font-size: 12px;
   }
-  .view-more:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
-<h1>PROJECTS</h1>
-<p class="subtitle">อัปเดต 28/04/2026</p>
+<h1>📊 Project Dashboard</h1>
+<p class="subtitle">สถานะโปรเจคทั้งหมด — อัปเดต 28/04/2026</p>
 
-<!-- Gaming -->
-<div class="section">
-  <div class="section-header">
-    <div class="section-icon">🎮</div>
-    <div>
-      <div class="section-title">Gaming</div>
-      <span class="badge badge-active">Active</span>
-    </div>
-  </div>
-  <table>
-    <tr><td>เป้าหมาย</td><td>เกมบนเว็บสะสมแต้มแลกของรางวัล</td></tr>
-    <tr><td>เกมแรก</td><td>Train Snake — ✅ เสร็จแล้ว</td></tr>
-    <tr><td>Features</td><td>3 โหมด, 5 themes, 3 power-ups, BGM+SFX, Leaderboard</td></tr>
-  </table>
-  <div style="margin-top:12px;">
-    <div class="log-date">28/04 — เพิ่มระบบใส่ชื่อผู้เล่นใน Leaderboard</div>
-    <div class="log-date">28/04 — เพิ่ม Time Attack โหมด</div>
-    <div class="log-date">28/04 — เพิ่ม 5 themes, 3 power-ups, BGM+SFX</div>
-  </div>
-  <a class="view-more" href="gaming.html">ดูรายละเอียด →</a>
+<div class="grid">
+  <a class="card" href="gaming.html">
+    <div class="card-icon">🎮</div>
+    <div class="card-title">Gaming</div>
+    <div class="card-desc">เกมบนเว็บสะสมแต้มแลกของรางวัล<br>Train Snake — เสร็จแล้ว!</div>
+    <span class="card-status status-active">Active</span>
+  </a>
+
+  <a class="card" href="gotaipei.html">
+    <div class="card-icon">🌐</div>
+    <div class="card-title">Go Taipei</div>
+    <div class="card-desc">เว็บไซต์รวบรวมสถานที่ท่องเที่ยวในไทเป<br>รอปรับปรุงต่อ</div>
+    <span class="card-status status-wip">In Progress</span>
+  </a>
+
+  <a class="card" href="trading-bot.html">
+    <div class="card-icon">📈</div>
+    <div class="card-title">Trading Bot</div>
+    <div class="card-desc">ระบบเทรดอัตโนมัติ ดูพอร์ตแบบ real-time<br>กำลังเชื่อมต่อ exchange</div>
+    <span class="card-status status-wip">In Progress</span>
+  </a>
+
+  <a class="card" href="coding-lessons.html">
+    <div class="card-icon">📚</div>
+    <div class="card-title">Coding Lessons</div>
+    <div class="card-desc">บันทึกบทเรียนการเขียนโค้ดของคุณหนุ่ม<br>สะสมเทคนิคและ snippet ต่างๆ</div>
+    <span class="card-status status-ideas">Ideas</span>
+  </a>
 </div>
 
-<!-- Go Taipei -->
-<div class="section">
-  <div class="section-header">
-    <div class="section-icon">🌐</div>
-    <div>
-      <div class="section-title">Go Taipei</div>
-      <span class="badge badge-wip">In Progress</span>
-    </div>
-  </div>
-  <table>
-    <tr><td>เป้าหมาย</td><td>เว็บรวบรวมสถานที่ท่องเที่ยวในไต้หวัน</td></tr>
-    <tr><td>สถานะ</td><td>ออกแบบ UI เบื้องต้นแล้ว</td></tr>
-    <tr><td>ข้อมูล</td><td>6 tours, vehicles, why section, CTA contact</td></tr>
-  </table>
-  <div style="margin-top:12px;">
-    <div class="log-date">25/04 — ออกแบบ dark theme with amber accent</div>
-    <div class="log-date">25/04 — Initial commit — Go Taipei website prototype</div>
-  </div>
-  <a class="view-more" href="gotaipei.html">ดูรายละเอียด →</a>
+<div class="footer">
+  Last updated by Ada 🦕
 </div>
-
-<!-- Trading Bot -->
-<div class="section">
-  <div class="section-header">
-    <div class="section-icon">📈</div>
-    <div>
-      <div class="section-title">Trading Bot</div>
-      <span class="badge badge-active">Active</span>
-    </div>
-  </div>
-  <table>
-    <tr><td>เป้าหมาย</td><td>Monitor + Alert สำหรับ BTC/USDT, ETH/USDT และ XAU/USDT (ทองคำ)</td></tr>
-    <tr><td>Exchange</td><td>Binance Public API</td></tr>
-    <tr><td>Timeframe</td><td>1H (1 ชั่วโมง)</td></tr>
-    <tr><td>Delivery</td><td>Telegram Group — ทุก 1 ชม. อัตโนมัติ</td></tr>
-    <tr><td>By</td><td>Ada 🐰 — AI Assistant</td></tr>
-  </table>
-  <div style="margin-top:12px;">
-    <div class="log-date">28/04 — 15:20 — เพิ่ม XAU (ทองคำ) ด้วย Binance Futures</div>
-    <div class="log-date">28/04 — 14:30 — สร้าง dashboard tracking ความคืบหน้า</div>
-    <div class="log-date">28/04 — 14:00 — Monitor ทำงานทุกชั่วโมงแล้ว</div>
-    <div class="log-date">28/04 — เช้า — เปลี่ยนมาใช้ Binance API</div>
-    <div class="log-date">28/04 — เช้า — เริ่ม monitor BTC + ETH</div>
-  </div>
-  <a class="view-more" href="trading-bot.html">ดูรายละเอียด →</a>
-</div>
-
-<!-- Coding Lessons -->
-<div class="section">
-  <div class="section-header">
-    <div class="section-icon">📚</div>
-    <div>
-      <div class="section-title">Coding Lessons</div>
-      <span class="badge badge-ideas">Ideas</span>
-    </div>
-  </div>
-  <table>
-    <tr><td>เป้าหมาย</td><td>บันทึกการเรียนรู้การเขียนโค้ด</td></tr>
-    <tr><td>สถานะ</td><td>รอเริ่มต้น</td></tr>
-    <tr><td>ไอเดีย</td><td>snippet, เทคนิค, บทเรียน</td></tr>
-  </table>
-  <a class="view-more" href="coding-lessons.html">ดูรายละเอียด →</a>
-</div>
-
 </body>
 </html>
