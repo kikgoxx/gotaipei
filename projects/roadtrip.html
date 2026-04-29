@@ -17,8 +17,9 @@
   .status-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
   .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
   .badge-new { background: linear-gradient(135deg, #ff6b35, #ff2e63); color: #fff; }
-  .badge-planning { background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: #fff; }
-  .badge-active { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
+  .badge-wip { background: linear-gradient(135deg, #feca57, #ff6b35); color: #fff; }
+  .badge-done { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
+  .badge-ideas { background: linear-gradient(135deg, #636e72, #b2bec3); color: #fff; }
   table { width: 100%; border-collapse: collapse; }
   td { padding: 6px 0; border-bottom: 1px solid #ffffff11; font-size: 14px; color: #ccc; }
   td:first-child { color: #aaa; width: 110px; }
@@ -26,11 +27,12 @@
   .location-card h4 { color: #ff6b35; margin-bottom: 4px; font-size: 15px; }
   .location-card p { color: #888; font-size: 12px; margin-bottom: 6px; }
   .mini-game-tag { display: inline-block; background: #6c5ce7; color: #fff; padding: 2px 10px; border-radius: 12px; font-size: 11px; margin-right: 4px; }
+  .mini-game-tag.done { background: #00b894; }
+  .mini-game-tag.building { background: #feca57; color: #333; }
   .knowledge-tag { display: inline-block; background: #00b894; color: #fff; padding: 2px 10px; border-radius: 12px; font-size: 11px; }
   .loop-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #ffffff11; }
   .loop-num { background: #ff6b35; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; flex-shrink: 0; }
   .loop-text { color: #ccc; font-size: 14px; }
-  .loop-arrow { color: #ff6b35; font-size: 18px; }
   .style-item { display: inline-block; background: #2a4a73; padding: 4px 12px; border-radius: 16px; font-size: 12px; color: #ccc; margin: 3px; }
   .link-btn { display: inline-block; background: linear-gradient(135deg, #ff6b35, #ff2e63); color: #fff; padding: 8px 18px; border-radius: 8px; text-decoration: none; font-size: 14px; margin-top: 10px; }
   .link-btn:hover { opacity: 0.9; }
@@ -38,11 +40,21 @@
   .progress-bar { background: #333; border-radius: 8px; height: 8px; margin-top: 8px; overflow: hidden; }
   .progress-fill { background: linear-gradient(90deg, #ff6b35, #ff2e63); height: 100%; border-radius: 8px; transition: width 0.3s; }
   .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: #888; margin-top: 4px; }
+  .check-done { color: #00b894; }
+  .check-wip { color: #feca57; }
+  .check-todo { color: #636e72; }
 </style>
 </head>
 <body>
 <div class="container">
   <a class="back" href="index.html">← หน้าเกมทั้งหมด</a>
+
+  <!-- Play Game Button -->
+  <div style="margin-bottom:20px;">
+    <a href="../games/roadtrip.html" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#ff6b35,#ff2e63);color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-size:16px;font-weight:bold;">
+      🎮 เล่นเกม Road Trip Taiwan ตอนนี้!
+    </a>
+  </div>
 
   <div class="emoji-big">🚌 Road Trip Taiwan</div>
   <h1>Road Trip Taiwan — Casual Touring Game</h1>
@@ -50,16 +62,32 @@
   <div class="section">
     <div class="section-title">📌 ภาพรวม</div>
     <table>
-      <tr><td>สถานะ</td><td><span class="badge badge-new">🆕 โปรเจคใหม่!</span> <span class="badge badge-planning">📋 Planning</span></td></tr>
+      <tr><td>สถานะ</td><td><span class="badge badge-wip">🔨 กำลังพัฒนา</span> <span class="badge badge-done">✅ Mini-game แรกเสร็จ</span></td></tr>
       <tr><td>ประเภท</td><td>Casual + Story / Map-based / Mini-games</td></tr>
-      <tr><td>แพลตฟอร์ม</td><td>Web (HTML5 Canvas)</td></tr>
+      <tr><td>แพลตฟอร์ม</td><td>Web (HTML5 + CSS + JS)</td></tr>
       <tr><td>เป้าหมาย</td><td>เกมท่องเที่ยวไต้หวัน + โปรโมท Go Taipei Tour</td></tr>
-      <tr><td>ความยาก</td><td>ปานกลาง (โครงสร้างใหญ่ แต่ mechanics ง่าย)</td></tr>
+      <tr><td>ความคืบหน้า</td><td>~40% — ระบบหลักเสร็จ, Mini-game 1/5</td></tr>
     </table>
     <div style="margin-top:12px;">
-      <div class="progress-label"><span>ความคืบหน้า</span><span>0%</span></div>
-      <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      <div class="progress-label"><span>ความคืบหน้า</span><span>40%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
     </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✅ สิ่งที่เสร็จแล้ว (v1)</div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Start screen พร้อม logo + ปุ่มเริ่มเดินทาง</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Map screen แบบ Mario style มี 5 จุดเชื่อมกัน</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Van SVG สีฟ้า วิ่งบน map และ travel screen</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Travel animation พร้อมข้อความ "พบกันที่จุดนัดพบ"</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">ปุ่ม "รถมาถึงแล้ว!" กดไปหน้าเกม</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Mini-game แรก: หยิบของฝากไต้หวันใส่ตะกร้า</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Popup รายละเอียดสินค้า + ปุ่มหยิบใส่ตะกร้า</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">เสียง Sound Effects (ถูก/ผิด/ชนะ)</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Timer 2 นาที + Popup ต่อเวลา (ใส่โฆษณาได้)</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Result screen "ภารกิจสำเร็จ!" พร้อมดาว + ความรู้</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">Promotion links ไป gotaipei.net</span></div>
+    <div class="loop-step"><span class="check-done">✓</span><span class="loop-text">LocalStorage เก็บ progress</span></div>
   </div>
 
   <div class="section">
@@ -73,137 +101,105 @@
   </div>
 
   <div class="section">
-    <div class="section-title">🗺️ เส้นทาง (Locations)</div>
+    <div class="section-title">🗺️ เส้นทาง (Locations) — 5 จุด</div>
 
     <div class="location-card">
-      <h4>1. 🚩 Ximending (จุดเริ่มต้น)</h4>
-      <p>ไฮไลท์ของไต้หวัน — ร้านค้า แสงสี วัฒนธรรม</p>
-      <span class="mini-game-tag">🎯 Mini Game: แต่งตัวเลือกสถานที่</span>
-      <span class="knowledge-tag">💡 ความรู้: Ximending แปลว่า "ตรอกซอกซอย"</span>
+      <h4>1. ซีเหมินติง Ximending</h4>
+      <p>ถนนช้อปปิ้งที่ขึ้นชื่อที่สุดในไต้หวัน (3 ล้านคน/เดือน)</p>
+      <span class="mini-game-tag done">✅ หยิบของฝากใส่ตะกร้า — เสร็จแล้ว!</span>
+      <span class="knowledge-tag">💡 ความรู้: ซีเหมินติง แปลว่า "ตรอกซอกซอย" ในภาษาจีน</span>
     </div>
 
     <div class="location-card">
-      <h4>2. 🪨 Yehliu Geopark</h4>
-      <p>อุทยานหินแปล มีหิน Queen's Head ที่มีชื่อ</p>
-      <span class="mini-game-tag">🔍 Mini Game: หาหิน Queen's Head</span>
-      <span class="mini-game-tag">🎨 จัดเฟรมถ่ายรูป</span>
-      <span class="knowledge-tag">💡 ความรู้: หินเกิดจากฟันหินปูนในน้ำ</span>
+      <h4>2. อุทยานหินเยว่หลิว Yehliu Geopark</h4>
+      <p>อุทยานหินแปลก เส้นทางเล่นถัดไปที่จะพัฒนา</p>
+      <span class="mini-game-tag building">🔨 กำลังสร้าง: จับหิน Queen's Head</span>
+      <span class="knowledge-tag">💡 ความรู้: หินเกิดจากลมและน้ำทะเลกัดเซาะนานล้านปี</span>
     </div>
 
     <div class="location-card">
-      <h4>3. 🎨 Zhengbin Fishing Port (ท่าปลาจิ่งเบิ้น)</h4>
-      <p>ท่าเรือสีสัน บ้านเรือนยุโรป มุมถ่ายรูปสวย</p>
-      <span class="mini-game-tag">📸 Mini Game: ถ่ายรูปมุมสวย</span>
-      <span class="knowledge-tag">💡 ความรู้: สีสันตึกมาจากชาวจีนแต้จิ๋ว</span>
+      <h4>3. ท่าเรือเจิ้งปิ้น ตึกหลากสี Zhengbin Port</h4>
+      <p>ท่าเรือสีพาสเทล ถ่ายรูปสวยมากในยามเย็น</p>
+      <span class="mini-game-tag building">🔨 กำลังสร้าง: จัดเฟรมถ่ายรูป</span>
+      <span class="knowledge-tag">💡 ความรู้: เคยเป็นท่าประมงขนาดใหญ่ที่สุดในไต้หวัน</span>
     </div>
 
     <div class="location-card">
-      <h4>4. 🏮 Jiufen Old Street</h4>
+      <h4>4. หมู่บ้านจิ่วเฟิ่น Jiufen Old Street</h4>
       <p>ตรอกเก่าแก่ เคยเป็นเมืองเหมืองทอง</p>
-      <span class="mini-game-tag">🍵 Mini Game: จัดออเดอร์ร้านชา (reuse ร้านค้า mechanics)</span>
-      <span class="mini-game-tag">🎲 หลีกหลีกคนในตรอก</span>
+      <span class="mini-game-tag building">🔨 กำลังสร้าง: จัดออเดอร์ชา</span>
       <span class="knowledge-tag">💡 ความรู้: เคยเป็นเมืองเหมืองทองในอดีต</span>
     </div>
 
     <div class="location-card">
-      <h4>5. 💧 Shifen Waterfall</h4>
-      <p>น้ำตกขนาดใหญ่ อากาศดี ธรรมชาติ</p>
-      <span class="mini-game-tag">🏮 Mini Game: ปล่อยโคมลอย (เขียนคำอวยพร)</span>
-      <span class="mini-game-tag">🌈 ตกแต่งโคม</span>
-      <span class="knowledge-tag">💡 ความรู้: น้ำตกสูง 20 เมตร กว้าง 30 เมตร</span>
+      <h4>5. หมู่บ้านสือเฟิ่น Shifen Old Street</h4>
+      <p>มีน้ำตกสูง 20 เมตร + โคมลอยอธิษฐานที่มีชื่อ</p>
+      <span class="mini-game-tag building">🔨 กำลังสร้าง: ปล่อยโคมลอย</span>
+      <span class="knowledge-tag">💡 ความรู้: น้ำตกสูง 20 เมตร เป็นจุดเด่นของอุทยาน</span>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">🔄 Game Loop</div>
-    <div class="loop-step">
-      <div class="loop-num">1</div>
-      <div class="loop-text">เลือกเส้นทางบนแผนที่ (Map screen)</div>
-    </div>
-    <div class="loop-step">
-      <div class="loop-num">2</div>
-      <div class="loop-text">รถตู้วิ่งไปตามเส้นทาง (Auto-drive animation)</div>
-    </div>
-    <div class="loop-step">
-      <div class="loop-num">3</div>
-      <div class="loop-text">ถึงสถานที่ → เล่น Mini Game</div>
-    </div>
-    <div class="loop-step">
-      <div class="loop-num">4</div>
-      <div class="loop-text">ได้ดาว (1-3 ⭐) + ความรู้สั้นๆ</div>
-    </div>
-    <div class="loop-step">
-      <div class="loop-num">5</div>
-      <div class="loop-text">ปลดล็อกเส้นทางใหม่ / ของรางวัล</div>
-    </div>
-    <div class="loop-step">
-      <div class="loop-num">6</div>
-      <div class="loop-text">เก็บรูปใน Photo Album → กลับไปเลือกเส้นทางใหม่</div>
-    </div>
+    <div class="section-title">🔄 Game Loop (เสร็จแล้ว)</div>
+    <div class="loop-step"><div class="loop-num">1</div><div class="loop-text">เลือกเส้นทางบนแผนที่ Map</div></div>
+    <div class="loop-step"><div class="loop-num">2</div><div class="loop-text">รถตู้วิ่งไปตามเส้นทาง (Van SVG animation)</div></div>
+    <div class="loop-step"><div class="loop-num">3</div><div class="loop-text">ถึงสถานที่ → กด "รถมาถึงแล้ว!"</div></div>
+    <div class="loop-step"><div class="loop-num">4</div><div class="loop-text">เล่น Mini Game</div></div>
+    <div class="loop-step"><div class="loop-num">5</div><div class="loop-text">ได้ดาว (1-3 ⭐) + ความรู้สั้นๆ</div></div>
+    <div class="loop-step"><div class="loop-num">6</div><div class="loop-text">ปลดล็อกเส้นทางใหม่ / กลับ Map</div></div>
   </div>
 
   <div class="section">
     <div class="section-title">🎨 สไตล์ Art</div>
     <div class="style-item">🎨 Chibi / น่ารัก</div>
     <div class="style-item">🌸 สีพาสเทล (pastel)</div>
-    <div class="style-item">🚐 รถตู้การ์ตูน (เหมือนรถคุณจริงๆ 😄)</div>
+    <div class="style-item">🚐 รถตู้ SVG สีฟ้า</div>
     <div class="style-item">🗺️ แผนที่แบบ Mario map</div>
-    <div class="style-item">🏔️ Background ภูเขาไต้หวัน</div>
-    <div class="style-item">🌊 ทะเลเป็นฉากหลัง</div>
-    <div style="margin-top:12px; color:#888; font-size:13px;">รถตู้สีสันสดใส + ตัวละคร NPC นักท่องเที่ยวต่างชาติ</div>
+    <div class="style-item">🌊 Background ไล่สีฟ้า-ครีม</div>
+    <div style="margin-top:12px; color:#888; font-size:13px;">รถตู้สีฟ้า (ตาม reference จากคุณหนุ่ม) + ตัวละคร NPC สเต็ปถัดไป</div>
   </div>
 
   <div class="section">
     <div class="section-title">🧠 Trick ทำให้ติดเกม</div>
     <table>
-      <tr><td>⭐ ดาวระบบ</td><td>ให้ 1-3 ดาวต่อ location ตามความสำเร็จ</td></tr>
-      <tr><td>📸 Photo Album</td><td>เก็บรูปถ่ายจากแต่ละสถานที่</td></tr>
-      <tr><td>🗺️ Unlock Map</td><td>ปลดล็อก location ใหม่เมื่อได้ดาวครบ</td></tr>
-      <tr><td>👥 NPC สนทนา</td><td>นักท่องเที่ยวต่างชาติ พูดไทย-อังกฤษ</td></tr>
-      <tr><td>🎁 ของรางวัล</td><td>เงินทอง, คูปองทัวร์, sticker</td></tr>
+      <tr><td>⭐ ดาวระบบ</td><td>ให้ 1-3 ดาวต่อ location ตามความสำเร็จ ✅</td></tr>
+      <tr><td>📸 Photo Album</td><td>เก็บรูปถ่ายจากแต่ละสถานที่ (โครงสร้างพร้อม)</td></tr>
+      <tr><td>🗺️ Unlock Map</td><td>ปลดล็อก location ใหม่เมื่อได้ดาวครบ ✅</td></tr>
+      <tr><td>⏰ Timer + Popup ต่อเวลา</td><td>ใส่โฆษณา/ข้อมูลเพิ่มเติมได้ ✅</td></tr>
+      <tr><td>🔊 Sound Effects</td><td>เสียงถูก/ผิด/ชนะ ✅</td></tr>
+      <tr><td>💰 Coins + Progress</td><td>เก็บ localStorage ✅</td></tr>
     </table>
   </div>
 
   <div class="section">
-    <div class="section-title">🔗 Promotion แบบเนียน</div>
-    <div class="concept-box">✅ ปุ่ม <strong>"ดูทริปจริง"</strong> — ไปหน้าเว็บ Go Taipei Tour ที่เกี่ยวข้อง</div>
-    <div class="concept-box">✅ ปุ่ม <strong>"จองรถเช่า"</strong> — link ไปเว็บจองจริง</div>
-    <div class="concept-box">✅ ปุ่ม <strong>"แชร์ให้เพื่อน"</strong> — share photo album + สถานที่ที่ไป</div>
-    <div class="concept-box">✅ ปุ่ม <strong>"ดูรีวิว"</strong> — link ไป Google Maps / TripAdvisor</div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">🎮 Mini Games รายละเอียด</div>
-    <table>
-      <tr><td>Ximending</td><td><strong>แต่งตัว / เลือกเสื้อผ้า</strong> — ตอบคำถาม: "วันนี้ไปไหน?" เลือก outfit → ได้ดาว</td></tr>
-      <tr><td>Yehliu</td><td><strong>หาหิน Queen's Head</strong> — กดหาหินในกลุ่มหินที่ใหญ่ที่สุด → จับเวลา</td></tr>
-      <tr><td>Zhengbin</td><td><strong>จัดเฟรมถ่ายรูป</strong> — ลากกรอบรูปให้ตรงกับวิว → ถ่ายรูป</td></tr>
-      <tr><td>Jiufen</td><td><strong>จัดออเดอร์ร้านชา</strong> — ลูกค้าสั่ง → คลิกให้ถูก → ได้เงิน</td></tr>
-      <tr><td>Shifen</td><td><strong>ปล่อยโคมลอย</strong> — เขียนคำอวยพร → ปล่อยโคม → ถ่ายรูป + share</td></tr>
-    </table>
-  </div>
-
-  <div class="section">
-    <div class="section-title">🔧 Technical Plan</div>
+    <div class="section-title">🔧 Technical</div>
     <table>
       <tr><td>File</td><td>games/roadtrip.html</td></tr>
-      <tr><td>Canvas</td><td>HTML5 Canvas 2D</td></tr>
+      <tr><td>Stack</td><td>HTML5 + CSS + Vanilla JS (ไม่ใช้ framework)</td></tr>
       <tr><td>State</td><td>localStorage (progress, stars, photos)</td></tr>
-      <tr><td>Assets</td><td>ใช้โค้ดวาดเอง (ไม่ต้องโหลดรูปภายนอก)</td></tr>
-      <tr><td>Screens</td><td>Map → Drive → MiniGame → Result → Map</td></tr>
+      <tr><td>Assets</td><td>SVG วาดเอง + ไม่ต้องโหลดรูปภายนอก</td></tr>
+      <tr><td>Screens</td><td>Start → Map → Travel → Game → Result → Map</td></tr>
     </table>
   </div>
 
   <div class="section">
-    <div class="section-title">📝 Milestones</div>
+    <div class="section-title">📝 TODO ถัดไป</div>
     <table>
-      <tr><td>✅</td><td>วางโครงสร้างโปรเจค + หน้า Map</td></tr>
-      <tr><td>⬜</td><td>ระบบรถวิ่ง animation อัตโนมัติ</td></tr>
-      <tr><td>⬜</td><td>Mini game Ximending + Yehliu</td></tr>
-      <tr><td>⬜</td><td>Mini game Zhengbin + Jiufen</td></tr>
-      <tr><td>⬜</td><td>Mini game Shifen + Photo Album</td></tr>
-      <tr><td>⬜</td><td>ระบบดาว + Unlock + Promotion links</td></tr>
+      <tr><td><span class="check-wip">○</span></td><td>Mini game 2: อุทยานหินเยว่หลิว — จับหิน Queen's Head</td></tr>
+      <tr><td><span class="check-todo">☐</span></td><td>Mini game 3: ท่าเรือเจิ้งปิ้น — จัดเฟรมถ่ายรูป</td></tr>
+      <tr><td><span class="check-todo">☐</span></td><td>Mini game 4: หมู่บ้านจิ่วเฟิ่น — จัดออเดอร์ชา</td></tr>
+      <tr><td><span class="check-todo">☐</span></td><td>Mini game 5: หมู่บ้านสือเฟิ่น — ปล่อยโคมลอย</td></tr>
+      <tr><td><span class="check-todo">☐</span></td><td>Photo Album screen แสดงรูปที่เก็บได้</td></tr>
+      <tr><td><span class="check-todo">☐</span></td><td>Background image สำหรับ map screen</td></tr>
+      <tr><td><span class="check-todo">☐</span></td><td>เพิ่ม NPC สนทนาในแต่ละจุด</td></tr>
+      <tr><td><span class="check-todo">☐</span></td><td>แต่งเติม Animation และ Particle effects</td></tr>
     </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📝 อัปเดตล่าสุด</div>
+    <div class="loop-step"><div class="loop-text" style="color:#888; font-size:12px;">30/04/2026 — อัพเดท progress 40%, Mini-game แรกเสร็จ, Sound effects, Timer 2 นาที + Popup ต่อเวลา</div></div>
+    <div class="loop-step"><div class="loop-text" style="color:#888; font-size:12px;">29/04/2026 — เริ่มโปรเจค Road Trip Taiwan</div></div>
   </div>
 </div>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Go Taipei – Van & Car charter in Taiwan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
 :root {
   --bg: #0d1b2a;
@@ -18,12 +18,11 @@
   --border: #2a4a73;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Noto Sans Thai', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+body { font-family: 'Sarabun', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
 /* HEADER */
 header { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
-.logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--text); text-decoration: none; }
-.logo span { color: var(--accent); }
+.logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--accent); text-decoration: none; }
 nav { display: flex; gap: 28px; }
 nav a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
 nav a:hover, nav a.active { color: var(--accent); }
@@ -110,12 +109,12 @@ nav a:hover, nav a.active { color: var(--accent); }
 .cta-btn:hover { opacity: 0.9; transform: translateY(-2px); }
 .cta-btn.line { background: #06C755; color: white; }
 .cta-btn.fb { background: #1877F2; color: white; }
+.cta-btn.wa { background: #25D366; color: white; }
 .cta-btn.tel { background: var(--accent); color: #000; }
 
 /* FOOTER */
 footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--text); }
-.footer-logo span { color: var(--accent); }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--accent); }
 .footer-info { font-size: 12px; color: var(--text-muted); line-height: 1.8; text-align: right; }
 
 /* RESPONSIVE */
@@ -137,11 +136,11 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
 <header>
   <a href="index.html" class="logo">Go <span>Taipei</span></a>
   <nav>
-    <a href="#tours">ทัวร์ทั้งหมด</a>
-    <a href="#vehicles">รถและราคา</a>
-    <a href="#contact">ติดต่อ</a>
+    <a href="#tours" class="header-contact">ทัวร์ทั้งหมด</a>
+    <a href="#vehicles" class="header-contact">รถและราคา</a>
+    <a href="#contact" class="header-contact">ติดต่อ</a>
   </nav>
-  <a href="games/index.html" class="header-contact" style="background: var(--bg); color: var(--accent); border: 1px solid var(--accent);">🎮 เล่นเกม</a>
+  <a href="games/roadtrip.html" target="_blank" class="header-contact" style="background: var(--accent); color: #000;">🎮 เล่นเกม Road Trip</a>
   <a href="https://line.me/R/ti/p/@966kmony" class="header-contact">💬 สอบถาม / จองทัวร์ผ่าน LINE</a>
 </header>
 
@@ -149,8 +148,7 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
   <div class="hero-img"></div>
   <div class="hero-bg"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">✦ Go Taipei Tour · ทัวร์ไต้หวัน สำหรับคนไทย</div>
-    <h1>เที่ยวไต้หวันแบบส่วนตัว <em>ดูแลเหมือนครอบครัว</em></h1>
+    <h1><span>Go Taipei</span> ไต้หวันในแบบที่คุณเลือก</h1>
     <p class="hero-desc">จัดทริปไพรเวท รถส่วนตัว คนขับพูดไทยและอังกฤษ ดูแลตลอดการเดินทาง รับจากโรงแรม โอนจ่ายเป็นเงินไทยได้</p>
     <div class="hero-badges">
       <span class="hero-badge">✅ คนขับพูดไทย (จำนวนจำกัด)</span>
@@ -168,7 +166,7 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
     <div id="tours" class="section-wrap">
       <div class="section-header">
         <div>
-          <h2>โปรแกรม<span> ทัวร์ยอดนิยม</span></h2>
+          <h2><span>โปรแกรมทัวร์ยอดนิยม</span></h2>
           <p class="section-sub">ทัวร์ส่วนตัว รับ-ส่งโรงแรม ปรับเส้นทางได้ตามความต้องการ</p>
         </div>
       </div>
@@ -303,8 +301,7 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
     <div id="vehicles" class="section-wrap">
       <div class="section-header">
         <div>
-          <h2>ยานพาหนะ<span> ทุกขนาด</span></h2>
-          <p class="section-sub">เลือกรถให้เหมาะกับขนาดกลุ่มของคุณ</p>
+          <h2><span>เลือกรถให้เหมาะกับขนาดกลุ่มของคุณ</span></h2>
         </div>
       </div>
       <p class="vehicles-intro">ทุกคันรวมค่าน้ำมัน, ค่าทางด่วน, ค่าจอดรถ, ที่พัก (กรณีค้างคืน) และอาหารของคนขับแล้ว</p>
@@ -315,13 +312,6 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
           <div class="vehicle-name">รถเก๋ง 5 ที่นั่ง</div>
           <div class="vehicle-capacity">ไม่เกิน 4 ผู้โดยสาร</div>
           <div class="vehicle-note">Toyota Cross / Altis</div>
-        </div>
-
-        <div class="vehicle-card">
-          <div class="vehicle-icon">🚙</div>
-          <div class="vehicle-name">รถเก๋ง 7 ที่นั่ง</div>
-          <div class="vehicle-capacity">ไม่เกิน 6 ผู้โดยสาร</div>
-          <div class="vehicle-note">Toyota Wish / Sienta</div>
         </div>
 
         <div class="vehicle-card">
@@ -352,7 +342,7 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
     <div id="why" class="section-wrap">
       <div class="section-header">
         <div>
-          <h2>ทำไมต้องเลือก<span> Go Taipei?</span></h2>
+          <h2><span>ทำไมต้องเลือก Go Taipei?</span></h2>
         </div>
       </div>
       <div class="why-grid">
@@ -362,6 +352,14 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
           <div class="why-text">
             <div class="why-title">คนขับพูดไทย & อังกฤษ</div>
             <div class="why-desc">สื่อสารได้ตลอดการเดินทาง ไม่ต้องกังวลเรื่องภาษา</div>
+          </div>
+        </div>
+
+        <div class="why-item">
+          <div class="why-icon">🌏</div>
+          <div class="why-text">
+            <div class="why-title">มีแอดมินคนไทยดูแลตลอด</div>
+            <div class="why-desc">ติดต่อสอบถามได้ตลอด ไม่ต้องกังวลเรื่องภาษา</div>
           </div>
         </div>
 
@@ -397,14 +395,6 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
           </div>
         </div>
 
-        <div class="why-item">
-          <div class="why-icon">🌏</div>
-          <div class="why-text">
-            <div class="why-title">มีแอดมินคนไทยดูแลตลอด</div>
-            <div class="why-desc">ติดต่อสอบถามได้ตลอด ไม่ต้องกังวลเรื่องภาษา</div>
-          </div>
-        </div>
-
       </div>
     </div>
 
@@ -412,9 +402,10 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
 
   <!-- CTA / CONTACT -->
   <div id="contact" class="cta-section">
-    <h2>สนใจ<span> ติดต่อได้เลยครับ</span></h2>
+    <h2><span>สนใจติดต่อได้เลยครับ</span></h2>
     <p>เช็คคิว สอบถามราคา หรือจองทัวร์ได้เลยครับ ดูแลเหมือนครอบครัว</p>
     <div class="cta-buttons">
+      <a href="https://wa.me/66875198224" class="cta-btn wa">📱 WhatsApp: 087-519-8224</a>
       <a href="https://line.me/R/ti/p/@966kmony" class="cta-btn line">💬 Line: @966kmony</a>
       <a href="http://www.facebook.com/gotaipeitour" class="cta-btn fb">📘 Facebook: Go Taipei</a>
       <a href="tel:+886968817739" class="cta-btn tel">📞 +886 96-881-7739</a>
@@ -424,7 +415,7 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32
 </main>
 
 <footer>
-  <div class="footer-logo">Go <span>Taipei</span></div>
+  <div class="footer-logo"><span>Go Taipei</span> ไต้หวันในแบบที่คุณเลือก</div>
   <div class="footer-info">
     📧 gotaipeitour@gmail.com<br>
     Line: gotaipeitour · โทร +886 96-881-7739
