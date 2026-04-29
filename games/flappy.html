@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Flappy Bird 🐦</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d1b2a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100dvh;
+    width: 100vw;
+    overscroll-behavior: none;
+    touch-action: none;
+  }
+  h2 { color: #ff6b35; margin-bottom: 6px; text-shadow: 0 0 20px #ff6b3555; font-size: 22px; text-align: center; }
+  #info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 6px;
+    font-size: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  #info span { color: #aaa; }
+  #info b { color: #ff6b35; }
+  canvas {
+    border: 3px solid #ff6b35;
+    border-radius: 12px;
+    box-shadow: 0 0 30px #ff6b3533, inset 0 0 60px #00000055;
+    display: block;
+    width: min(420px, calc(100vw - 16px));
+    height: auto;
+    max-height: 65vh;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  #msg {
+    margin-top: 8px;
+    font-size: 18px;
+    color: #ff6b35;
+    min-height: 24px;
+    text-shadow: 0 0 10px #ff6b3566;
+    text-align: center;
+  }
+  .controls {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    background: linear-gradient(135deg, #ff6b35, #ff2e63);
+    color: #fff;
+    transition: all 0.2s;
+    box-shadow: 0 3px 10px #ff6b3544;
+  }
+  button:hover { transform: translateY(-1px); box-shadow: 0 5px 15px #ff6b3566; }
+  button:disabled { background: #444; box-shadow: none; transform: none; }
+  .hint { margin-top: 6px; font-size: 11px; color: #555; }
+  #tapBtn {
+    width: 120px;
+    height: 120px;
+    font-size: 48px;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    margin-top: 8px;
+  }
+  @media (max-width: 480px) {
+    #tapBtn { width: 140px; height: 140px; font-size: 56px; }
+  }
+
+  /* Leaderboard */
+  #lbPanel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1e3a5f;
+    border: 2px solid #ff6b35;
+    border-radius: 16px;
+    padding: 20px 28px;
+    z-index: 100;
+    min-width: 280px;
+    box-shadow: 0 0 40px #0008;
+    display: none;
+  }
+  #lbPanel h3 { color: #ff6b35; text-align: center; margin-bottom: 12px; }
+  #lbPanel table { width: 100%; border-collapse: collapse; }
+  #lbPanel td { padding: 4px 8px; color: #ccc; font-size: 14px; }
+  #lbPanel tr:nth-child(1) td { color: #feca57; }
+  #lbPanel tr:nth-child(2) td { color: #dfe6e9; }
+  #lbPanel tr:nth-child(3) td { color: #b2bec3; }
+  #lbPanel .rank { width: 30px; font-weight: bold; }
+  #lbPanel .score { text-align: right; color: #ff6b35; font-weight: bold; }
+  #lbPanel button { margin-top: 12px; width: 100%; }
+  .lb-overlay {
+    position: fixed;
+    inset: 0;
+    background: #0006;
+    z-index: 99;
+    display: none;
+  }
+  .mode-tag {
+    font-size: 12px;
+    background: linear-gradient(135deg, #ff6b35, #ff2e63);
+    padding: 2px 10px;
+    border-radius: 20px;
+    color: #fff;
+    margin-bottom: 4px;
+    display: inline-block;
+  }
+
+  /* Name modal */
+  #nameModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1e3a5f;
+    border: 2px solid #ff6b35;
+    border-radius: 16px;
+    padding: 24px 32px;
+    z-index: 200;
+    min-width: 280px;
+    box-shadow: 0 0 40px #0008;
+    text-align: center;
+  }
+  #nameModal h3 { color: #ff6b35; margin-bottom: 12px; }
+  #nameScoreText { color: #ccc; margin-bottom: 16px; font-size: 16px; }
+  #playerNameInput {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 2px solid #ff6b35;
+    background: #0d1b2a;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    box-sizing: border-box;
+  }
+  #nameModalButtons { display: flex; gap: 8px; margin-top: 12px; }
+  #nameModalButtons button { flex: 1; padding: 8px; border: none; border-radius: 8px; color: #fff; font-size: 15px; cursor: pointer; }
+  #nameSubmit { background: linear-gradient(135deg, #ff6b35, #ff2e63); }
+  #nameSkip { background: #444; }
+  #nameOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0006;
+    z-index: 199;
+  }
+
+  /* Game Over overlay */
+  #gameOverOverlay {
+    position: fixed;
+    inset: 0;
+    background: #0009;
+    z-index: 150;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #gameOverOverlay h2 { font-size: 32px; color: #ff2e63; margin-bottom: 8px; }
+  #gameOverOverlay .final-score { font-size: 22px; color: #feca57; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:fixed;inset:0;touch-action:none;-webkit-user-select:none;user-select:none;overscroll-behavior:none;">
+  <h2>🐦 FLAPPY BIRD</h2>
+  <div class="mode-tag">Flap to survive!</div>
+
+  <div id="info">
+    <span>SCORE: <b id="score">0</b></span>
+    <span>BEST: <b id="best">0</b></span>
+  </div>
+
+  <canvas id="c" width="420" height="520" style="touch-action:none;"></canvas>
+
+  <div id="msg">กด SPACE หรือ TAP เพื่อบิน</div>
+
+  <div class="controls">
+    <button id="tapBtn">▲</button>
+    <button id="startBtn" style="margin-top:6px;">START ▶</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:8px;">
+    <button id="lbBtn" style="background:#0984e3;font-size:13px;padding:5px 14px;">🏆 Leaderboard</button>
+    <button id="muteBtn" style="background:#555;font-size:13px;padding:5px 14px;">🔊 Sound</button>
+  </div>
+  <div class="hint">SPACE / TAP / ↑↓ = บิน</div>
+
+  <div style="text-align:center;margin-top:10px;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;background:#1e3a5f;color:#a0aec0;padding:6px 14px;border-radius:20px;font-size:12px;text-decoration:none;border:1px solid #2a4a73;transition:all 0.2s;" onmouseover="this.style.borderColor='#ff6b35';this.style.color='#ff6b35'" onmouseout="this.style.borderColor='#2a4a73';this.style.color='#a0aec0'">← หน้ารวมเกม</a>
+  </div>
+</div>
+
+<div class="lb-overlay" id="lbOverlay"></div>
+<div id="lbPanel">
+  <h3>🏆 Leaderboard</h3>
+  <table id="lbTable"><tbody></tbody></table>
+  <button id="lbClose">ปิด</button>
+</div>
+
+<div id="nameOverlay"></div>
+<div id="nameModal">
+  <h3>💀 Game Over!</h3>
+  <p id="nameScoreText"></p>
+  <input id="playerNameInput" type="text" maxlength="16" placeholder="ใส่ชื่อของคุณ..." />
+  <div id="nameModalButtons">
+    <button id="nameSubmit">บันทึก</button>
+    <button id="nameSkip">ข้าม</button>
+  </div>
+</div>
+
+<script>
+// ─── AUDIO ENGINE ────────────────────────────────────────────────────────────
+let audioCtx = null;
+let muted = false;
+
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function playSFX(type) {
+  if (!audioCtx || muted) return;
+  const now = audioCtx.currentTime;
+  const g = audioCtx.createGain();
+  g.connect(audioCtx.destination);
+
+  if (type === 'flap') {
+    const osc = audioCtx.createOscillator();
+    osc.connect(g);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(520, now);
+    osc.frequency.exponentialRampToValueAtTime(720, now + 0.08);
+    g.gain.setValueAtTime(0.2, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    osc.start(now);
+    osc.stop(now + 0.12);
+  } else if (type === 'score') {
+    const osc = audioCtx.createOscillator();
+    osc.connect(g);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, now);
+    g.gain.setValueAtTime(0.2, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+    osc.start(now);
+    osc.stop(now + 0.2);
+  } else if (type === 'die') {
+    const osc = audioCtx.createOscillator();
+    osc.connect(g);
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(300, now);
+    osc.frequency.exponentialRampToValueAtTime(80, now + 0.4);
+    g.gain.setValueAtTime(0.3, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+    osc.start(now);
+    osc.stop(now + 0.5);
+  }
+}
+
+// ─── LEADERBOARD ─────────────────────────────────────────────────────────────
+const LB_KEY = 'flappyLB';
+function getLB() {
+  try { return JSON.parse(localStorage.getItem(LB_KEY) || '[]'); } catch { return []; }
+}
+function saveLB(score, name) {
+  const lb = getLB();
+  lb.push({ score, name: name || 'Anonymous', ts: Date.now() });
+  lb.sort((a, b) => b.score - a.score);
+  lb.splice(20);
+  localStorage.setItem(LB_KEY, JSON.stringify(lb));
+}
+function showLB() {
+  const lb = getLB();
+  const tbody = document.querySelector('#lbTable tbody');
+  tbody.innerHTML = '';
+  if (lb.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#666;padding:20px;">ยังไม่มีคะแนน</td></tr>';
+  } else {
+    lb.slice(0, 10).forEach((e, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td class="rank">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)}</td>
+        <td style="color:#fff;font-size:13px;">${e.name || 'Anonymous'}</td>
+        <td class="score">${e.score}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  document.getElementById('lbOverlay').style.display = 'block';
+  document.getElementById('lbPanel').style.display = 'block';
+}
+document.getElementById('lbBtn').addEventListener('click', showLB);
+document.getElementById('lbClose').addEventListener('click', () => {
+  document.getElementById('lbOverlay').style.display = 'none';
+  document.getElementById('lbPanel').style.display = 'none';
+});
+document.getElementById('lbOverlay').addEventListener('click', () => {
+  document.getElementById('lbOverlay').style.display = 'none';
+  document.getElementById('lbPanel').style.display = 'none';
+});
+
+// ─── NAME INPUT ───────────────────────────────────────────────────────────────
+document.getElementById('nameSubmit').addEventListener('click', () => {
+  const name = document.getElementById('playerNameInput').value.trim() || 'Anonymous';
+  saveLB(gameScore, name);
+  document.getElementById('nameModal').style.display = 'none';
+  document.getElementById('nameOverlay').style.display = 'none';
+  document.getElementById('playerNameInput').value = '';
+  showLB();
+});
+document.getElementById('nameSkip').addEventListener('click', () => {
+  saveLB(gameScore, 'Anonymous');
+  document.getElementById('nameModal').style.display = 'none';
+  document.getElementById('nameOverlay').style.display = 'none';
+  showLB();
+});
+
+// ─── GAME STATE ─────────────────────────────────────────────────────────────
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const bestEl = document.getElementById('best');
+const msgEl = document.getElementById('msg');
+const startBtn = document.getElementById('startBtn');
+const tapBtn = document.getElementById('tapBtn');
+const muteBtn = document.getElementById('muteBtn');
+
+let gameState = 'idle'; // idle | playing | dead
+let gameScore = 0;
+let best = parseInt(localStorage.getItem('flappyBest') || '0');
+bestEl.textContent = best;
+
+// Bird
+const GRAVITY = 0.45;
+const FLAP_STRENGTH = -7.5;
+let bird = { x: 80, y: 220, vy: 0, w: 34, h: 26, angle: 0 };
+
+// Pipes
+let pipes = [];
+const PIPE_WIDTH = 60;
+const PIPE_GAP = 160;
+let pipeTimer = 0;
+const PIPE_INTERVAL = 100;
+
+// Ground scroll
+let groundX = 0;
+const GROUND_SPEED = 2.5;
+const GROUND_Y = 480;
+
+// Cloud / bg
+let clouds = [];
+function initClouds() {
+  clouds = [];
+  for (let i = 0; i < 5; i++) {
+    clouds.push({
+      x: Math.random() * 420,
+      y: 30 + Math.random() * 150,
+      w: 40 + Math.random() * 60,
+      speed: 0.3 + Math.random() * 0.5
+    });
+  }
+}
+initClouds();
+
+function reset() {
+  bird.y = 220;
+  bird.vy = 0;
+  bird.angle = 0;
+  pipes = [];
+  pipeTimer = 0;
+  gameScore = 0;
+  scoreEl.textContent = 0;
+  groundX = 0;
+}
+
+function flap() {
+  initAudio();
+  bird.vy = FLAP_STRENGTH;
+  playSFX('flap');
+}
+
+function spawnPipe() {
+  const minTop = 80;
+  const maxTop = 300;
+  const top = minTop + Math.random() * (maxTop - minTop);
+  pipes.push({
+    x: 430,
+    topH: top,
+    botY: top + PIPE_GAP,
+    scored: false
+  });
+}
+
+// ─── DRAWING ─────────────────────────────────────────────────────────────────
+function drawBG() {
+  // Sky gradient
+  const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  grad.addColorStop(0, '#1e3a5f');
+  grad.addColorStop(1, '#0d1b2a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Clouds
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  clouds.forEach(c => {
+    ctx.beginPath();
+    ctx.ellipse(c.x, c.y, c.w / 2, c.w / 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
+function drawGround() {
+  // Ground strip
+  ctx.fillStyle = '#1a3a1a';
+  ctx.fillRect(0, GROUND_Y, canvas.width, canvas.height - GROUND_Y);
+
+  // Dashed center line (scrolling)
+  ctx.fillStyle = '#2d5a2d';
+  const dashW = 40;
+  const dashH = 4;
+  for (let x = (groundX % (dashW * 2)) - dashW * 2; x < canvas.width; x += dashW * 2) {
+    ctx.fillRect(x, GROUND_Y + 20, dashW, dashH);
+    ctx.fillRect(x, GROUND_Y + 36, dashW, dashH);
+  }
+
+  // Ground top edge
+  ctx.fillStyle = '#55efc4';
+  ctx.fillRect(0, GROUND_Y, canvas.width, 3);
+}
+
+function drawBird() {
+  ctx.save();
+  ctx.translate(bird.x + bird.w / 2, bird.y + bird.h / 2);
+  ctx.rotate(bird.angle);
+  ctx.translate(-bird.w / 2, -bird.h / 2);
+
+  // Body
+  ctx.fillStyle = '#feca57';
+  ctx.beginPath();
+  ctx.ellipse(bird.w / 2, bird.h / 2, bird.w / 2, bird.h / 2, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Wing
+  ctx.fillStyle = '#f9ca24';
+  ctx.beginPath();
+  ctx.ellipse(bird.w / 2 - 4, bird.h / 2 + 2, 10, 6, -0.3, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Eye
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.arc(bird.w / 2 + 6, bird.h / 2 - 4, 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#333';
+  ctx.beginPath();
+  ctx.arc(bird.w / 2 + 7, bird.h / 2 - 4, 2.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Beak
+  ctx.fillStyle = '#e17055';
+  ctx.beginPath();
+  ctx.moveTo(bird.w / 2 + 12, bird.h / 2);
+  ctx.lineTo(bird.w / 2 + 22, bird.h / 2 + 3);
+  ctx.lineTo(bird.w / 2 + 12, bird.h / 2 + 6);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawPipe(pipe) {
+  // Top pipe
+  const grad1 = ctx.createLinearGradient(pipe.x, 0, pipe.x + PIPE_WIDTH, 0);
+  grad1.addColorStop(0, '#00b894');
+  grad1.addColorStop(0.5, '#00cec9');
+  grad1.addColorStop(1, '#00b894');
+  ctx.fillStyle = grad1;
+  ctx.fillRect(pipe.x, 0, PIPE_WIDTH, pipe.topH);
+
+  // Top pipe cap
+  ctx.fillStyle = '#00cec9';
+  ctx.fillRect(pipe.x - 4, pipe.topH - 20, PIPE_WIDTH + 8, 20);
+
+  // Bottom pipe
+  const grad2 = ctx.createLinearGradient(pipe.x, 0, pipe.x + PIPE_WIDTH, 0);
+  grad2.addColorStop(0, '#00b894');
+  grad2.addColorStop(0.5, '#00cec9');
+  grad2.addColorStop(1, '#00b894');
+  ctx.fillStyle = grad2;
+  ctx.fillRect(pipe.x, pipe.botY, PIPE_WIDTH, canvas.height - pipe.botY);
+
+  // Bottom pipe cap
+  ctx.fillStyle = '#00cec9';
+  ctx.fillRect(pipe.x - 4, pipe.botY, PIPE_WIDTH + 8, 20);
+}
+
+function draw() {
+  drawBG();
+  pipes.forEach(drawPipe);
+  drawGround();
+  drawBird();
+
+  // Start screen hint
+  if (gameState === 'idle') {
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.font = '14px Segoe UI';
+    ctx.textAlign = 'center';
+    ctx.fillText('SPACE / TAP / ↑↓ = บิน', canvas.width / 2, canvas.height / 2 - 20);
+  }
+}
+
+// ─── GAME LOOP ────────────────────────────────────────────────────────────────
+let lastTime = 0;
+function loop(ts) {
+  const dt = Math.min((ts - lastTime) / 16.67, 3);
+  lastTime = ts;
+
+  if (gameState === 'playing') {
+    // Bird physics
+    bird.vy += GRAVITY * dt;
+    bird.y += bird.vy * dt;
+    bird.angle = Math.min(Math.max(bird.vy * 0.06, -0.6), 1.2);
+
+    // Clamp to top
+    if (bird.y < 0) { bird.y = 0; bird.vy = 0; }
+
+    // Scroll ground
+    groundX -= GROUND_SPEED * dt;
+
+    // Move clouds
+    clouds.forEach(c => {
+      c.x -= c.speed * dt;
+      if (c.x + c.w < 0) c.x = canvas.width + c.w;
+    });
+
+    // Spawn pipes
+    pipeTimer += dt;
+    if (pipeTimer >= PIPE_INTERVAL / 16.67) {
+      pipeTimer = 0;
+      spawnPipe();
+    }
+
+    // Move pipes
+    pipes.forEach(p => {
+      p.x -= GROUND_SPEED * dt;
+    });
+
+    // Remove off-screen pipes
+    pipes = pipes.filter(p => p.x + PIPE_WIDTH > -10);
+
+    // Collision detection
+    // Ground collision
+    if (bird.y + bird.h >= GROUND_Y) {
+      gameOver();
+      return;
+    }
+    // Pipe collision
+    pipes.forEach(p => {
+      if (bird.x + bird.w > p.x && bird.x < p.x + PIPE_WIDTH) {
+        if (bird.y < p.topH || bird.y + bird.h > p.botY) {
+          gameOver();
+          return;
+        }
+      }
+      // Score
+      if (!p.scored && p.x + PIPE_WIDTH < bird.x) {
+        p.scored = true;
+        gameScore++;
+        scoreEl.textContent = gameScore;
+        playSFX('score');
+      }
+    });
+
+    if (gameState !== 'playing') return; // game over called
+  }
+
+  draw();
+  requestAnimationFrame(loop);
+}
+
+function gameOver() {
+  gameState = 'dead';
+  playSFX('die');
+
+  if (gameScore > best) {
+    best = gameScore;
+    localStorage.setItem('flappyBest', best);
+    bestEl.textContent = best;
+  }
+
+  msgEl.textContent = `💀 คะแนน: ${gameScore}`;
+  startBtn.textContent = 'RETRY ▶';
+  startBtn.disabled = false;
+
+  document.getElementById('nameScoreText').textContent = `คะแนนของคุณ: ${gameScore}`;
+  document.getElementById('nameModal').style.display = 'block';
+  document.getElementById('nameOverlay').style.display = 'block';
+  document.getElementById('playerNameInput').focus();
+}
+
+function startGame() {
+  initAudio();
+  if (gameState === 'dead') reset();
+  gameState = 'playing';
+  msgEl.textContent = '';
+  startBtn.textContent = 'PLAYING...';
+  startBtn.disabled = true;
+  flap();
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown') {
+    e.preventDefault();
+    if (gameState === 'idle' || gameState === 'dead') {
+      if (gameState === 'dead' && document.getElementById('nameModal').style.display === 'none') {
+        startGame();
+      } else if (gameState === 'idle') {
+        startGame();
+      }
+    } else if (gameState === 'playing') {
+      flap();
+    }
+  }
+});
+
+canvas.addEventListener('click', () => {
+  initAudio();
+  if (gameState === 'idle') { startGame(); }
+  else if (gameState === 'playing') { flap(); }
+});
+
+tapBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  initAudio();
+  if (gameState === 'idle' || gameState === 'dead') {
+    if (gameState === 'dead' && document.getElementById('nameModal').style.display === 'none') {
+      startGame();
+    } else if (gameState === 'idle') {
+      startGame();
+    }
+  } else if (gameState === 'playing') {
+    flap();
+  }
+});
+
+// Touch on canvas (swipe)
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  initAudio();
+  if (gameState === 'idle') { startGame(); }
+  else if (gameState === 'playing') { flap(); }
+}, { passive: false });
+
+startBtn.addEventListener('click', () => {
+  if (startBtn.disabled) return;
+  if (gameState === 'idle' || gameState === 'dead') {
+    startGame();
+  }
+});
+
+muteBtn.addEventListener('click', () => {
+  initAudio();
+  muted = !muted;
+  muteBtn.textContent = muted ? '🔇 Sound' : '🔊 Sound';
+  muteBtn.style.background = muted ? '#7f1d1d' : '#555';
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+draw();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
