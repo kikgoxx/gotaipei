@@ -100,16 +100,16 @@ let best = parseInt(localStorage.getItem('flappyBest') || '0');
 bestEl.textContent = best;
 
 // Bird
-const G = 0.25;
-const FLAP = -5.5;
+const G = 0.12;
+const FLAP = -4;
 let bird = { x: 80, y: 220, vy: 0, w: 34, h: 26 };
 
 // Pipes
 let pipes = [];
 const PIPE_W = 60;
 const PIPE_GAP = 220;
-const PIPE_SPEED = 2;
-const PIPE_SPAWN = 200; // frames
+const PIPE_SPEED = 1.2;
+const PIPE_SPAWN = 320; // frames
 let pipeTimer = 0;
 
 // Ground
