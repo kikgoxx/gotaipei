@@ -324,6 +324,10 @@ document.getElementById('lbOverlay').addEventListener('click', () => {
   document.getElementById('lbOverlay').style.display = 'none';
   document.getElementById('lbPanel').style.display = 'none';
 });
+document.getElementById('nameOverlay').addEventListener('click', () => {
+  document.getElementById('nameModal').style.display = 'none';
+  document.getElementById('nameOverlay').style.display = 'none';
+});
 
 // ─── NAME INPUT ───────────────────────────────────────────────────────────────
 document.getElementById('nameSubmit').addEventListener('click', () => {
@@ -618,14 +622,37 @@ function gameOver() {
   startBtn.textContent = 'RETRY ▶';
   startBtn.disabled = false;
 
-  document.getElementById('nameScoreText').textContent = `คะแนนของคุณ: ${gameScore}`;
+  // Show game over overlay for retry without requiring name entry
+  document.getElementById('nameScoreText').textContent = `💀 คะแนน: ${gameScore}`;
+  document.getElementById('nameModal').querySelector('h3').textContent = '💀 Game Over!';
+  document.getElementById('nameSubmit').style.display = 'none';
+  document.getElementById('nameSkip').style.display = 'none';
+  document.getElementById('playerNameInput').style.display = 'none';
   document.getElementById('nameModal').style.display = 'block';
   document.getElementById('nameOverlay').style.display = 'block';
-  document.getElementById('playerNameInput').focus();
+
+  // Auto-close after 1.5s and show name entry
+  setTimeout(() => {
+    document.getElementById('nameModal').style.display = 'none';
+    document.getElementById('nameOverlay').style.display = 'none';
+    // Then show name entry after a brief pause
+    setTimeout(() => {
+      document.getElementById('nameScoreText').textContent = `คะแนนของคุณ: ${gameScore}`;
+      document.getElementById('nameModal').querySelector('h3').textContent = '💀 Game Over!';
+      document.getElementById('nameSubmit').style.display = '';
+      document.getElementById('nameSkip').style.display = '';
+      document.getElementById('playerNameInput').style.display = '';
+      document.getElementById('nameModal').style.display = 'block';
+      document.getElementById('nameOverlay').style.display = 'block';
+      document.getElementById('playerNameInput').focus();
+    }, 300);
+  }, 1500);
 }
 
 function startGame() {
   initAudio();
+  document.getElementById('nameModal').style.display = 'none';
+  document.getElementById('nameOverlay').style.display = 'none';
   if (gameState === 'dead') reset();
   gameState = 'playing';
   msgEl.textContent = '';
