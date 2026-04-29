@@ -190,7 +190,7 @@
 </style>
 </head>
 <body>
-<div id="gameWrap" style="overflow:hidden;position:fixed;inset:0;touch-action:none;-webkit-user-select:none;user-select:none;overscroll-behavior:none;">
+<div id="gameWrap" style="display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:fixed;inset:0;touch-action:none;-webkit-user-select:none;user-select:none;overscroll-behavior:none;">
 <h2>🚂 RAIL RUSH</h2>
 <div id="mode-tag">⚡ Challenge</div>
 
@@ -1174,7 +1174,8 @@ modeTimeAttackBtn.addEventListener('click', () => {
 });
 
 modeDiv.append(modeChallengeBtn, modeTimeAttackBtn, modeClassicBtn);
-document.body.insertBefore(modeDiv, canvas);
+const gameWrap = document.getElementById('gameWrap');
+gameWrap.insertBefore(modeDiv, document.getElementById('info'));
 
 // Touch / Swipe controls
 let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
