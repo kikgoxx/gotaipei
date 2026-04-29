@@ -602,7 +602,10 @@ function loop(ts) {
       }
     });
 
-    if (gameState !== 'playing') return; // game over called
+    if (gameState !== 'playing') {
+    draw();
+    requestAnimationFrame(loop);
+    return;
   }
 
   draw();
