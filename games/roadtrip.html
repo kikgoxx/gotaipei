@@ -209,7 +209,7 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
     </div>
   </div>
   <p class="travel-text" id="travel-dest"></p>
-  <button class="btn" id="travel-ready-btn" style="display:none;margin-top:16px;">รถมาถึงแล้ว!</button>
+  <button class="btn" id="travel-ready-btn" style="display:none;margin-top:16px;">ไปกันเถอะ!</button>
 </div>
 
 <!-- GAME SCREEN -->
@@ -272,7 +272,7 @@ const SHOP_ITEMS = [
   { icon: '🥧', name: 'พายสับปะรด', desc: 'ของฝากขึ้นชื่ออันดับ 1 ของไต้หวัน หอมและหวาน', link: 'https://www.gotaipei.net' },
   { icon: '🍦', name: 'ไอศกรีมหมี', desc: 'ไอศกรีมโฮมเมด หน้าตาน่ารัก', link: 'https://www.gotaipei.net' },
   { icon: '🥟', name: 'ซาลาเปาไส้', desc: 'ขนมจีนจีน หน้าต่างๆมีไส้ต่างกัน', link: 'https://www.gotaipei.net' },
-  { icon: '🍜', name: 'บะหมี่หยงซาน', desc: 'ร้านบะหมี่ดังในไทเป รอคิวเยอะ', link: 'https://www.gotaipei.net' },
+  { icon: '🍜', name: 'บะหมี่อาจง', desc: 'ร้านดังมากของซีเหมินติง รสชาติคล้ายกระเพาะปลา+ราดหน้า', link: 'https://www.gotaipei.net' },
   { icon: '🥮', name: 'เสี่ยวหลงเปา', desc: 'ของกินยอดฮิต อร่อยมากตอนทานร้อนๆ', link: 'https://www.gotaipei.net' },
   { icon: '🍪', name: 'แครกเกอร์นูกัส', desc: 'อร่อยจนต้องต่อคิว ของว่างยอดนิยม', link: 'https://www.gotaipei.net' },
   { icon: '🍯', name: 'นูกัส', desc: 'ขนมเหนียวหนึบ มีรสหอมของนม ยอดฮิดในไต้หวัน', link: 'https://www.gotaipei.net' },
@@ -342,7 +342,7 @@ function selectLocation(idx) {
 
 function startTravel(loc) {
   showScreen('travel-screen');
-  document.getElementById('travel-dest').innerHTML = '<span style="font-size:1.2rem;">🚐 รถกำลังไปรับคุณที่ <strong>' + loc.nameTH + '</strong></span><span style="display:block;font-size:0.9rem;color:#888;margin-top:8px;">พบกันที่จุดนัดพบนะครับ! ✨</span>';
+  document.getElementById('travel-dest').innerHTML = '<span style="font-size:1.2rem;">🚐 เดินทางไป <strong>' + loc.nameTH + '</strong></span><span style="display:block;font-size:0.9rem;color:#888;margin-top:8px;">เดินทางประมาณ 50 นาทีนะครับ! ✨</span>';
   document.getElementById('travel-ready-btn').style.display = 'none';
   const van = document.getElementById('travel-van');
   van.style.transition = 'none';
