@@ -639,7 +639,6 @@ function gameOver() {
 
 function startGame() {
   initAudio();
-  gameOverPending = false;
   document.getElementById('nameModal').style.display = 'none';
   document.getElementById('nameOverlay').style.display = 'none';
   if (gameState === 'dead') reset();
