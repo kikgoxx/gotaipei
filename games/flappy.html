@@ -622,11 +622,9 @@ function gameOver() {
   startBtn.textContent = 'RETRY ▶';
   startBtn.disabled = false;
 
-  // Name entry modal ONLY if user doesn't retry within 2 seconds
-  let nameShown = false;
-  const nameTimer = setTimeout(() => {
-    if (gameState === 'dead' && !nameShown) {
-      nameShown = true;
+  // Auto show name modal after 2 seconds if no retry
+  setTimeout(() => {
+    if (gameState === 'dead') {
       document.getElementById('nameScoreText').textContent = `คะแนนของคุณ: ${gameScore}`;
       document.getElementById('nameModal').querySelector('h3').textContent = '💀 Game Over!';
       document.getElementById('nameSubmit').style.display = '';
@@ -637,23 +635,6 @@ function gameOver() {
       document.getElementById('playerNameInput').focus();
     }
   }, 2000);
-
-  // Cancel timer if user successfully retries
-  const originalStartGame = startGame;
-  startGame = function() {
-    clearTimeout(nameTimer);
-    nameShown = true;
-    document.getElementById('nameModal').style.display = 'none';
-    document.getElementById('nameOverlay').style.display = 'none';
-    initAudio();
-    if (gameState === 'dead') reset();
-    gameState = 'playing';
-    msgEl.textContent = '';
-    startBtn.textContent = 'PLAYING...';
-    startBtn.disabled = true;
-    flap();
-    startGame = originalStartGame;
-  };
 }
 
 function startGame() {
