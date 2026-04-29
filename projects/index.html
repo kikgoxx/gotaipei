@@ -113,6 +113,40 @@
     color: #4a6a8a;
   }
 
+  .card-todos {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: #0d1b2a44;
+    border-radius: 10px;
+    border-left: 3px solid #ff6b35;
+  }
+  .todos-label {
+    font-size: 10px;
+    color: #ff6b35;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .todos-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .todos-list li {
+    font-size: 12px;
+    color: #8ab4d4;
+    padding: 2px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .todos-list li::before {
+    content: '▸';
+    color: #ff6b3588;
+    font-size: 10px;
+  }
+
   .footer {
     text-align: center;
     margin-top: 40px;
@@ -149,6 +183,14 @@
       <div class="progress-bar">
         <div class="progress-fill fill-active" style="width:80%"></div>
       </div>
+    </div>
+    <div class="card-todos">
+      <div class="todos-label">สิ่งที่จะทำ</div>
+      <ul class="todos-list">
+        <li>เพิ่มโหมด PvP สู้กับเพื่อน</li>
+        <li>ระบบ achievement ลุ้นของรางวัล</li>
+        <li>ระบบ tournaments รายสัปดาห์</li>
+      </ul>
     </div>
     <div class="card-desc">เกมบนเว็บสะสมแต้มแลกของรางวัล<br>Train Snake — เสร็จแล้ว!</div>
     <div class="card-stats">
@@ -189,6 +231,14 @@
         <div class="progress-fill fill-wip" style="width:40%"></div>
       </div>
     </div>
+    <div class="card-todos">
+      <div class="todos-label">สิ่งที่จะทำ</div>
+      <ul class="todos-list">
+        <li>เพิ่มรูปภาพและรายละเอียดแต่ละสถานที่</li>
+        <li>ระบบจองตั๋วออนไลน์</li>
+        <li>ระบบ review และ rating</li>
+      </ul>
+    </div>
     <div class="card-desc">เว็บรวบรวมสถานที่ท่องเที่ยวในไต้หวัน<br>ออกแบบ UI เบื้องต้นแล้ว</div>
     <div class="card-stats">
       <div class="stat-item">
@@ -228,6 +278,14 @@
         <div class="progress-fill fill-active" style="width:70%"></div>
       </div>
     </div>
+    <div class="card-todos">
+      <div class="todos-label">สิ่งที่จะทำ</div>
+      <ul class="todos-list">
+        <li>เพิ่ม indicator เช่น RSI, MACD</li>
+        <li>ระบบ alert ผ่าน LINE Notify</li>
+        <li>Backtest ดูผลย้อนหลัง</li>
+      </ul>
+    </div>
     <div class="card-desc">ระบบเทรดอัตโนมัติ ดูพอร์ตแบบ real-time<br>กำลังเชื่อมต่อ exchange</div>
     <div class="card-stats">
       <div class="stat-item">
@@ -266,6 +324,14 @@
       <div class="progress-bar">
         <div class="progress-fill fill-ideas" style="width:10%"></div>
       </div>
+    </div>
+    <div class="card-todos">
+      <div class="todos-label">สิ่งที่จะทำ</div>
+      <ul class="todos-list">
+        <li>จัดหมวดหมู่ snippet ตามภาษา</li>
+        <li>ระบบ search หาโค้ดที่ต้องการ</li>
+        <li>เพิ่มบทเรียน JavaScript เบื้องต้น</li>
+      </ul>
     </div>
     <div class="card-desc">บันทึกบทเรียนการเขียนโค้ดของคุณหนุ่ม<br>สะสมเทคนิคและ snippet ต่างๆ</div>
     <div class="card-stats">
