@@ -103,6 +103,7 @@ bestEl.textContent = best;
 const G = 0.12;
 const FLAP = -1.8;
 let bird = { x: 80, y: 220, vy: 0, w: 34, h: 26 };
+let wingFlap = 0; // wing animation
 
 // Pipes
 let pipes = [];
@@ -233,6 +234,7 @@ function reset() {
 function flap() {
   initAudio();
   bird.vy = FLAP;
+  wingFlap = 0; // reset to full flap animation
   play('flap');
 }
 
@@ -271,24 +273,41 @@ function drawGround() {
 }
 
 function drawBird() {
+  const cx = bird.x + bird.w / 2;
+  const cy = bird.y + bird.h / 2;
+
+  // Body
   ctx.fillStyle = '#feca57';
   ctx.beginPath();
-  ctx.ellipse(bird.x + bird.w / 2, bird.y + bird.h / 2, bird.w / 2, bird.h / 2, 0, 0, Math.PI * 2);
+  ctx.ellipse(cx, cy, bird.w / 2, bird.h / 2, 0, 0, Math.PI * 2);
   ctx.fill();
+
+  // Wing flap animation
+  const flapPhase = Math.sin(wingFlap * 0.5) * 0.6;
+  const wingY = cy + Math.sin(flapPhase) * 6;
+  ctx.fillStyle = '#f9ca24';
+  ctx.beginPath();
+  ctx.ellipse(cx - 4, wingY + 2, 12, 7, flapPhase * 0.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Beak
   ctx.fillStyle = '#e17055';
   ctx.beginPath();
-  ctx.moveTo(bird.x + bird.w / 2 + 10, bird.y + bird.h / 2 + 2);
-  ctx.lineTo(bird.x + bird.w / 2 + 22, bird.y + bird.h / 2 + 5);
-  ctx.lineTo(bird.x + bird.w / 2 + 10, bird.y + bird.h / 2 + 8);
+  ctx.moveTo(cx + 10, cy + 2);
+  ctx.lineTo(cx + 22, cy + 5);
+  ctx.lineTo(cx + 10, cy + 8);
   ctx.closePath();
   ctx.fill();
+
+  // Eye white
   ctx.fillStyle = '#fff';
   ctx.beginPath();
-  ctx.arc(bird.x + bird.w / 2 + 8, bird.y + bird.h / 2 - 3, 4, 0, Math.PI * 2);
+  ctx.arc(cx + 8, cy - 3, 4, 0, Math.PI * 2);
   ctx.fill();
+  // Eye pupil
   ctx.fillStyle = '#333';
   ctx.beginPath();
-  ctx.arc(bird.x + bird.w / 2 + 9, bird.y + bird.h / 2 - 3, 2, 0, Math.PI * 2);
+  ctx.arc(cx + 9, cy - 3, 2, 0, Math.PI * 2);
   ctx.fill();
 }
 
@@ -340,7 +359,7 @@ function startGame() {
     bird.y = 220; bird.vy = 0;
     pipes = []; pipeTimer = 0;
     score = 0; scoreEl.textContent = 0;
-    groundX = 0;
+    groundX = 0; wingFlap = 0;
   }
   state = 'playing';
   msgEl.textContent = '';
@@ -390,6 +409,8 @@ function loop() {
 
   bird.vy += G;
   bird.y += bird.vy;
+  wingFlap++;
+  if (wingFlap > 20) wingFlap = 0;
   groundX -= PIPE_SPEED;
   clouds.forEach(c => { c.x -= c.speed; if (c.x + c.w < 0) c.x = canvas.width + c.w; });
   pipeTimer++;
