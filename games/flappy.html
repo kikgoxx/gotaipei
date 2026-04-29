@@ -336,7 +336,12 @@ function startGame() {
   initAudio();
   document.getElementById('modal').style.display = 'none';
   document.getElementById('modalOverlay').style.display = 'none';
-  if (state === 'dead') reset();
+  if (state === 'dead') {
+    bird.y = 220; bird.vy = 0;
+    pipes = []; pipeTimer = 0;
+    score = 0; scoreEl.textContent = 0;
+    groundX = 0;
+  }
   state = 'playing';
   msgEl.textContent = '';
   startBtn.textContent = 'PLAYING...';
