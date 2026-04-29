@@ -21,11 +21,8 @@
   .log-date { color: #666; font-size: 12px; }
   .log-text { color: #ccc; font-size: 13px; margin-top: 2px; }
   .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-  .badge-active { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
   .badge-wip { background: linear-gradient(135deg, #feca57, #ff6b35); color: #fff; }
-  .done { color: #00b894; }
-  .pending { color: #feca57; }
-  .note { color: #74b9ff; font-size: 12px; margin-top: 4px; display: block; }
+  .badge-done { background: linear-gradient(135deg, #4ade80, #22c55e); color: #fff; }
 </style>
 </head>
 <body>
@@ -34,88 +31,77 @@
 
   <div class="emoji-big">📈</div>
   <h1>Trading Bot</h1>
-  <p style="color:#555; font-size:13px; margin-top:4px;">By Ada 🐰 — AI Assistant</p>
 
   <div class="section">
     <div class="section-title">📌 ภาพรวม</div>
     <table>
-      <tr><td>สถานะ</td><td><span class="badge badge-active">Active</span> — รันทุก 1 ชั่วโมง</td></tr>
-      <tr><td>เป้าหมาย</td><td>Monitor + Alert สำหรับ BTC/USDT, ETH/USDT และ XAU/USDT (ทองคำ)</td></tr>
-      <tr><td>Exchange</td><td>Binance Public API</td></tr>
-      <tr><td>Timeframe</td><td>1H (1 ชั่วโมง)</td></tr>
-      <tr><td>Delivery</td><td>Telegram Group: Trading Bot</td></tr>
-      <tr><td>Script</td><td>trading-monitor/fetch-prices.js</td></tr>
-      <tr><td>Schedule</td><td>Windows Task Scheduler — ทุก 1 ชม.</td></tr>
-    </table>
-  </div>
-
-  <div class="section">
-    <div class="section-title">✅ ที่เสร็จแล้ว</div>
-    <div class="log-entry">
-      <div class="log-date">28/04/2026 — 14:00</div>
-      <div class="log-text"><span class="done">✓</span> เปลี่ยนจาก CoinGecko มาใช้ Binance Public API — data แม่นกว่า, rate limit สูงกว่า (1200 req/min)</div>
-    </div>
-    <div class="log-entry">
-      <div class="log-date">28/04/2026 — เช้า</div>
-      <div class="log-text"><span class="done">✓</span> Monitor BTC + ETH + XAU (ทอง) ทุก 1 ชั่วโมง ผ่าน Windows Task Scheduler</div>
-    </div>
-    <div class="log-entry">
-      <div class="log-date">28/04/2026 — เช้า</div>
-      <div class="log-text"><span class="done">✓</span> วิเคราะห์ RSI, MACD, EMA 50/200, Bollinger Bands, ADX, Support/Resistance, Volume</div>
-    </div>
-    <div class="log-entry">
-      <div class="log-date">28/04/2026 — เช้า</div>
-      <div class="log-text"><span class="done">✓</span> Alert เมื่อ RSI Overbought/Oversold, MACD Crossover, Volume ผิดปกติ</div>
-    </div>
-    <div class="log-entry">
-      <div class="log-date">28/04/2026 — เช้า</div>
-      <div class="log-text"><span class="done">✓</span> Telegram notify — ส่งมาที่ Trading Bot group อัตโนมัติ</div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">🔜 สิ่งที่จะทำ</div>
-    <div class="log-entry"><span class="pending">☐</span> ดู Open Positions (Futures) — รอเปิด Futures API permission บน Binance</div>
-    <div class="log-entry"><span class="pending">☐</span> รองรับ timeframe หลายแบบ (4H, 15m, 1D)</div>
-    <div class="log-entry"><span class="pending">☐</span> Backtest กลยุทธ์</div>
-    <div class="log-entry"><span class="pending">☐</span> Dashboard แสดงผลบนเว็บ</div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">📊 Indicators ที่ใช้</div>
-    <table>
-      <tr><td>RSI 14</td><td>Overbought >70 / Oversold &lt;30</td></tr>
-      <tr><td>MACD</td><td>Golden Cross / Death Cross detection</td></tr>
-      <tr><td>Bollinger Bands</td><td>Upper/Middle/Lower band + %B position</td></tr>
-      <tr><td>ADX</td><td>Trend strength (>25 = trending, >40 = strong)</td></tr>
-      <tr><td>EMA</td><td>EMA 50 vs EMA 200 (trend direction)</td></tr>
-      <tr><td>Support/Resistance</td><td>30-period high/low</td></tr>
-      <tr><td>Volume</td><td>Alert ถ้า volume > 1.5x หรือ < 0.5x เทียบ avg 14 วัน</td></tr>
+      <tr><td>สถานะ</td><td><span class="badge badge-done">Active v2</span></td></tr>
+      <tr><td>เป้าหมาย</td><td>ระบบเทรดอัตโนมัติ ดูพอร์ตแบบ real-time</td></tr>
+      <tr><td>Timeframe</td><td>1 ชม. (hourly candle)</td></tr>
+      <tr><td>Alert Logic</td><td>RSI &lt; 30 + Vol 1.5x (LONG) / RSI &gt; 70 + Vol 1.5x (SHORT)</td></tr>
     </table>
   </div>
 
   <div class="section">
     <div class="section-title">📝 Discussion Log</div>
     <div class="log-entry">
-      <div class="log-date">28/04/2026 — 17:10</div>
-      <div class="log-text">เพิ่ม Bollinger Bands (BB) + ADX indicators สำหรับทุกเหรียญ</div>
+      <div class="log-date">25/04/2026</div>
+      <div class="log-text">เริ่มโปรเจค — คุณหนุ่มสนใจระบบเทรดอัตโนมัติ</div>
     </div>
     <div class="log-entry">
-      <div class="log-date">28/04/2026 — 15:20</div>
-      <div class="log-text">เพิ่ม XAU/USDT (ทองคำ) จาก Binance Futures + แก้ Telegram HTML parse issue</div>
+      <div class="log-date">29/04/2026</div>
+      <div class="log-text">Backtest v1: RSI &lt; 30 ให้ผลดีที่สุด +17.55% (WinRate 76.9%)</div>
     </div>
     <div class="log-entry">
-      <div class="log-date">28/04/2026 — 14:30</div>
-      <div class="log-text">สร้าง dashboard บน kikgoxx.github.io/gotaipei/projects สำหรับติดตามความคืบหน้า</div>
+      <div class="log-date">29/04/2026</div>
+      <div class="log-text">Backtest v3: RSI + TP5% = +24.34% (WinRate 100%)</div>
     </div>
     <div class="log-entry">
-      <div class="log-date">28/04/2026 — 14:00</div>
-      <div class="log-text">Monitor ทำงานทุกชั่วโมงแล้ว — RSI, MACD, EMA, Support/Resistance, Volume</div>
+      <div class="log-date">29/04/2026</div>
+      <div class="log-text">Backtest v4 (DCA): DCA 2x 50/50 TP7% = +30.83% (ขึ้นกว่า NoDCA เกือบ 2 เท่า)</div>
     </div>
     <div class="log-entry">
-      <div class="log-date">28/04/2026 — เช้า</div>
-      <div class="log-text">เริ่มโปรเจค — ตั้ง monitor สำหรับ BTC + ETH บน Binance</div>
+      <div class="log-date">29/04/2026</div>
+      <div class="log-text">อัพเกรด Monitor v2: รันทุก 5 นาที + alert RSI &lt; 30 + Vol (LONG) / RSI &gt; 70 + Vol (SHORT) + cooldown 30 นาที + normal update ทุก 2 ชม.</div>
     </div>
+    <div class="log-entry">
+      <div class="log-date">29/04/2026</div>
+      <div class="log-text">MACD ไม่จำเป็นสำหรับ Entry แต่ใช้เป็น Exit signal ได้ (MACD Death Cross = ยืนยันออก)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📊 Backtest Results (1h TF, BTC+ETH, 2000 candles)</div>
+    <table>
+      <tr><td>Best LONG</td><td style="color:#4ade80;">RSI &lt; 30 + TP5% → +24.34% (WinRate 100%)</td></tr>
+      <tr><td>Best DCA</td><td style="color:#4ade80;">DCA 2x 50/50 TP7% → +30.83% (ETH)</td></tr>
+      <tr><td>Best SHORT</td><td style="color:#f87171;">RSI &gt; 70 + Vol 1.5x → +7.52%</td></tr>
+      <tr><td>Best ADX combo</td><td style="color:#fbbf24;">ADX&gt;25 + RSI&lt;40 + Vol → +12.26%</td></tr>
+      <tr><td>MACD alone</td><td style="color:#f87171;">❌ -6.93% ถึง -16.19% (ห้ามใช้อย่างเดียว)</td></tr>
+      <tr><td>Entry indicator แนะนำ</td><td>RSI + Volume (MACD เป็น exit เท่านั้น)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🔜 สิ่งที่จะทำ</div>
+    <div class="log-entry"><span style="color:#4ade80;">☑</span> เชื่อมต่อ exchange API</div>
+    <div class="log-entry"><span style="color:#4ade80;">☑</span> ระบบ Alert (RSI + Volume)</div>
+    <div class="log-entry"><span style="color:#4ade80;">☑</span> Backtest กลยุทธ์</div>
+    <div class="log-entry"><span style="color:#4ade80;">☑</span> Monitor v2: 5-min loop + cooldown + 2hr normal update</div>
+    <div class="log-entry"><span style="color:#feca57;">☐</span> ดู P&L แบบ real-time</div>
+    <div class="log-entry"><span style="color:#feca57;">☐</span> ระบบ DCA จริง (auto-trading)</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📁 ไฟล์สคริปต์</div>
+    <table>
+      <tr><td>Monitor v1</td><td>trading-monitor/fetch-prices.js (hourly, basic)</td></tr>
+      <tr><td>Monitor v2</td><td>trading-monitor/trading-monitor-v2.js (5-min loop + alert + cooldown)</td></tr>
+      <tr><td>Backtest v1</td><td>trading-monitor/backtest.js</td></tr>
+      <tr><td>Backtest v2</td><td>trading-monitor/backtest-v2.js (LONG/SHORT)</td></tr>
+      <tr><td>Backtest v3</td><td>trading-monitor/backtest-v3.js (all indicators + TP/SL)</td></tr>
+      <tr><td>Backtest v4</td><td>trading-monitor/backtest-v4.js (DCA strategy)</td></tr>
+    </table>
   </div>
 </div>
 </body>
