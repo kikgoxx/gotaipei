@@ -49,9 +49,15 @@
     box-shadow: 0 8px 25px #0005;
     border-color: #ff6b35;
   }
-  .card-icon { font-size: 40px; margin-bottom: 12px; }
-  .card-title { font-size: 18px; font-weight: bold; margin-bottom: 6px; }
-  .card-desc { color: #aaa; font-size: 13px; line-height: 1.5; margin-bottom: 12px; }
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .card-icon { font-size: 36px; }
+  .card-titles { flex: 1; }
+  .card-title { font-size: 18px; font-weight: bold; margin-bottom: 4px; }
   .card-status {
     display: inline-block;
     padding: 3px 10px;
@@ -62,6 +68,51 @@
   .status-active { background: linear-gradient(135deg, #00b894, #00cec9); color: #fff; }
   .status-wip { background: linear-gradient(135deg, #feca57, #ff6b35); color: #fff; }
   .status-ideas { background: linear-gradient(135deg, #636e72, #b2bec3); color: #fff; }
+
+  .progress-wrap { margin-bottom: 12px; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #7a9cc0;
+    margin-bottom: 5px;
+  }
+  .progress-bar {
+    height: 6px;
+    background: #0d1b2a;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.4s ease;
+  }
+  .fill-active { background: linear-gradient(90deg, #00b894, #00cec9); }
+  .fill-wip { background: linear-gradient(90deg, #feca57, #ff6b35); }
+  .fill-ideas { background: linear-gradient(90deg, #636e72, #b2bec3); }
+
+  .card-desc { color: #aaa; font-size: 13px; line-height: 1.5; margin-bottom: 14px; }
+
+  .card-stats {
+    display: flex;
+    gap: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #ffffff0d;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 2px; }
+  .stat-label { font-size: 10px; color: #5a7a9a; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-value { font-size: 14px; font-weight: 600; color: #c8dff5; }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    font-size: 11px;
+    color: #4a6a8a;
+  }
+
   .footer {
     text-align: center;
     margin-top: 40px;
@@ -80,33 +131,163 @@
 <p class="subtitle">สถานะโปรเจคทั้งหมด — อัปเดต 28/04/2026</p>
 
 <div class="grid">
+
+  <!-- Gaming -->
   <a class="card" href="gaming.html">
-    <div class="card-icon">🎮</div>
-    <div class="card-title">Gaming</div>
+    <div class="card-top">
+      <div class="card-icon">🎮</div>
+      <div class="card-titles">
+        <div class="card-title">Gaming</div>
+        <span class="card-status status-active">Active</span>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>ความคืบหน้า</span>
+        <span>80%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill fill-active" style="width:80%"></div>
+      </div>
+    </div>
     <div class="card-desc">เกมบนเว็บสะสมแต้มแลกของรางวัล<br>Train Snake — เสร็จแล้ว!</div>
-    <span class="card-status status-active">Active</span>
+    <div class="card-stats">
+      <div class="stat-item">
+        <span class="stat-label">โหมดเล่น</span>
+        <span class="stat-value">3 โหมด</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Themes</span>
+        <span class="stat-value">5 ธีม</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Power-ups</span>
+        <span class="stat-value">3 ชนิด</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span>🔄 อัปเดต 28/04</span>
+      <span>ดูรายละเอียด →</span>
+    </div>
   </a>
 
+  <!-- Go Taipei -->
   <a class="card" href="gotaipei.html">
-    <div class="card-icon">🌐</div>
-    <div class="card-title">Go Taipei</div>
-    <div class="card-desc">เว็บไซต์รวบรวมสถานที่ท่องเที่ยวในไทเป<br>รอปรับปรุงต่อ</div>
-    <span class="card-status status-wip">In Progress</span>
+    <div class="card-top">
+      <div class="card-icon">🌐</div>
+      <div class="card-titles">
+        <div class="card-title">Go Taipei</div>
+        <span class="card-status status-wip">In Progress</span>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>ความคืบหน้า</span>
+        <span>40%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill fill-wip" style="width:40%"></div>
+      </div>
+    </div>
+    <div class="card-desc">เว็บรวบรวมสถานที่ท่องเที่ยวในไต้หวัน<br>ออกแบบ UI เบื้องต้นแล้ว</div>
+    <div class="card-stats">
+      <div class="stat-item">
+        <span class="stat-label">ทัวร์</span>
+        <span class="stat-value">6 ทัวร์</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">ยานพาหนะ</span>
+        <span class="stat-value">4 ประเภท</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">สถานะ</span>
+        <span class="stat-value">Design</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span>🔄 อัปเดต 25/04</span>
+      <span>ดูรายละเอียด →</span>
+    </div>
   </a>
 
+  <!-- Trading Bot -->
   <a class="card" href="trading-bot.html">
-    <div class="card-icon">📈</div>
-    <div class="card-title">Trading Bot</div>
+    <div class="card-top">
+      <div class="card-icon">📈</div>
+      <div class="card-titles">
+        <div class="card-title">Trading Bot</div>
+        <span class="card-status status-active">Active</span>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>ความคืบหน้า</span>
+        <span>70%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill fill-active" style="width:70%"></div>
+      </div>
+    </div>
     <div class="card-desc">ระบบเทรดอัตโนมัติ ดูพอร์ตแบบ real-time<br>กำลังเชื่อมต่อ exchange</div>
-    <span class="card-status status-wip">In Progress</span>
+    <div class="card-stats">
+      <div class="stat-item">
+        <span class="stat-label">BTC/USDT</span>
+        <span class="stat-value">Monitor</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">ETH/USDT</span>
+        <span class="stat-value">Monitor</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">XAU/USDT</span>
+        <span class="stat-value">Monitor</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span>🔄 อัปเดต 28/04</span>
+      <span>ดูรายละเอียด →</span>
+    </div>
   </a>
 
+  <!-- Coding Lessons -->
   <a class="card" href="coding-lessons.html">
-    <div class="card-icon">📚</div>
-    <div class="card-title">Coding Lessons</div>
+    <div class="card-top">
+      <div class="card-icon">📚</div>
+      <div class="card-titles">
+        <div class="card-title">Coding Lessons</div>
+        <span class="card-status status-ideas">Ideas</span>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>ความคืบหน้า</span>
+        <span>10%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill fill-ideas" style="width:10%"></div>
+      </div>
+    </div>
     <div class="card-desc">บันทึกบทเรียนการเขียนโค้ดของคุณหนุ่ม<br>สะสมเทคนิคและ snippet ต่างๆ</div>
-    <span class="card-status status-ideas">Ideas</span>
+    <div class="card-stats">
+      <div class="stat-item">
+        <span class="stat-label">บทเรียน</span>
+        <span class="stat-value">0 บท</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Snippet</span>
+        <span class="stat-value">0 ชิ้น</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">สถานะ</span>
+        <span class="stat-value">รอเริ่ม</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span>🔄 อัปเดต 28/04</span>
+      <span>ดูรายละเอียด →</span>
+    </div>
   </a>
+
 </div>
 
 <div class="footer">
