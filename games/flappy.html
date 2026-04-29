@@ -356,6 +356,7 @@ const tapBtn = document.getElementById('tapBtn');
 const muteBtn = document.getElementById('muteBtn');
 
 let gameState = 'idle'; // idle | playing | dead
+let gameOverPending = false;
 let gameScore = 0;
 let best = parseInt(localStorage.getItem('flappyBest') || '0');
 bestEl.textContent = best;
@@ -621,36 +622,24 @@ function gameOver() {
   msgEl.textContent = `💀 คะแนน: ${gameScore}`;
   startBtn.textContent = 'RETRY ▶';
   startBtn.disabled = false;
+  gameOverPending = true;
 
-  // Show game over overlay for retry without requiring name entry
-  document.getElementById('nameScoreText').textContent = `💀 คะแนน: ${gameScore}`;
-  document.getElementById('nameModal').querySelector('h3').textContent = '💀 Game Over!';
-  document.getElementById('nameSubmit').style.display = 'none';
-  document.getElementById('nameSkip').style.display = 'none';
-  document.getElementById('playerNameInput').style.display = 'none';
-  document.getElementById('nameModal').style.display = 'block';
-  document.getElementById('nameOverlay').style.display = 'block';
-
-  // Auto-close after 1.5s and show name entry
+  // Show name entry modal after a short delay
   setTimeout(() => {
-    document.getElementById('nameModal').style.display = 'none';
-    document.getElementById('nameOverlay').style.display = 'none';
-    // Then show name entry after a brief pause
-    setTimeout(() => {
-      document.getElementById('nameScoreText').textContent = `คะแนนของคุณ: ${gameScore}`;
-      document.getElementById('nameModal').querySelector('h3').textContent = '💀 Game Over!';
-      document.getElementById('nameSubmit').style.display = '';
-      document.getElementById('nameSkip').style.display = '';
-      document.getElementById('playerNameInput').style.display = '';
-      document.getElementById('nameModal').style.display = 'block';
-      document.getElementById('nameOverlay').style.display = 'block';
-      document.getElementById('playerNameInput').focus();
-    }, 300);
-  }, 1500);
+    document.getElementById('nameScoreText').textContent = `คะแนนของคุณ: ${gameScore}`;
+    document.getElementById('nameModal').querySelector('h3').textContent = '💀 Game Over!';
+    document.getElementById('nameSubmit').style.display = '';
+    document.getElementById('nameSkip').style.display = '';
+    document.getElementById('playerNameInput').style.display = '';
+    document.getElementById('nameModal').style.display = 'block';
+    document.getElementById('nameOverlay').style.display = 'block';
+    document.getElementById('playerNameInput').focus();
+  }, 800);
 }
 
 function startGame() {
   initAudio();
+  gameOverPending = false;
   document.getElementById('nameModal').style.display = 'none';
   document.getElementById('nameOverlay').style.display = 'none';
   if (gameState === 'dead') reset();
