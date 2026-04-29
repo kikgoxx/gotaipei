@@ -282,16 +282,27 @@ function drawBird() {
   ctx.ellipse(cx, cy, bird.w / 2, bird.h / 2, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  // Wing flap animation - larger wing on top of body
-  const flapOffset = Math.abs(Math.sin(wingFlap * 0.4)) * 10;
+  // Wing - elongated bird wing
+  const flapOffset = Math.abs(Math.sin(wingFlap * 0.4)) * 8;
   ctx.fillStyle = '#f9ca24';
   ctx.beginPath();
-  ctx.ellipse(cx - 2, cy - flapOffset, 14, 9, -0.4, 0, Math.PI * 2);
+  ctx.ellipse(cx - 8, cy - flapOffset, 10, 4, -0.8, 0, Math.PI * 2);
   ctx.fill();
-  // Wing highlight
-  ctx.fillStyle = '#ffe066';
+
+  // Tail feathers
+  ctx.fillStyle = '#f9ca24';
   ctx.beginPath();
-  ctx.ellipse(cx - 2, cy - flapOffset, 8, 5, -0.4, 0, Math.PI * 2);
+  ctx.moveTo(cx - bird.w / 2 + 2, cy - 3);
+  ctx.lineTo(cx - bird.w / 2 - 10, cy - 8);
+  ctx.lineTo(cx - bird.w / 2 - 8, cy + 2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#e17055';
+  ctx.beginPath();
+  ctx.moveTo(cx - bird.w / 2 + 2, cy + 3);
+  ctx.lineTo(cx - bird.w / 2 - 10, cy + 8);
+  ctx.lineTo(cx - bird.w / 2 - 8, cy + 2);
+  ctx.closePath();
   ctx.fill();
 
   // Beak
