@@ -161,7 +161,6 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
     <p style="font-size:0.9rem;color:#888;margin-bottom:12px;">เลือกระดับความยาก:</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
       <button class="btn-diff" data-diff="easy" onclick="selectDifficulty('easy')">🌱 Easy</button>
-      <button class="btn-diff" data-diff="normal" onclick="selectDifficulty('normal')">⚡ Normal</button>
       <button class="btn-diff" data-diff="hard" onclick="selectDifficulty('hard')">🔥 Hard</button>
     </div>
   </div>
@@ -218,24 +217,23 @@ var LOCATIONS = [
 ];
 
 var SHOP_ITEMS = [
-  { icon: '🧋', name: 'ชาไข่มุก', desc: 'เครื่องดื่มยอดฮิตของไต้หวัน เนื้อนุ่มหนึบ', link: 'https://www.gotaipei.net' },
-  { icon: '🍗', name: 'ไก่ทอดไต้หวัน', desc: 'เนื้อไก่ทอดชิ้นใหญ่ ผงโรยสูตรพิเศษ กรอบนอกนุ่มใน', link: 'https://www.gotaipei.net' },
-  { icon: '🥧', name: 'พายสับปะรด', desc: 'ของฝากขึ้นชื่ออันดับ 1 ของไต้หวัน หอมและหวาน', link: 'https://www.gotaipei.net' },
-  { icon: '🍦', name: 'ไอศกรีมหมี', desc: 'ไอศกรีมโฮมเมด หน้าตาน่ารัก', link: 'https://www.gotaipei.net' },
-  { icon: '🥟', name: 'ซาลาเปาไส้', desc: 'ขนมจีนจีน หน้าต่างๆมีไส้ต่างกัน', link: 'https://www.gotaipei.net' },
-  { icon: '🍜', name: 'บะหมี่อาจง', desc: 'ร้านดังมากของซีเหมินติง รสชาติคล้ายกระเพาะปลา+ราดหน้า', link: 'https://www.gotaipei.net' },
-  { icon: '🥮', name: 'เสี่ยวหลงเปา', desc: 'ของกินยอดฮิต อร่อยมากตอนทานร้อนๆ', link: 'https://www.gotaipei.net' },
-  { icon: '🍯', name: 'นูกัส', desc: 'ขนมเหนียวหนึบ มีรสหอมของนม ยอดฮิตในไต้หวัน', link: 'https://www.gotaipei.net' },
-  { icon: '🍪', name: 'แครกเกอร์นูกัส', desc: 'อร่อยจนต้องต่อคิว ของว่างยอดนิยม', link: 'https://www.gotaipei.net' },
-  { icon: '🧃', name: 'น้ำผลไม้แก้ว', desc: 'น้ำผลไม้สดๆ กดเองจากเครื่อง', link: 'https://www.gotaipei.net' },
-  { icon: '🥠', name: 'เค้กชาเขียว', desc: 'ขนมเบเกอรี่ชาเขียวเนื้อนุ่ม', link: 'https://www.gotaipei.net' },
-  { icon: '🧸', name: 'ตุ๊กตาหมี', desc: 'ของที่ระลึกน่ารัก มีหลายขนาด', link: 'https://www.gotaipei.net' }
+  { icon: '🧋', name: 'ชาไข่มุก', price: 60, desc: 'เครื่องดื่มยอดฮิตของไต้หวัน เนื้อนุ่มหนึบ', link: 'https://www.gotaipei.net' },
+  { icon: '🍗', name: 'ไก่ทอดไต้หวัน', price: 150, desc: 'เนื้อไก่ทอดชิ้นใหญ่ ผงโรยสูตรพิเศษ กรอบนอกนุ่มใน', link: 'https://www.gotaipei.net' },
+  { icon: '🥧', name: 'พายสับปะรด', price: 120, desc: 'ของฝากขึ้นชื่ออันดับ 1 ของไต้หวัน หอมและหวาน', link: 'https://www.gotaipei.net' },
+  { icon: '🍦', name: 'ไอศกรีมหมี', price: 80, desc: 'ไอศกรีมโฮมเมด หน้าตาน่ารัก', link: 'https://www.gotaipei.net' },
+  { icon: '🥟', name: 'ซาลาเปาไส้', price: 35, desc: 'ขนมจีนจีน หน้าต่างๆมีไส้ต่างกัน', link: 'https://www.gotaipei.net' },
+  { icon: '🍜', name: 'บะหมี่อาจง', price: 180, desc: 'ร้านดังมากของซีเหมินติง รสชาติคล้ายกระเพาะปลา+ราดหน้า', link: 'https://www.gotaipei.net' },
+  { icon: '🥮', name: 'เสี่ยวหลงเปา', price: 40, desc: 'ของกินยอดฮิต อร่อยมากตอนทานร้อนๆ', link: 'https://www.gotaipei.net' },
+  { icon: '🍯', name: 'นูกัส', price: 50, desc: 'ขนมเหนียวหนึบ มีรสหอมของนม ยอดฮิตในไต้หวัน', link: 'https://www.gotaipei.net' },
+  { icon: '🍪', name: 'แครกเกอร์นูกัส', price: 80, desc: 'อร่อยจนต้องต่อคิว ของว่างยอดนิยม', link: 'https://www.gotaipei.net' },
+  { icon: '🧃', name: 'น้ำผลไม้แก้ว', price: 45, desc: 'น้ำผลไม้สดๆ กดเองจากเครื่อง', link: 'https://www.gotaipei.net' },
+  { icon: '🥠', name: 'เค้กชาเขียว', price: 100, desc: 'ขนมเบเกอรี่ชาเขียวเนื้อนุ่ม', link: 'https://www.gotaipei.net' },
+  { icon: '🧸', name: 'ตุ๊กตาหมี', price: 200, desc: 'ของที่ระลึกน่ารัก มีหลายขนาด', link: 'https://www.gotaipei.net' }
 ];
 
 var DIFFICULTY = {
-  easy: { timer: 120, items: 4, showHint: true, label: 'Easy', desc: '2 นาที, ดู hint ได้' },
-  normal: { timer: 60, items: 4, showHint: false, label: 'Normal', desc: '1 นาที' },
-  hard: { timer: 45, items: 6, showHint: false, label: 'Hard', desc: '45 วินาที, 6 ชิ้น' }
+  easy: { timer: 120, items: 6, showHint: true, label: 'Easy', desc: '6 ชิ้น, ดู hint ได้' },
+  hard: { timer: 90, items: 0, showHint: false, label: 'Hard', desc: 'ราคา 550-600 NTD', target: [550, 600] }
 };
 
 var state = { currentScene: 'start', currentLocation: 0, totalStars: 0, totalPhotos: 0, totalCoins: 0, gameTimer: 60, timerInterval: null, currentGame: null, selectedItems: [], targetItems: [], difficulty: 'easy', playerName: '', meetingPoint: '' };
@@ -259,6 +257,13 @@ function loadGame() {
     state.difficulty = saved.difficulty || 'easy';
     state.playerName = saved.playerName || '';
     state.meetingPoint = saved.meetingPoint || '';
+  }
+  document.getElementById('player-name-input').value = state.playerName || '';
+  if (state.playerName) {
+    var btn = document.getElementById('start-btn');
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
   }
 }
 
@@ -320,9 +325,9 @@ function startTravel(loc) {
 function selectDifficulty(diff) {
   state.difficulty = diff;
   updateDifficultyButtons();
+  document.getElementById('meeting-point-section').style.display = 'block';
   var btn = document.getElementById('travel-ready-btn');
   btn.textContent = state.currentGame && state.currentGame.id === 0 ? 'รถมาถึงแล้ว!' : 'ไปกันเถอะ!';
-  document.getElementById('meeting-point-section').style.display = 'block';
   btn.style.display = 'inline-block';
 }
 
@@ -349,15 +354,24 @@ function startShoppingGame() {
   state.selectedItems = [];
   state.gameTimer = diff.timer;
   var gameArea = document.getElementById('game-area');
-  var hintHTML = diff.showHint ? '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า:</p><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">' + state.targetItems.map(function(t) { return '<span style="background:#FFE8EE;padding:6px 12px;border-radius:20px;font-size:1.1rem;" title="' + t.name + '">' + t.icon + ' <span style="font-size:0.8rem;color:#4A4A4A;">' + t.name + '</span></span>'; }).join('') + '</div>' : '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า (' + diff.items + ' ชิ้น)!</p>';
-  gameArea.innerHTML = hintHTML + '<div class="shop-grid" id="shop-grid"></div><div class="basket-zone" id="basket"><span class="basket-label">🧺 ตะกร้าว่างเปล่า</span></div>';
+  var isHard = state.difficulty === 'hard';
+
+  var goalHTML;
+  if (isHard) {
+    goalHTML = '<p class="goal-text">🧺 หยิบของราคารวม <strong>550-600 NTD</strong> ใส่ตะกร้า!</p><div id="basket-total" style="background:#FFE8EE;padding:10px 16px;border-radius:12px;margin-bottom:16px;font-size:1.1rem;">💰 ราคารวม: <strong id="price-display">0</strong> NTD <span id="price-status" style="font-size:0.8rem;color:#888;"> — ยังไม่ถึง</span></div>';
+  } else {
+    goalHTML = diff.showHint ? '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า:</p><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">' + state.targetItems.map(function(t) { return '<span style="background:#FFE8EE;padding:6px 12px;border-radius:20px;font-size:1.1rem;" title="' + t.name + '">' + t.icon + ' <span style="font-size:0.8rem;color:#4A4A4A;">' + t.name + '</span></span>'; }).join('') + '</div>' : '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า (' + diff.items + ' ชิ้น)!</p>';
+  }
+
+  gameArea.innerHTML = goalHTML + '<div class="shop-grid" id="shop-grid"></div><div class="basket-zone" id="basket"><span class="basket-label">🧺 ตะกร้าว่างเปล่า</span></div>';
   var grid = document.getElementById('shop-grid');
   var allItems = SHOP_ITEMS.slice().sort(function() { return Math.random() - 0.5; });
   allItems.forEach(function(item) {
     var div = document.createElement('div');
     div.className = 'shop-item';
-    div.textContent = item.icon;
-    div.title = item.name;
+    div.textContent = isHard ? item.icon + ' ' + item.price : item.icon;
+    div.title = item.name + (isHard ? ' (' + item.price + ' NTD)' : '');
+    div.style.fontSize = isHard ? '1rem' : '2rem';
     div.onclick = function() { selectShopItem(div, item); };
     div.ondblclick = function() { showItemPopup(item, true); };
     grid.appendChild(div);
@@ -365,10 +379,66 @@ function startShoppingGame() {
   startTimer();
 }
 
+function renderBasket() {
+  var isHard = state.difficulty === 'hard';
+  var basket = document.getElementById('basket');
+  if (state.selectedItems.length === 0) {
+    basket.innerHTML = '<span class="basket-label">🧺 ตะกร้าว่างเปล่า</span>';
+  } else if (isHard) {
+    var total = state.selectedItems.reduce(function(s, i) { return s + i.price; }, 0);
+    var inRange = total >= 550 && total <= 600;
+    basket.innerHTML = state.selectedItems.map(function(s) {
+      return '<span onclick="removeFromBasket(\'' + s.icon + '\')" title="คลิกเอาออก: ' + s.name + ' (' + s.price + ' NTD)" style="cursor:pointer;">' + s.icon + ' <span style="font-size:0.7rem;">' + s.price + '</span></span>';
+    }).join('') + '<span style="font-size:0.8rem;color:rgba(255,255,255,0.85);margin-left:8px;">= ' + total + ' NTD</span>';
+    var priceDisplay = document.getElementById('price-display');
+    var priceStatus = document.getElementById('price-status');
+    if (priceDisplay) priceDisplay.textContent = total;
+    if (priceStatus) {
+      if (inRange) {
+        priceStatus.textContent = ' — 🎉 ถึงจุด!';
+        priceStatus.style.color = '#00b894';
+      } else if (total < 550) {
+        priceStatus.textContent = ' — ยังไม่ถึง (ขาด ' + (550 - total) + ')';
+        priceStatus.style.color = '#FF6B6B';
+      } else {
+        priceStatus.textContent = ' — เกินไปแล้ว! (' + (total - 600) + ' NTD)';
+        priceStatus.style.color = '#FF6B6B';
+      }
+    }
+    if (inRange) {
+      clearInterval(state.timerInterval);
+      playSound('win');
+      setTimeout(function() { endGame(true); }, 500);
+    }
+  } else {
+    basket.innerHTML = state.selectedItems.map(function(s) { return '<span title="' + s.name + '">' + s.icon + '</span>'; }).join('') + '<span style="font-size:0.7rem;color:rgba(255,255,255,0.7);margin-left:8px;">' + state.selectedItems.length + '/' + state.targetItems.length + '</span>';
+    if (state.selectedItems.length === state.targetItems.length) {
+      clearInterval(state.timerInterval);
+      playSound('win');
+      setTimeout(function() { endGame(true); }, 500);
+    }
+  }
+}
+
+function removeFromBasket(icon) {
+  var idx = state.selectedItems.findIndex(function(i) { return i.icon === icon; });
+  if (idx > -1) {
+    state.selectedItems.splice(idx, 1);
+    var gridItems = document.querySelectorAll('.shop-item');
+    gridItems.forEach(function(g) {
+      if (g.textContent.indexOf(icon) !== -1) {
+        g.classList.remove('matched', 'selected');
+      }
+    });
+    renderBasket();
+    playSound('wrong');
+  }
+}
+
 function selectShopItem(el, item) {
   var popup = document.getElementById('item-popup');
   document.getElementById('popup-icon').textContent = item.icon;
-  document.getElementById('popup-name').textContent = item.name;
+  document.getElementById('popup-name').textContent = item.name + (item.price ? ' — ' + item.price + ' NTD' : '');
   document.getElementById('popup-desc').textContent = item.desc;
   var pickupBtn = document.getElementById('popup-pickup');
   pickupBtn.style.display = 'inline-block';
@@ -378,19 +448,26 @@ function selectShopItem(el, item) {
 
 function addToBasket(item, el) {
   if (el && el.classList.contains('matched')) return;
-  var isTarget = state.targetItems.some(function(t) { return t.icon === item.icon; });
-  if (el) el.classList.add('selected');
-  if (isTarget) {
+  var isHard = state.difficulty === 'hard';
+  if (isHard) {
+    // Hard mode: any item can be added, just add it
     playSound('correct');
-    if (el) { el.classList.add('matched'); el.classList.remove('selected'); }
+    if (el) { el.classList.add('matched'); }
     state.selectedItems.push(item);
-    var basket = document.getElementById('basket');
-    if (state.selectedItems.length === 0) { basket.innerHTML = '<span class="basket-label">🧺 ตะกร้าว่างเปล่า</span>'; }
-    else { basket.innerHTML = state.selectedItems.map(function(s) { return '<span title="' + s.name + '">' + s.icon + '</span>'; }).join('') + '<span style="font-size:0.7rem;color:rgba(255,255,255,0.7);margin-left:8px;">' + state.selectedItems.length + '/' + state.targetItems.length + '</span>'; }
-    if (state.selectedItems.length === state.targetItems.length) { clearInterval(state.timerInterval); playSound('win'); setTimeout(function() { endGame(true); }, 500); }
+    renderBasket();
   } else {
-    playSound('wrong');
-    if (el) setTimeout(function() { el.classList.remove('selected'); }, 300);
+    // Easy mode: only target items
+    var isTarget = state.targetItems.some(function(t) { return t.icon === item.icon; });
+    if (el) el.classList.add('selected');
+    if (isTarget) {
+      playSound('correct');
+      if (el) { el.classList.add('matched'); el.classList.remove('selected'); }
+      state.selectedItems.push(item);
+      renderBasket();
+    } else {
+      playSound('wrong');
+      if (el) setTimeout(function() { el.classList.remove('selected'); }, 300);
+    }
   }
 }
 
@@ -498,8 +575,12 @@ function playSound(type) {
 }
 
 function startGame() {
-  state.playerName = document.getElementById('player-name-input').value.trim();
-  loadGame(); updateMapUI(); showScreen('map-screen');
+  var enteredName = document.getElementById('player-name-input').value.trim();
+  state.playerName = enteredName;
+  saveGame();
+  loadGame();
+  updateMapUI();
+  showScreen('map-screen');
 }
 
 document.getElementById('start-btn').addEventListener('click', startGame);
