@@ -7,34 +7,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;600;700&family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --pink: #FFB7C5;
-  --blue: #A8D8EA;
-  --yellow: #FFD93D;
-  --cream: #FFF8F0;
-  --text: #4A4A4A;
-  --white: #FFFFFF;
-}
+:root { --pink: #FFB7C5; --blue: #A8D8EA; --yellow: #FFD93D; --cream: #FFF8F0; --text: #4A4A4A; --white: #FFFFFF; }
 body { font-family: 'Sarabun', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; overflow: hidden; }
 h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .screen { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; }
 .screen.active { display: flex; }
 
-/* START SCREEN */
+/* START */
 #start-screen { flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(180deg, #A8D8EA 0%, #FFF8F0 100%); gap: 24px; padding: 40px; }
 #start-screen img.logo { width: 500px; max-width: 85vw; border-radius: 24px; box-shadow: 0 12px 48px rgba(0,0,0,0.18); }
 #start-screen h1 { font-size: 3rem; color: var(--text); text-align: center; }
 #start-screen p { color: #888; font-size: 1.2rem; text-align: center; }
-.btn { background: var(--pink); color: white; border: none; padding: 16px 48px; border-radius: 50px; font-size: 1.2rem; font-family: 'Mitr', sans-serif; font-weight: 600; cursor: pointer; box-shadow: 0 4px 16px rgba(255,183,197,0.5); transition: transform 0.15s, box-shadow 0.15s; }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,183,197,0.6); }
+.btn { background: linear-gradient(135deg, #FF9BAB, #FF6B8A); color: white; border: none; padding: 18px 52px; border-radius: 50px; font-size: 1.3rem; font-family: 'Mitr', sans-serif; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(255,107,138,0.5); transition: transform 0.15s, box-shadow 0.15s; }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(255,107,138,0.6); }
 
-/* MAP SCREEN */
+/* MAP */
 #map-screen { flex-direction: column; background: linear-gradient(180deg, #E8F4F8 0%, #FFF8F0 60%); }
 .map-header { padding: 20px; text-align: center; background: white; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 .map-header h2 { color: var(--text); font-size: 1.5rem; }
 .map-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; }
 .route-map { position: relative; width: 100%; max-width: 700px; height: 400px; }
-.route-line { position: absolute; top: 50%; left: 5%; right: 5%; height: 4px; background: repeating-linear-gradient(90deg, var(--pink) 0px, var(--pink) 12px, transparent 12px, transparent 24px); border-radius: 2px; transform: translateY(-50%); }
+.route-line { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 .location-node { position: absolute; width: 80px; height: 80px; border-radius: 50%; background: white; box-shadow: 0 4px 16px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 3px solid transparent; }
 .location-node:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(0,0,0,0.18); }
 .location-node.locked { filter: grayscale(0.7); opacity: 0.7; cursor: not-allowed; }
@@ -58,7 +51,7 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .stat-item { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 500; }
 .stat-item span { font-size: 1.4rem; }
 
-/* TRAVEL SCREEN */
+/* TRAVEL */
 #travel-screen { flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(180deg, #A8D8EA 0%, #FFF8F0 100%); gap: 24px; }
 .road-animation { position: relative; width: 80%; height: 120px; }
 .road-line-travel { position: absolute; top: 50%; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, #ccc 0px, #ccc 20px, transparent 20px, transparent 40px); transform: translateY(-50%); border-radius: 3px; }
@@ -67,8 +60,11 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 @keyframes van-bounce { 0%, 100% { transform: translateY(-50%) translateX(0); } 50% { transform: translateY(-56%) translateX(3px); } }
 #travel-van.animating { animation: van-bounce 0.35s ease-in-out infinite; }
 .travel-text { font-family: 'Mitr', sans-serif; font-size: 1.2rem; color: var(--text); text-align: center; max-width: 400px; }
+.btn-diff { padding: 12px 20px; border-radius: 14px; border: none; font-size: 14px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; font-weight: 600; }
+.btn-diff:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.btn-diff.selected { box-shadow: 0 0 0 3px #FFB7C5, 0 4px 16px rgba(255,183,197,0.4); }
 
-/* GAME SCREEN */
+/* GAME */
 #game-screen { flex-direction: column; background: var(--cream); }
 .game-header { padding: 16px 20px; background: white; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 .game-header .back-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 8px; }
@@ -85,7 +81,7 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .basket-zone .basket-label { font-size: 0.9rem; opacity: 0.9; }
 .goal-text { font-size: 0.95rem; color: #888; margin-bottom: 16px; }
 
-/* ITEM POPUP */
+/* POPUP */
 .item-popup { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
 .item-popup.show { display: flex; }
 .item-popup-card { background: white; border-radius: 20px; padding: 28px; max-width: 320px; width: 90%; text-align: center; box-shadow: 0 16px 48px rgba(0,0,0,0.2); animation: pop-in 0.2s ease-out; }
@@ -98,7 +94,7 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .game-timer.warning { color: #FF6B6B; animation: blink 0.5s infinite; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-/* RESULT SCREEN */
+/* RESULT */
 #result-screen { flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(180deg, #FFF8F0 0%, #FFE8EE 100%); gap: 24px; text-align: center; }
 .result-card { background: white; border-radius: 24px; padding: 40px; box-shadow: 0 8px 40px rgba(0,0,0,0.1); max-width: 400px; width: 90%; }
 .result-card h2 { font-size: 1.8rem; margin-bottom: 8px; }
@@ -129,59 +125,26 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 </head>
 <body>
 
-<!-- START SCREEN -->
 <div id="start-screen" class="screen active">
   <img src="roadtrip-logo.jpg" alt="Road Trip Taiwan" class="logo">
   <h1>🚐 Road Trip Taiwan</h1>
   <p>Go Taipei พาเที่ยว 5 สถานที่ยอดฮิต</p>
-  <button class="btn" id="start-btn">เริ่มเดินทาง!</button>
+  <input type="text" id="player-name-input" placeholder="ใส่ชื่อของคุณ..." style="padding:14px 20px;border-radius:50px;border:2px solid #FFB7C5;font-size:1rem;font-family:'Sarabun',sans-serif;width:280px;text-align:center;outline:none;background:#fff;">
+  <button class="btn" id="start-btn" style="opacity:0.5;cursor:not-allowed;" disabled>เริ่มเดินทาง!</button>
+  <p style="margin-top:24px;font-size:0.8rem;color:#aaa;">Version 1.0.0 | Developed by Panya &amp; Ada</p>
 </div>
 
-<!-- MAP SCREEN -->
 <div id="map-screen" class="screen">
-  <div class="map-header">
-    <h2>แผนที่เส้นทาง <span>Road Trip Taiwan</span></h2>
-  </div>
+  <div class="map-header"><h2>แผนที่เส้นทาง <span>Road Trip Taiwan</span></h2></div>
   <div class="map-body">
     <div class="route-map">
-      <div class="route-line"></div>
-      <div id="van-marker">
-        <svg viewBox="0 0 60 45" width="45" height="34" xmlns="http://www.w3.org/2000/svg">
-          <rect x="5" y="8" width="50" height="28" rx="8" fill="#A8D8EA"/>
-          <rect x="5" y="8" width="50" height="14" rx="8" fill="#89C5D9"/>
-          <rect x="10" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/>
-          <rect x="26" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/>
-          <line x1="42" y1="10" x2="42" y2="34" stroke="#6BA5B8" stroke-width="1.5"/>
-          <circle cx="18" cy="36" r="7" fill="#4A4A4A"/><circle cx="18" cy="36" r="3" fill="#888"/>
-          <circle cx="42" cy="36" r="7" fill="#4A4A4A"/><circle cx="42" cy="36" r="3" fill="#888"/>
-          <rect x="48" y="18" width="6" height="8" rx="2" fill="#FFD93D"/>
-        </svg>
-      </div>
-      <div class="location-node" id="node-0" onclick="selectLocation(0)">
-        <div class="node-icon">🏠</div>
-        <div class="node-name">ซีเหมินติง<small>Ximending</small></div>
-        <div class="node-stars" id="stars-0">☆☆☆</div>
-      </div>
-      <div class="location-node locked" id="node-1" onclick="selectLocation(1)">
-        <div class="lock-icon">🔒</div>
-        <div class="node-name">อุทยานหินเยว่หลิว<small>Yehliu</small></div>
-        <div class="node-stars" id="stars-1"></div>
-      </div>
-      <div class="location-node locked" id="node-2" onclick="selectLocation(2)">
-        <div class="lock-icon">🔒</div>
-        <div class="node-name">ท่าเรือเจิ้งปิ้น<small>Zhengbin</small></div>
-        <div class="node-stars" id="stars-2"></div>
-      </div>
-      <div class="location-node locked" id="node-3" onclick="selectLocation(3)">
-        <div class="lock-icon">🔒</div>
-        <div class="node-name">หมู่บ้านจิ่วเฟิ่น<small>Jiufen</small></div>
-        <div class="node-stars" id="stars-3"></div>
-      </div>
-      <div class="location-node locked" id="node-4" onclick="selectLocation(4)">
-        <div class="lock-icon">🔒</div>
-        <div class="node-name">หมู่บ้านสือเฟิ่น<small>Shifen</small></div>
-        <div class="node-stars" id="stars-4"></div>
-      </div>
+      <svg class="route-line" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5 55 Q 13 42 22 30 Q 32 18 42 60 Q 52 78 62 25 Q 72 12 82 55 Q 88 75 95 55" fill="none" stroke="#FFB7C5" stroke-width="1.2" stroke-dasharray="4,3" stroke-linecap="round"/></svg>
+      <div id="van-marker"><svg viewBox="0 0 60 45" width="45" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="8" width="50" height="28" rx="8" fill="#A8D8EA"/><rect x="5" y="8" width="50" height="14" rx="8" fill="#89C5D9"/><rect x="10" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><rect x="26" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><line x1="42" y1="10" x2="42" y2="34" stroke="#6BA5B8" stroke-width="1.5"/><circle cx="18" cy="36" r="7" fill="#4A4A4A"/><circle cx="18" cy="36" r="3" fill="#888"/><circle cx="42" cy="36" r="7" fill="#4A4A4A"/><circle cx="42" cy="36" r="3" fill="#888"/><rect x="48" y="18" width="6" height="8" rx="2" fill="#FFD93D"/></svg></div>
+      <div class="location-node" id="node-0" onclick="selectLocation(0)"><div class="node-icon">🏠</div><div class="node-name">ซีเหมินติง<small>Ximending</small></div><div class="node-stars" id="stars-0">☆☆☆</div></div>
+      <div class="location-node locked" id="node-1" onclick="selectLocation(1)"><div class="lock-icon">🔒</div><div class="node-name">อุทยานหินเยว่หลิว<small>Yehliu</small></div><div class="node-stars" id="stars-1"></div></div>
+      <div class="location-node locked" id="node-2" onclick="selectLocation(2)"><div class="lock-icon">🔒</div><div class="node-name">ท่าเรือเจิ้งปิ้น<small>Zhengbin</small></div><div class="node-stars" id="stars-2"></div></div>
+      <div class="location-node locked" id="node-3" onclick="selectLocation(3)"><div class="lock-icon">🔒</div><div class="node-name">หมู่บ้านจิ่วเฟิ่น<small>Jiufen</small></div><div class="node-stars" id="stars-3"></div></div>
+      <div class="location-node locked" id="node-4" onclick="selectLocation(4)"><div class="lock-icon">🔒</div><div class="node-name">หมู่บ้านสือเฟิ่น<small>Shifen</small></div><div class="node-stars" id="stars-4"></div></div>
     </div>
   </div>
   <div class="stats-bar">
@@ -191,28 +154,23 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
   </div>
 </div>
 
-<!-- TRAVEL SCREEN -->
 <div id="travel-screen" class="screen">
-  <div class="road-animation">
-    <div class="road-line-travel"></div>
-    <div id="travel-van">
-      <svg viewBox="0 0 60 45" width="60" height="45" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="8" width="50" height="28" rx="8" fill="#A8D8EA"/>
-        <rect x="5" y="8" width="50" height="14" rx="8" fill="#89C5D9"/>
-        <rect x="10" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/>
-        <rect x="26" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/>
-        <line x1="42" y1="10" x2="42" y2="34" stroke="#6BA5B8" stroke-width="1.5"/>
-        <circle cx="18" cy="36" r="7" fill="#4A4A4A"/><circle cx="18" cy="36" r="3" fill="#888"/>
-        <circle cx="42" cy="36" r="7" fill="#4A4A4A"/><circle cx="42" cy="36" r="3" fill="#888"/>
-        <rect x="48" y="18" width="6" height="8" rx="2" fill="#FFD93D"/>
-      </svg>
+  <div class="road-animation"><div class="road-line-travel"></div><div id="travel-van"><svg viewBox="0 0 60 45" width="60" height="45" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="8" width="50" height="28" rx="8" fill="#A8D8EA"/><rect x="5" y="8" width="50" height="14" rx="8" fill="#89C5D9"/><rect x="10" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><rect x="26" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><line x1="42" y1="10" x2="42" y2="34" stroke="#6BA5B8" stroke-width="1.5"/><circle cx="18" cy="36" r="7" fill="#4A4A4A"/><circle cx="18" cy="36" r="3" fill="#888"/><circle cx="42" cy="36" r="7" fill="#4A4A4A"/><circle cx="42" cy="36" r="3" fill="#888"/><rect x="48" y="18" width="6" height="8" rx="2" fill="#FFD93D"/></svg></div></div>
+  <p class="travel-text" id="travel-dest"></p>
+  <div id="difficulty-select" style="display:none;margin:16px 0;text-align:center;">
+    <p style="font-size:0.9rem;color:#888;margin-bottom:12px;">เลือกระดับความยาก:</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-diff" data-diff="easy" onclick="selectDifficulty('easy')">🌱 Easy</button>
+      <button class="btn-diff" data-diff="normal" onclick="selectDifficulty('normal')">⚡ Normal</button>
+      <button class="btn-diff" data-diff="hard" onclick="selectDifficulty('hard')">🔥 Hard</button>
     </div>
   </div>
-  <p class="travel-text" id="travel-dest"></p>
-  <button class="btn" id="travel-ready-btn" style="display:none;margin-top:16px;">ไปกันเถอะ!</button>
+  <div id="meeting-point-section" style="display:none;margin:12px 0;text-align:center;">
+    <input type="text" id="meeting-point-input" placeholder="ชื่อโรงแรมหรือจุดนัดพบ..." style="padding:12px 16px;border-radius:12px;border:2px solid #A8D8EA;font-size:0.95rem;font-family:'Sarabun',sans-serif;width:260px;text-align:center;outline:none;background:#fff;">
+  </div>
+  <button class="btn" id="travel-ready-btn" style="display:none;">รถมาถึงแล้ว!</button>
 </div>
 
-<!-- GAME SCREEN -->
 <div id="game-screen" class="screen">
   <div class="game-header">
     <button class="back-btn" onclick="backToMap()">←</button>
@@ -220,22 +178,16 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
     <span class="location-tag" id="game-location-tag"></span>
     <div class="game-timer" id="game-timer">60</div>
   </div>
-  <div class="game-body">
-    <div class="game-area" id="game-area"></div>
-  </div>
+  <div class="game-body"><div class="game-area" id="game-area"></div></div>
 </div>
 
-<!-- RESULT SCREEN -->
 <div id="result-screen" class="screen">
   <div class="result-card">
     <h2 id="result-title">ผลเกม</h2>
     <p class="location-name" id="result-location">สถานที่</p>
     <div class="stars-earned" id="result-stars">⭐⭐⭐</div>
     <div class="photo-badge" id="photo-badge">📸 เก็บภาพแล้ว!</div>
-    <div class="knowledge-card">
-      <p id="knowledge-text">ความรู้เกี่ยวกับที่นี่</p>
-      <p class="source" id="knowledge-source"></p>
-    </div>
+    <div class="knowledge-card"><p id="knowledge-text">ความรู้เกี่ยวกับที่นี่</p><p class="source" id="knowledge-source"></p></div>
     <div class="promo-card">
       <p>อยากไปจริงๆ ใช่ไหมล่ะ?</p>
       <div class="promo-btns">
@@ -244,29 +196,28 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
       </div>
     </div>
   </div>
-  <button class="btn" onclick="backToMap()">กลับสู่แผนที่</button>
+  <button class="btn" onclick="backToMap()">ไปเที่ยวกันต่อ!</button>
 </div>
 
-<!-- ITEM POPUP -->
 <div class="item-popup" id="item-popup" onclick="if(event.target.id==='item-popup') closeItemPopup();">
   <div class="item-popup-card">
     <div class="popup-icon" id="popup-icon">🧋</div>
     <h3 id="popup-name">ชื่อสินค้า</h3>
     <p id="popup-desc">รายละเอียดสินค้า</p>
-<button class="popup-btn" id="popup-pickup">🧺 หยิบใส่ตะกร้า</button>
+    <button class="popup-btn" id="popup-pickup">🧺 หยิบใส่ตะกร้า</button>
   </div>
 </div>
 
 <script>
-const LOCATIONS = [
-  { id: 0, name: 'Ximending', nameTH: 'ซีเหมินติง', icon: '🏠', stars: 0, completed: false, knowledge: 'ซีเหมินติง (Ximending) เป็นถนนช้อปปิ้งที่ขึ้นชื่อที่สุดในไต้หวัน เต็มไปด้วยร้านอาหาร ร้านค้า และแสงสียามค่ำคืน', x: 2, y: 55 },
-  { id: 1, name: 'Yehliu Geopark', nameTH: 'อุทยานหินเยว่หลิว', icon: '🪨', stars: 0, completed: false, knowledge: 'อุทยานเยว่หลิวมีหินรูปร่างแปลกมากมาย รวมถึง Queens Head ที่ขึ้นชื่อ เกิดจากลมและน้ำทะเลกัดเซาะมานานหลายล้านปี', x: 22, y: 30 },
-  { id: 2, name: 'Zhengbin Port', nameTH: 'ท่าเรือเจิ้งปิ้น ตึกหลากสี', icon: '⚓', stars: 0, completed: false, knowledge: 'ท่าเรือเจิ้งปิ้นเคยเป็นท่าประมงขนาดใหญ่ที่สุดในไต้หวัน ตึกสีพาสเทลถ่ายรูปสวยมากในยามเย็น', x: 42, y: 60 },
-  { id: 3, name: 'Jiufen Old Street', nameTH: 'หมู่บ้านจิ่วเฟิ่น', icon: '🏮', stars: 0, completed: false, knowledge: 'หมู่บ้านจิ่วเฟิ่นเคยเป็นเมืองเหมืองทองในอดีต บ้านเรือนถูกสร้างไว้บนเนินเขาแคบๆ จนเป็นเอกลักษณ์', x: 62, y: 25 },
-  { id: 4, name: 'Shifen Old Street', nameTH: 'หมู่บ้านสือเฟิ่น', icon: '💧', stars: 0, completed: false, knowledge: 'หมู่บ้านสือเฟิ่นมีน้ำตกสูง 20 เมตร เป็นจุดเด่นของอุทยาน และโคมลอยที่ปล่อยที่นี่เป็นของขวัญที่มีชื่อเสียง', x: 82, y: 55 }
+var LOCATIONS = [
+  { id: 0, name: 'Ximending', nameTH: 'ซีเหมินติง', icon: '🏠', stars: 0, completed: false, knowledge: 'ซีเหมินติง (Ximending) เป็นถนนช้อปปิ้งที่ขึ้นชื่อที่สุดในไต้หวัน เต็มไปด้วยร้านอาหาร ร้านค้า และแสงสียามค่ำคืน', travelMsg: 'เจอกันที่จุดนัดพบนะครับ! ✨', x: 2, y: 55 },
+  { id: 1, name: 'Yehliu Geopark', nameTH: 'อุทยานหินเยว่หลิว', icon: '🪨', stars: 0, completed: false, knowledge: 'อุทยานเยว่หลิวมีหินรูปร่างแปลกมากมาย รวมถึง Queens Head ที่ขึ้นชื่อ เกิดจากลมและน้ำทะเลกัดเซาะมานานหลายล้านปี', travelMsg: 'เดินทางประมาณ 50 นาทีนะครับ! ✨', x: 22, y: 30 },
+  { id: 2, name: 'Zhengbin Port', nameTH: 'ท่าเรือเจิ้งปิ้น ตึกหลากสี', icon: '⚓', stars: 0, completed: false, knowledge: 'ท่าเรือเจิ้งปิ้นเคยเป็นท่าประมงขนาดใหญ่ที่สุดในไต้หวัน ตึกสีพาสเทลถ่ายรูปสวยมากในยามเย็น', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', x: 42, y: 60 },
+  { id: 3, name: 'Jiufen Old Street', nameTH: 'หมู่บ้านจิ่วเฟิ่น', icon: '🏮', stars: 0, completed: false, knowledge: 'หมู่บ้านจิ่วเฟิ่นเคยเป็นเมืองเหมืองทองในอดีต บ้านเรือนถูกสร้างไว้บนเนินเขาแคบๆ จนเป็นเอกลักษณ์', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', x: 62, y: 25 },
+  { id: 4, name: 'Shifen Old Street', nameTH: 'หมู่บ้านสือเฟิ่น', icon: '💧', stars: 0, completed: false, knowledge: 'หมู่บ้านสือเฟิ่นมีน้ำตกสูง 20 เมตร เป็นจุดเด่นของอุทยาน และโคมลอยที่ปล่อยที่นี่เป็นของขวัญที่มีชื่อเสียง', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', x: 82, y: 55 }
 ];
 
-const SHOP_ITEMS = [
+var SHOP_ITEMS = [
   { icon: '🧋', name: 'ชาไข่มุก', desc: 'เครื่องดื่มยอดฮิตของไต้หวัน เนื้อนุ่มหนึบ', link: 'https://www.gotaipei.net' },
   { icon: '🍗', name: 'ไก่ทอดไต้หวัน', desc: 'เนื้อไก่ทอดชิ้นใหญ่ ผงโรยสูตรพิเศษ กรอบนอกนุ่มใน', link: 'https://www.gotaipei.net' },
   { icon: '🥧', name: 'พายสับปะรด', desc: 'ของฝากขึ้นชื่ออันดับ 1 ของไต้หวัน หอมและหวาน', link: 'https://www.gotaipei.net' },
@@ -274,36 +225,45 @@ const SHOP_ITEMS = [
   { icon: '🥟', name: 'ซาลาเปาไส้', desc: 'ขนมจีนจีน หน้าต่างๆมีไส้ต่างกัน', link: 'https://www.gotaipei.net' },
   { icon: '🍜', name: 'บะหมี่อาจง', desc: 'ร้านดังมากของซีเหมินติง รสชาติคล้ายกระเพาะปลา+ราดหน้า', link: 'https://www.gotaipei.net' },
   { icon: '🥮', name: 'เสี่ยวหลงเปา', desc: 'ของกินยอดฮิต อร่อยมากตอนทานร้อนๆ', link: 'https://www.gotaipei.net' },
+  { icon: '🍯', name: 'นูกัส', desc: 'ขนมเหนียวหนึบ มีรสหอมของนม ยอดฮิตในไต้หวัน', link: 'https://www.gotaipei.net' },
   { icon: '🍪', name: 'แครกเกอร์นูกัส', desc: 'อร่อยจนต้องต่อคิว ของว่างยอดนิยม', link: 'https://www.gotaipei.net' },
-  { icon: '🍯', name: 'นูกัส', desc: 'ขนมเหนียวหนึบ มีรสหอมของนม ยอดฮิดในไต้หวัน', link: 'https://www.gotaipei.net' },
   { icon: '🧃', name: 'น้ำผลไม้แก้ว', desc: 'น้ำผลไม้สดๆ กดเองจากเครื่อง', link: 'https://www.gotaipei.net' },
   { icon: '🥠', name: 'เค้กชาเขียว', desc: 'ขนมเบเกอรี่ชาเขียวเนื้อนุ่ม', link: 'https://www.gotaipei.net' },
   { icon: '🧸', name: 'ตุ๊กตาหมี', desc: 'ของที่ระลึกน่ารัก มีหลายขนาด', link: 'https://www.gotaipei.net' }
 ];
 
-let state = { currentScene: 'start', currentLocation: 0, totalStars: 0, totalPhotos: 0, totalCoins: 0, gameTimer: 60, timerInterval: null, currentGame: null, selectedItems: [], targetItems: [] };
+var DIFFICULTY = {
+  easy: { timer: 120, items: 4, showHint: true, label: 'Easy', desc: '2 นาที, ดู hint ได้' },
+  normal: { timer: 60, items: 4, showHint: false, label: 'Normal', desc: '1 นาที' },
+  hard: { timer: 45, items: 6, showHint: false, label: 'Hard', desc: '45 วินาที, 6 ชิ้น' }
+};
+
+var state = { currentScene: 'start', currentLocation: 0, totalStars: 0, totalPhotos: 0, totalCoins: 0, gameTimer: 60, timerInterval: null, currentGame: null, selectedItems: [], targetItems: [], difficulty: 'easy', playerName: '', meetingPoint: '' };
 
 function saveGame() {
   localStorage.setItem('roadtrip_save', JSON.stringify({
-    locations: LOCATIONS.map(l => ({ id: l.id, stars: l.stars, completed: l.completed })),
-    totalStars: state.totalStars, totalPhotos: state.totalPhotos, totalCoins: state.totalCoins, currentLocation: state.currentLocation
+    locations: LOCATIONS.map(function(l) { return { id: l.id, stars: l.stars, completed: l.completed }; }),
+    totalStars: state.totalStars, totalPhotos: state.totalPhotos, totalCoins: state.totalCoins, currentLocation: state.currentLocation, difficulty: state.difficulty, playerName: state.playerName, meetingPoint: state.meetingPoint
   }));
 }
 
 function loadGame() {
-  const data = localStorage.getItem('roadtrip_save');
+  var data = localStorage.getItem('roadtrip_save');
   if (data) {
-    const saved = JSON.parse(data);
-    saved.locations.forEach(s => { const loc = LOCATIONS.find(l => l.id === s.id); if (loc) { loc.stars = s.stars; loc.completed = s.completed; } });
+    var saved = JSON.parse(data);
+    saved.locations.forEach(function(s) { var loc = LOCATIONS.find(function(l) { return l.id === s.id; }); if (loc) { loc.stars = s.stars; loc.completed = s.completed; } });
     state.totalStars = saved.totalStars || 0;
     state.totalPhotos = saved.totalPhotos || 0;
     state.totalCoins = saved.totalCoins || 0;
     state.currentLocation = saved.currentLocation || 0;
+    state.difficulty = saved.difficulty || 'easy';
+    state.playerName = saved.playerName || '';
+    state.meetingPoint = saved.meetingPoint || '';
   }
 }
 
 function showScreen(screenId) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById(screenId).classList.add('active');
   state.currentScene = screenId.replace('-screen', '');
 }
@@ -312,12 +272,12 @@ function updateMapUI() {
   document.getElementById('total-stars').textContent = state.totalStars;
   document.getElementById('total-photos').textContent = state.totalPhotos;
   document.getElementById('total-coins').textContent = state.totalCoins;
-  const van = document.getElementById('van-marker');
-  const loc = LOCATIONS[state.currentLocation];
+  var van = document.getElementById('van-marker');
+  var loc = LOCATIONS[state.currentLocation];
   van.style.left = loc.x + '%';
   van.style.top = loc.y + '%';
-  LOCATIONS.forEach((l, i) => {
-    const node = document.getElementById('node-' + i);
+  LOCATIONS.forEach(function(l, i) {
+    var node = document.getElementById('node-' + i);
     node.classList.remove('locked', 'completed', 'current');
     if (l.completed) {
       node.classList.add('completed');
@@ -333,18 +293,21 @@ function updateMapUI() {
 }
 
 function selectLocation(idx) {
-  const loc = LOCATIONS[idx];
   if (idx > state.currentLocation) return;
   state.currentLocation = idx;
-  state.currentGame = loc;
-  startTravel(loc);
+  state.currentGame = LOCATIONS[idx];
+  startTravel(state.currentGame);
 }
 
 function startTravel(loc) {
   showScreen('travel-screen');
-  document.getElementById('travel-dest').innerHTML = '<span style="font-size:1.2rem;">🚐 เดินทางไป <strong>' + loc.nameTH + '</strong></span><span style="display:block;font-size:0.9rem;color:#888;margin-top:8px;">เดินทางประมาณ 50 นาทีนะครับ! ✨</span>';
+  document.getElementById('travel-dest').innerHTML = '<span style="font-size:1.2rem;">🚐 เดินทางไปรับคุณ<strong>' + state.playerName + '</strong></span><span style="display:block;font-size:0.9rem;color:#888;margin-top:8px;">' + (state.meetingPoint ? state.meetingPoint + ' ✨' : loc.travelMsg) + '</span>';
+  document.getElementById('difficulty-select').style.display = 'block';
+  document.getElementById('meeting-point-section').style.display = 'none';
+  document.getElementById('meeting-point-input').value = state.meetingPoint || '';
   document.getElementById('travel-ready-btn').style.display = 'none';
-  const van = document.getElementById('travel-van');
+  updateDifficultyButtons();
+  var van = document.getElementById('travel-van');
   van.style.transition = 'none';
   van.style.left = '0%';
   van.classList.remove('animating');
@@ -352,10 +315,26 @@ function startTravel(loc) {
   van.classList.add('animating');
   van.style.transition = 'left 2.3s ease-in-out';
   van.style.left = '90%';
-  setTimeout(function() { document.getElementById('travel-ready-btn').style.display = 'inline-block'; }, 2400);
+}
+
+function selectDifficulty(diff) {
+  state.difficulty = diff;
+  updateDifficultyButtons();
+  var btn = document.getElementById('travel-ready-btn');
+  btn.textContent = state.currentGame && state.currentGame.id === 0 ? 'รถมาถึงแล้ว!' : 'ไปกันเถอะ!';
+  document.getElementById('meeting-point-section').style.display = 'block';
+  btn.style.display = 'inline-block';
+}
+
+function updateDifficultyButtons() {
+  document.querySelectorAll('.btn-diff').forEach(function(btn) {
+    btn.style.background = btn.dataset.diff === state.difficulty ? '#FFB7C5' : '#eee';
+    btn.style.color = btn.dataset.diff === state.difficulty ? '#fff' : '#333';
+  });
 }
 
 function startMiniGame(loc) {
+  state.meetingPoint = document.getElementById('meeting-point-input').value.trim();
   showScreen('game-screen');
   document.getElementById('game-title').textContent = loc.name + ' Mini Game';
   document.getElementById('game-location-tag').innerHTML = loc.nameTH + ' <small>' + loc.name + '</small>';
@@ -364,17 +343,18 @@ function startMiniGame(loc) {
 }
 
 function startShoppingGame() {
-  const shuffled = [...SHOP_ITEMS].sort(() => Math.random() - 0.5);
-  state.targetItems = shuffled.slice(0, 4);
+  var diff = DIFFICULTY[state.difficulty];
+  var shuffled = SHOP_ITEMS.slice().sort(function() { return Math.random() - 0.5; });
+  state.targetItems = shuffled.slice(0, diff.items);
   state.selectedItems = [];
-  state.gameTimer = 120;
-  state.timerExtended = false;
-  const gameArea = document.getElementById('game-area');
-  gameArea.innerHTML = '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า:</p><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">' + state.targetItems.map(function(t) { return '<span style="background:#FFE8EE;padding:6px 12px;border-radius:20px;font-size:1.1rem;" title="' + t.name + '">' + t.icon + ' <span style="font-size:0.8rem;color:#4A4A4A;">' + t.name + '</span></span>'; }).join('') + '</div><div class="shop-grid" id="shop-grid"></div><div class="basket-zone" id="basket"><span class="basket-label">🧺 ตะกร้าว่างเปล่า</span></div>';
-  const grid = document.getElementById('shop-grid');
-  const allItems = [...SHOP_ITEMS].sort(() => Math.random() - 0.5);
+  state.gameTimer = diff.timer;
+  var gameArea = document.getElementById('game-area');
+  var hintHTML = diff.showHint ? '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า:</p><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">' + state.targetItems.map(function(t) { return '<span style="background:#FFE8EE;padding:6px 12px;border-radius:20px;font-size:1.1rem;" title="' + t.name + '">' + t.icon + ' <span style="font-size:0.8rem;color:#4A4A4A;">' + t.name + '</span></span>'; }).join('') + '</div>' : '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า (' + diff.items + ' ชิ้น)!</p>';
+  gameArea.innerHTML = hintHTML + '<div class="shop-grid" id="shop-grid"></div><div class="basket-zone" id="basket"><span class="basket-label">🧺 ตะกร้าว่างเปล่า</span></div>';
+  var grid = document.getElementById('shop-grid');
+  var allItems = SHOP_ITEMS.slice().sort(function() { return Math.random() - 0.5; });
   allItems.forEach(function(item) {
-    const div = document.createElement('div');
+    var div = document.createElement('div');
     div.className = 'shop-item';
     div.textContent = item.icon;
     div.title = item.name;
@@ -386,11 +366,11 @@ function startShoppingGame() {
 }
 
 function selectShopItem(el, item) {
-  const popup = document.getElementById('item-popup');
+  var popup = document.getElementById('item-popup');
   document.getElementById('popup-icon').textContent = item.icon;
   document.getElementById('popup-name').textContent = item.name;
   document.getElementById('popup-desc').textContent = item.desc;
-  const pickupBtn = document.getElementById('popup-pickup');
+  var pickupBtn = document.getElementById('popup-pickup');
   pickupBtn.style.display = 'inline-block';
   pickupBtn.onclick = function() { closeItemPopup(); addToBasket(item, el); };
   popup.classList.add('show');
@@ -398,13 +378,13 @@ function selectShopItem(el, item) {
 
 function addToBasket(item, el) {
   if (el && el.classList.contains('matched')) return;
-  const isTarget = state.targetItems.some(function(t) { return t.icon === item.icon; });
+  var isTarget = state.targetItems.some(function(t) { return t.icon === item.icon; });
   if (el) el.classList.add('selected');
   if (isTarget) {
     playSound('correct');
     if (el) { el.classList.add('matched'); el.classList.remove('selected'); }
     state.selectedItems.push(item);
-    const basket = document.getElementById('basket');
+    var basket = document.getElementById('basket');
     if (state.selectedItems.length === 0) { basket.innerHTML = '<span class="basket-label">🧺 ตะกร้าว่างเปล่า</span>'; }
     else { basket.innerHTML = state.selectedItems.map(function(s) { return '<span title="' + s.name + '">' + s.icon + '</span>'; }).join('') + '<span style="font-size:0.7rem;color:rgba(255,255,255,0.7);margin-left:8px;">' + state.selectedItems.length + '/' + state.targetItems.length + '</span>'; }
     if (state.selectedItems.length === state.targetItems.length) { clearInterval(state.timerInterval); playSound('win'); setTimeout(function() { endGame(true); }, 500); }
@@ -416,41 +396,32 @@ function addToBasket(item, el) {
 
 function startPlaceholderGame(loc) {
   state.gameTimer = 10;
-  const gameArea = document.getElementById('game-area');
+  var gameArea = document.getElementById('game-area');
   gameArea.innerHTML = '<p class="goal-text">🎮 <strong>' + loc.name + '</strong> mini-game</p><p style="margin:20px 0;color:#888;">รอเกมถัดไปที่จะสร้างนะคะ</p><p style="font-size:2rem;">' + loc.icon + '</p>';
   startTimer();
 }
 
 function startTimer() {
   clearInterval(state.timerInterval);
-  state.gameTimer = 120;
-  state.timerExtended = false;
   updateTimerDisplay();
   state.timerInterval = setInterval(function() {
     state.gameTimer--;
     updateTimerDisplay();
-    if (state.gameTimer <= 0) {
-      if (!state.timerExtended) {
-        showExtendTimerPopup();
-      } else {
-        clearInterval(state.timerInterval);
-        endGame(false);
-      }
-    }
+    if (state.gameTimer <= 0) { clearInterval(state.timerInterval); endGame(false); }
   }, 1000);
 }
 
 function updateTimerDisplay() {
-  const el = document.getElementById('game-timer');
+  var el = document.getElementById('game-timer');
   el.textContent = state.gameTimer;
   el.classList.toggle('warning', state.gameTimer <= 10);
 }
 
 function endGame(won) {
   clearInterval(state.timerInterval);
-  const loc = state.currentGame;
-  let stars = 0;
-  if (won) { stars = 3; state.totalCoins += 50; }
+  var loc = state.currentGame;
+  var stars = won ? 3 : 0;
+  if (won) { state.totalCoins += 50; }
   loc.stars = Math.max(loc.stars, stars);
   if (won && !loc.completed) { loc.completed = true; state.totalPhotos++; state.currentLocation = Math.min(state.currentLocation + 1, LOCATIONS.length - 1); }
   state.totalStars = LOCATIONS.reduce(function(sum, l) { return sum + l.stars; }, 0);
@@ -476,11 +447,11 @@ function backToMap() {
 }
 
 function showItemPopup(item, showLink) {
-  const popup = document.getElementById('item-popup');
+  var popup = document.getElementById('item-popup');
   document.getElementById('popup-icon').textContent = item.icon;
   document.getElementById('popup-name').textContent = item.name;
   document.getElementById('popup-desc').textContent = item.desc;
-  const pickupBtn = document.getElementById('popup-pickup');
+  var pickupBtn = document.getElementById('popup-pickup');
   if (showLink) { pickupBtn.style.display = 'none'; }
   else { pickupBtn.style.display = 'inline-block'; pickupBtn.onclick = function() { closeItemPopup(); addToBasket(item, null); }; }
   popup.classList.add('show');
@@ -488,12 +459,9 @@ function showItemPopup(item, showLink) {
 
 function closeItemPopup() { document.getElementById('item-popup').classList.remove('show'); }
 
-// ============ SOUND EFFECTS (Web Audio API) ============
-var audioCtx = null;
-function getAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); return audioCtx; }
 function playSound(type) {
   try {
-    var ctx = getAudio();
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
     var osc = ctx.createOscillator();
     var gain = ctx.createGain();
     osc.connect(gain);
@@ -529,36 +497,28 @@ function playSound(type) {
   } catch(e) {}
 }
 
-function showExtendTimerPopup() {
-  clearInterval(state.timerInterval);
-  const popup = document.getElementById('item-popup');
-  document.getElementById('popup-icon').textContent = '⏰';
-  document.getElementById('popup-name').textContent = 'หมดเวลาแล้ว!';
-  document.getElementById('popup-desc').textContent = 'ต้องการต่อเวลาเพื่อดูข้อมูลเพิ่มเติมหรือไม่?';
-  const pickupBtn = document.getElementById('popup-pickup');
-  pickupBtn.textContent = '+60 วินาที ต่อเล่น!';
-  pickupBtn.style.display = 'inline-block';
-  pickupBtn.onclick = function() {
-    closeItemPopup();
-    state.timerExtended = true;
-    state.gameTimer = 60;
-    updateTimerDisplay();
-    state.timerInterval = setInterval(function() {
-      state.gameTimer--;
-      updateTimerDisplay();
-      if (state.gameTimer <= 0) { clearInterval(state.timerInterval); endGame(false); }
-    }, 1000);
-  };
-  popup.classList.add('show');
+function startGame() {
+  state.playerName = document.getElementById('player-name-input').value.trim();
+  loadGame(); updateMapUI(); showScreen('map-screen');
 }
 
-function startGame() { loadGame(); updateMapUI(); showScreen('map-screen'); }
-
 document.getElementById('start-btn').addEventListener('click', startGame);
+document.getElementById('player-name-input').addEventListener('input', function() {
+  var val = this.value.trim();
+  var btn = document.getElementById('start-btn');
+  if (val.length > 0) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    btn.style.cursor = 'not-allowed';
+  }
+});
 document.getElementById('travel-ready-btn').addEventListener('click', function() { if (state.currentGame) startMiniGame(state.currentGame); });
 
 loadGame();
 </script>
-
 </body>
 </html>
