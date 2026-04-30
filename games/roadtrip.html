@@ -8,9 +8,9 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root { --pink: #FFB7C5; --blue: #A8D8EA; --yellow: #FFD93D; --cream: #FFF8F0; --text: #4A4A4A; }
-body { font-family: 'Sarabun', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; overflow: hidden; }
+body { font-family: 'Sarabun', sans-serif; background: var(--cream); color: var(--text); min-height: 100dvh; overflow: hidden; }
 h1, h2, h3 { font-family: 'Mitr', sans-serif; }
-.screen { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; }
+.screen { display: none; width: 100vw; min-height: 100dvh; position: fixed; top: 0; left: 0; }
 .screen.active { display: flex; }
 
 /* START */
@@ -78,7 +78,7 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .game-timer { font-family: 'Mitr', sans-serif; font-size: 1.5rem; margin-left: auto; }
 .game-timer.warning { color: #FF6B6B; animation: blink 0.5s infinite; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-.game-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+.game-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .game-area { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
 .shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
 .shop-item { background: var(--cream); border-radius: 12px; padding: 12px; font-size: 2rem; cursor: pointer; transition: transform 0.15s, background 0.15s; border: 2px solid transparent; }
@@ -116,11 +116,20 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .promo-btn { background: var(--pink); color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; }
 
 @media (max-width: 600px) {
-  #start-screen img.logo { width: 380px; }
+  #start-screen img.logo { width: 88vw; }
   #start-screen h1 { font-size: 2rem; }
   .location-node { width: 60px; height: 60px; }
-  .shop-grid { grid-template-columns: repeat(3, 1fr); }
-  .route-map { height: 320px; }
+  .shop-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .route-map { height: 280px; }
+  .game-area { padding: 16px; }
+  .game-area .shop-item { font-size: 1.6rem; padding: 8px; }
+  .item-popup-card { padding: 20px; }
+  .result-card { padding: 24px; }
+}
+@media (max-width: 400px) {
+  .shop-grid { grid-template-columns: repeat(2, 1fr); }
+  .game-timer { font-size: 1.2rem; }
+  .goal-text { font-size: 0.85rem; }
 }
 </style>
 </head>
