@@ -119,7 +119,7 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .rock-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px auto; max-width: 320px; }
 .rock { background: linear-gradient(145deg, #d4c5a9, #b8a88a); border-radius: 12px; padding: 16px; font-size: 2.2rem; text-align: center; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 4px 12px rgba(0,0,0,0.15); user-select: none; position: relative; }
 .rock:active { transform: scale(0.95); }
-.rock.queen { background: linear-gradient(145deg, #f5e6c8, #e8d4a0); box-shadow: 0 0 24px rgba(255,215,0,0.7); animation: queen-glow 0.6s ease-in-out infinite alternate; }
+.rock.queen { background: linear-gradient(145deg, #f5e6c8, #e8d4a0); background-image: url('images/queen-head-real.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; box-shadow: 0 0 24px rgba(255,215,0,0.7); animation: queen-glow 0.6s ease-in-out infinite alternate; }
 @keyframes queen-glow { from { box-shadow: 0 0 16px rgba(255,215,0,0.5); } to { box-shadow: 0 0 32px rgba(255,215,0,0.9); } }
 .rock.wrong { animation: shake 0.3s ease; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
@@ -783,7 +783,7 @@ function showQueenRock() {
   do { newPos = Math.floor(Math.random() * 9); } while (newPos === state.yehliuQueenPos);
   state.yehliuQueenPos = newPos;
   var rock = el('rock-' + newPos);
-  if (rock) { rock.classList.add('queen'); rock.innerHTML = '👸'; }
+  if (rock) { rock.classList.add('queen'); /* image shown via CSS background-image */ }
   // Auto hide after 1.2s
   clearTimeout(state.yehliuHideTimeout);
   state.yehliuHideTimeout = setTimeout(function() {
