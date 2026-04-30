@@ -115,6 +115,18 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .promo-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .promo-btn { background: var(--pink); color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; }
 
+/* YEhLIU ROCK GRID */
+.rock-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px auto; max-width: 320px; }
+.rock { background: linear-gradient(145deg, #d4c5a9, #b8a88a); border-radius: 12px; padding: 16px; font-size: 2.2rem; text-align: center; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 4px 12px rgba(0,0,0,0.15); user-select: none; position: relative; }
+.rock:active { transform: scale(0.95); }
+.rock.queen { background: linear-gradient(145deg, #f5e6c8, #e8d4a0); box-shadow: 0 0 24px rgba(255,215,0,0.7); animation: queen-glow 0.6s ease-in-out infinite alternate; }
+@keyframes queen-glow { from { box-shadow: 0 0 16px rgba(255,215,0,0.5); } to { box-shadow: 0 0 32px rgba(255,215,0,0.9); } }
+.rock.wrong { animation: shake 0.3s ease; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.rock-caught { position: absolute; top: -10px; right: -6px; font-size: 1.4rem; }
+.yehliu-score { font-size: 1.1rem; margin: 12px 0; color: var(--text); }
+.yehliu-hint { font-size: 0.85rem; color: #888; margin-top: 8px; }
+
 @media (max-width: 600px) {
   #start-screen img.logo { width: 88vw; }
   #start-screen h1 { font-size: 2rem; }
@@ -217,7 +229,7 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
     <h2 id="result-title">ผลเกม</h2>
     <p class="location-name" id="result-location">สถานที่</p>
     <div class="stars-earned" id="result-stars">⭐⭐⭐</div>
-    <div class="photo-badge" id="photo-badge">📸 เก็บภาพแล้ว!</div>
+    <div class="photo-badge" id="photo-badge">📸 Photo collected!</div>
     <div class="knowledge-card"><p id="knowledge-text">ความรู้เกี่ยวกับที่นี่</p></div>
     <div class="promo-card">
       <p id="promo-text">อยากไปจริงๆ ใช่ไหมล่ะ?</p>
@@ -274,6 +286,8 @@ var LANGS = {
     basketEmpty: '🧺 ตะกร้าว่างเปล่า',
     removeHint: 'คลิกเอาออก',
     placeholderGame: 'รอเกมถัดไปที่จะสร้างนะคะ',
+    goalYehliu: '👸 จับหัวราชินี! กดตอนที่หินเรืองแสงทอง!',
+    yehliuCatches: 'จับได้:',
     LOC: [
       { nameTH: 'ซีเหมินติง', name: 'Ximending', travelMsg: 'เจอกันที่จุดนัดพบนะครับ! ✨', knowledge: 'ซีเหมินติง (Ximending) เป็นถนนช้อปปิ้งที่ขึ้นชื่อที่สุดในไต้หวัน เต็มไปด้วยร้านอาหาร ร้านค้า และแสงสียามค่ำคืน' },
       { nameTH: 'อุทยานหินเยว่หลิว', name: 'Yehliu Geopark', travelMsg: 'เดินทางประมาณ 50 นาทีนะครับ! ✨', knowledge: 'อุทยานเยว่หลิวมีหินรูปร่างแปลกมากมาย รวมถึง Queens Head ที่ขึ้นชื่อ เกิดจากลมและน้ำทะเลกัดเซาะมานานหลายล้านปี' },
@@ -312,6 +326,8 @@ var LANGS = {
     basketEmpty: '🧺 Basket is empty',
     removeHint: 'Click to remove',
     placeholderGame: 'Next mini-game coming soon!',
+    goalYehliu: '👸 Find the Queen\'s Head! Tap when the rock glows gold!',
+    yehliuCatches: 'Caught:',
     LOC: [
       { nameTH: 'Ximending', name: 'Ximending', travelMsg: 'See you at the meeting point! ✨', knowledge: 'Ximending is Taiwan\'s most famous shopping district, full of restaurants, shops and bright night lights.' },
       { nameTH: 'Yehliu Geopark', name: 'Yehliu Geopark', travelMsg: 'About 50 minutes away! ✨', knowledge: 'Yehliu Geopark features uniquely shaped rocks including the famous Queens Head, formed by wind and sea erosion over millions of years.' },
@@ -435,6 +451,15 @@ function setLang(lang) {
     if (priceLabel) {
       priceLabel.textContent = '💰 ' + L.priceTotal;
     }
+    // Update Yehliu goal text if on Yehliu game
+    var goalEl = document.querySelector('.goal-text');
+    if (goalEl && state.currentGame.id === 1) {
+      goalEl.textContent = L.goalYehliu;
+    }
+    var catchLabel = el('yehliu-score');
+    if (catchLabel) {
+      catchLabel.innerHTML = L.yehliuCatches + ' <strong id="catch-count">' + state.yehliuCatches + '</strong>';
+    }
   }
   // Update difficulty button + travel text if on travel screen
   if (state.currentScene === 'travel') {
@@ -465,6 +490,7 @@ function applyLangUI() {
   el('promo-text').textContent = L.promoText;
   el('promo-btn1').textContent = L.promoBtn1;
   el('promo-btn2').textContent = L.promoBtn2;
+  el('photo-badge').textContent = L.photoBadge;
   // Node labels
   for (var i = 0; i < 5; i++) {
     var nameEl = el('node-name-' + i);
@@ -584,6 +610,7 @@ function startMiniGame() {
   el('game-title').textContent = locD.nameTH + ' Mini Game';
   el('game-location-tag').innerHTML = locD.nameTH + ' <small>' + locD.name + '</small>';
   if (state.currentGame.id === 0) startShoppingGame();
+  else if (state.currentGame.id === 1) startGame2_Yehliu();
   else startPlaceholderGame();
 }
 
@@ -727,11 +754,73 @@ function updatePriceDisplay() {
   }
 }
 
-function startPlaceholderGame() {
+function startGame2_Yehliu() {
+  var diff = DIFFICULTY[state.difficulty];
+  state.gameTimer = diff.timer;
+  state.yehliuCatches = 0;
+  state.yehliuQueenPos = -1;
+  state.yehliuShowingQueen = false;
   var L = LANGS[state.lang];
-  state.gameTimer = 10;
-  el('game-area').innerHTML = '<p class="goal-text">🎮 <strong>' + L.LOC[state.currentGame.id].nameTH + '</strong> Mini Game</p><p style="margin:20px 0;color:#888;">' + L.placeholderGame + '</p><p style="font-size:2rem;">' + state.currentGame.icon + '</p>';
+  var grid = '<div class="rock-grid" id="rock-grid">';
+  for (var i = 0; i < 9; i++) {
+    grid += '<div class="rock" id="rock-' + i + '" onclick="tapRock(' + i + ')">🪨</div>';
+  }
+  grid += '</div>';
+  var isHard = state.difficulty === 'hard';
+  el('game-area').innerHTML = '<p class="goal-text">' + L.goalYehliu + '</p><div class="yehliu-score" id="yehliu-score">' + L.yehliuCatches + ' <strong id="catch-count">0</strong></div>' + grid + '<p class="yehliu-hint" id="yehliu-hint"></p>';
+  state.yehliuInterval = setInterval(showQueenRock, 900);
   startTimer();
+}
+
+function showQueenRock() {
+  // Hide previous queen
+  if (state.yehliuQueenPos >= 0) {
+    var prev = el('rock-' + state.yehliuQueenPos);
+    if (prev) { prev.classList.remove('queen'); prev.innerHTML = '🪨'; }
+  }
+  // Pick new random rock (not the same as last)
+  var newPos;
+  do { newPos = Math.floor(Math.random() * 9); } while (newPos === state.yehliuQueenPos);
+  state.yehliuQueenPos = newPos;
+  var rock = el('rock-' + newPos);
+  if (rock) { rock.classList.add('queen'); rock.innerHTML = '👸'; }
+  // Auto hide after 1.2s
+  clearTimeout(state.yehliuHideTimeout);
+  state.yehliuHideTimeout = setTimeout(function() {
+    if (state.yehliuQueenPos >= 0) {
+      var r = el('rock-' + state.yehliuQueenPos);
+      if (r) { r.classList.remove('queen'); r.innerHTML = '🪨'; }
+    }
+  }, 1200);
+}
+
+function tapRock(idx) {
+  var rock = el('rock-' + idx);
+  if (!rock) return;
+  if (idx === state.yehliuQueenPos && rock.classList.contains('queen')) {
+    // Caught the queen!
+    state.yehliuCatches++;
+    playSound('win');
+    rock.innerHTML = '✨';
+    rock.classList.remove('queen');
+    el('catch-count').textContent = state.yehliuCatches;
+    clearTimeout(state.yehliuHideTimeout);
+    state.yehliuQueenPos = -1;
+    // Check win condition
+    var catchesNeeded = state.difficulty === 'easy' ? 5 : state.difficulty === 'normal' ? 7 : 10;
+    if (state.yehliuCatches >= catchesNeeded) {
+      clearInterval(state.yehliuInterval);
+      clearTimeout(state.yehliuHideTimeout);
+      playSound('win');
+      setTimeout(endGame, 600);
+    }
+  } else {
+    // Wrong rock — deduct 3 seconds
+    playSound('wrong');
+    state.gameTimer = Math.max(0, state.gameTimer - 3);
+    rock.classList.add('wrong');
+    setTimeout(function() { rock.classList.remove('wrong'); }, 300);
+  }
 }
 
 function startTimer() {
