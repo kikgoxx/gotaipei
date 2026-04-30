@@ -7,46 +7,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;600;700&family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-:root { --pink: #FFB7C5; --blue: #A8D8EA; --yellow: #FFD93D; --cream: #FFF8F0; --text: #4A4A4A; --white: #FFFFFF; }
+:root { --pink: #FFB7C5; --blue: #A8D8EA; --yellow: #FFD93D; --cream: #FFF8F0; --text: #4A4A4A; }
 body { font-family: 'Sarabun', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; overflow: hidden; }
 h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .screen { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; }
 .screen.active { display: flex; }
 
 /* START */
-#start-screen { flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(180deg, #A8D8EA 0%, #FFF8F0 100%); gap: 24px; padding: 40px; }
+#start-screen { flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(180deg, #A8D8EA 0%, #FFF8F0 100%); gap: 20px; padding: 40px; }
 #start-screen img.logo { width: 500px; max-width: 85vw; border-radius: 24px; box-shadow: 0 12px 48px rgba(0,0,0,0.18); }
 #start-screen h1 { font-size: 3rem; color: var(--text); text-align: center; }
-#start-screen p { color: #888; font-size: 1.2rem; text-align: center; }
+#start-screen .subtitle { color: #888; font-size: 1.2rem; text-align: center; }
+.lang-toggle { position: fixed; top: 16px; right: 16px; display: flex; gap: 4px; background: white; border-radius: 20px; padding: 4px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); z-index: 100; }
+.lang-toggle button { padding: 6px 14px; border-radius: 16px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; color: #888; transition: all 0.2s; }
+.lang-toggle button.active { background: var(--pink); color: white; }
 .btn { background: linear-gradient(135deg, #FF9BAB, #FF6B8A); color: white; border: none; padding: 18px 52px; border-radius: 50px; font-size: 1.3rem; font-family: 'Mitr', sans-serif; font-weight: 700; cursor: pointer; box-shadow: 0 6px 24px rgba(255,107,138,0.5); transition: transform 0.15s, box-shadow 0.15s; }
 .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(255,107,138,0.6); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:disabled:hover { transform: none; }
 
 /* MAP */
 #map-screen { flex-direction: column; background: linear-gradient(180deg, #E8F4F8 0%, #FFF8F0 60%); }
-.map-header { padding: 20px; text-align: center; background: white; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.map-header { padding: 16px 20px 12px; text-align: center; background: white; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 .map-header h2 { color: var(--text); font-size: 1.5rem; }
-.map-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; }
+.player-info-bar { display: flex; justify-content: center; gap: 24px; padding: 8px 16px; background: #f8f8f8; border-bottom: 1px solid #eee; font-size: 0.9rem; color: #666; }
+.player-info-bar span { display: flex; align-items: center; gap: 6px; }
+.map-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
 .route-map { position: relative; width: 100%; max-width: 700px; height: 400px; }
 .route-line { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.location-node { position: absolute; width: 80px; height: 80px; border-radius: 50%; background: white; box-shadow: 0 4px 16px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 3px solid transparent; }
-.location-node:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(0,0,0,0.18); }
+.location-node { position: absolute; width: 80px; height: 80px; border-radius: 50%; background: white; box-shadow: 0 4px 16px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; border: 3px solid transparent; }
+.location-node:hover { transform: scale(1.08); }
 .location-node.locked { filter: grayscale(0.7); opacity: 0.7; cursor: not-allowed; }
 .location-node.locked:hover { transform: none; }
 .location-node.completed { border-color: var(--yellow); }
 .location-node.current { border-color: var(--pink); animation: pulse 2s infinite; }
 @keyframes pulse { 0%, 100% { box-shadow: 0 4px 16px rgba(255,183,197,0.4); } 50% { box-shadow: 0 4px 32px rgba(255,183,197,0.8); } }
-.location-node .node-icon { font-size: 2rem; }
-.location-node .node-name { font-size: 0.7rem; font-weight: 600; margin-top: 4px; text-align: center; line-height: 1.3; }
-.location-node .node-name small { display: block; font-size: 0.55rem; color: #888; }
-.location-node .node-stars { font-size: 0.8rem; margin-top: 2px; }
-.location-node .lock-icon { font-size: 1.5rem; }
+.node-icon { font-size: 2rem; }
+.node-name { font-size: 0.7rem; font-weight: 600; margin-top: 4px; text-align: center; line-height: 1.3; }
+.node-name small { display: block; font-size: 0.55rem; color: #888; }
+.node-stars { font-size: 0.8rem; margin-top: 2px; }
+.lock-icon { font-size: 1.5rem; }
 #node-0 { top: 55%; left: 2%; transform: translateY(-50%); }
 #node-1 { top: 30%; left: 22%; transform: translateY(-50%); }
 #node-2 { top: 60%; left: 42%; transform: translateY(-50%); }
 #node-3 { top: 25%; left: 62%; transform: translateY(-50%); }
 #node-4 { top: 55%; left: 82%; transform: translateY(-50%); }
 #van-marker { position: absolute; top: 50%; left: 2%; transform: translate(-50%, -50%); transition: left 3s ease-in-out, top 3s ease-in-out; z-index: 10; }
-#van-marker svg { width: 45px; height: 34px; }
 .stats-bar { display: flex; justify-content: center; gap: 32px; padding: 16px; background: white; box-shadow: 0 -2px 12px rgba(0,0,0,0.06); }
 .stat-item { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 500; }
 .stat-item span { font-size: 1.4rem; }
@@ -54,31 +60,32 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 /* TRAVEL */
 #travel-screen { flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(180deg, #A8D8EA 0%, #FFF8F0 100%); gap: 24px; }
 .road-animation { position: relative; width: 80%; height: 120px; }
-.road-line-travel { position: absolute; top: 50%; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, #ccc 0px, #ccc 20px, transparent 20px, transparent 40px); transform: translateY(-50%); border-radius: 3px; }
+.road-line-travel { position: absolute; top: 50%; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, #ccc 0px, #ccc 20px, transparent 20px, transparent 40px); transform: translateY(-50%); }
 #travel-van { position: absolute; top: 50%; left: 0%; transform: translateY(-50%); transition: left 2.3s ease-in-out; z-index: 10; }
-#travel-van svg { width: 60px; height: 45px; }
 @keyframes van-bounce { 0%, 100% { transform: translateY(-50%) translateX(0); } 50% { transform: translateY(-56%) translateX(3px); } }
 #travel-van.animating { animation: van-bounce 0.35s ease-in-out infinite; }
 .travel-text { font-family: 'Mitr', sans-serif; font-size: 1.2rem; color: var(--text); text-align: center; max-width: 400px; }
-.btn-diff { padding: 12px 20px; border-radius: 14px; border: none; font-size: 14px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; font-weight: 600; }
-.btn-diff:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-.btn-diff.selected { box-shadow: 0 0 0 3px #FFB7C5, 0 4px 16px rgba(255,183,197,0.4); }
+.btn-diff { padding: 12px 20px; border-radius: 14px; border: none; font-size: 14px; cursor: pointer; font-weight: 600; background: #eee; color: #333; transition: transform 0.15s; }
+.btn-diff:hover { transform: scale(1.05); }
+.btn-diff.selected { background: var(--pink); color: white; }
 
 /* GAME */
 #game-screen { flex-direction: column; background: var(--cream); }
 .game-header { padding: 16px 20px; background: white; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
-.game-header .back-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 8px; }
+.back-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 8px; }
 .game-header h2 { font-size: 1.3rem; }
-.game-header .location-tag { background: var(--blue); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
-.game-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; gap: 20px; }
+.location-tag { background: var(--blue); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
+.game-timer { font-family: 'Mitr', sans-serif; font-size: 1.5rem; margin-left: auto; }
+.game-timer.warning { color: #FF6B6B; animation: blink 0.5s infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.game-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
 .game-area { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
 .shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
 .shop-item { background: var(--cream); border-radius: 12px; padding: 12px; font-size: 2rem; cursor: pointer; transition: transform 0.15s, background 0.15s; border: 2px solid transparent; }
 .shop-item:hover { transform: scale(1.05); background: var(--blue); }
-.shop-item.selected { border-color: var(--pink); background: #FFE8EE; }
 .shop-item.matched { opacity: 0.4; pointer-events: none; }
 .basket-zone { background: linear-gradient(135deg, var(--pink) 0%, #FF9BAB 100%); border-radius: 16px; padding: 16px; margin-top: 16px; min-height: 80px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; color: white; font-weight: 600; }
-.basket-zone .basket-label { font-size: 0.9rem; opacity: 0.9; }
+.basket-label { font-size: 0.9rem; opacity: 0.9; }
 .goal-text { font-size: 0.95rem; color: #888; margin-bottom: 16px; }
 
 /* POPUP */
@@ -86,22 +93,18 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .item-popup.show { display: flex; }
 .item-popup-card { background: white; border-radius: 20px; padding: 28px; max-width: 320px; width: 90%; text-align: center; box-shadow: 0 16px 48px rgba(0,0,0,0.2); animation: pop-in 0.2s ease-out; }
 @keyframes pop-in { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.item-popup-card .popup-icon { font-size: 3.5rem; margin-bottom: 12px; }
+.popup-icon { font-size: 3.5rem; margin-bottom: 12px; }
 .item-popup-card h3 { font-family: 'Mitr', sans-serif; font-size: 1.4rem; color: var(--text); margin-bottom: 8px; }
 .item-popup-card p { color: #888; font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; }
-.item-popup-card .popup-btn { display: inline-block; background: var(--pink); color: white; padding: 12px 28px; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; border: none; width: 100%; margin-top: 8px; }
-.game-timer { font-family: 'Mitr', sans-serif; font-size: 1.5rem; color: var(--text); }
-.game-timer.warning { color: #FF6B6B; animation: blink 0.5s infinite; }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.popup-btn { display: inline-block; background: var(--pink); color: white; padding: 12px 28px; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; border: none; width: 100%; }
 
 /* RESULT */
 #result-screen { flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(180deg, #FFF8F0 0%, #FFE8EE 100%); gap: 24px; text-align: center; }
 .result-card { background: white; border-radius: 24px; padding: 40px; box-shadow: 0 8px 40px rgba(0,0,0,0.1); max-width: 400px; width: 90%; }
 .result-card h2 { font-size: 1.8rem; margin-bottom: 8px; }
-.result-card .location-name { color: var(--pink); font-size: 1.2rem; margin-bottom: 24px; }
+.location-name { color: var(--pink); font-size: 1.2rem; margin-bottom: 24px; }
 .stars-earned { font-size: 3rem; margin: 20px 0; animation: stars-pop 0.6s ease-out; }
 @keyframes stars-pop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.2); } 100% { transform: scale(1); opacity: 1; } }
-.stars-earned span { margin: 0 4px; }
 .stars-earned span.filled { color: var(--yellow); text-shadow: 0 0 20px rgba(255,217,61,0.6); }
 .stars-earned span.empty { color: #ddd; }
 .knowledge-card { background: var(--cream); border-radius: 16px; padding: 16px; margin: 20px 0; text-align: left; }
@@ -110,14 +113,12 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 .promo-card { background: linear-gradient(135deg, #FFF8F0 0%, #FFE8EE 100%); border-radius: 16px; padding: 16px; margin-top: 16px; font-size: 0.9rem; }
 .promo-card p { margin-bottom: 12px; color: #666; }
 .promo-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.promo-btn { background: var(--pink); color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; transition: transform 0.15s; }
-.promo-btn:hover { transform: scale(1.05); }
+.promo-btn { background: var(--pink); color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; }
 
 @media (max-width: 600px) {
   #start-screen img.logo { width: 380px; }
   #start-screen h1 { font-size: 2rem; }
   .location-node { width: 60px; height: 60px; }
-  .location-node .node-icon { font-size: 1.5rem; }
   .shop-grid { grid-template-columns: repeat(3, 1fr); }
   .route-map { height: 320px; }
 }
@@ -125,43 +126,56 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 </head>
 <body>
 
+<div class="lang-toggle">
+  <button id="lang-th" onclick="setLang('th')">TH</button>
+  <button id="lang-en" onclick="setLang('en')">EN</button>
+</div>
+
 <div id="start-screen" class="screen active">
   <img src="roadtrip-logo.jpg" alt="Road Trip Taiwan" class="logo">
   <h1>🚐 Road Trip Taiwan</h1>
-  <p>Go Taipei พาเที่ยว 5 สถานที่ยอดฮิต</p>
+  <p class="subtitle" id="start-subtitle">Go Taipei พาเที่ยว 5 สถานที่ยอดฮิต</p>
   <input type="text" id="player-name-input" placeholder="ใส่ชื่อของคุณ..." style="padding:14px 20px;border-radius:50px;border:2px solid #FFB7C5;font-size:1rem;font-family:'Sarabun',sans-serif;width:280px;text-align:center;outline:none;background:#fff;">
-  <button class="btn" id="start-btn" style="opacity:0.5;cursor:not-allowed;" disabled>เริ่มเดินทาง!</button>
+  <button class="btn" id="start-btn" disabled>เริ่มเดินทาง!</button>
   <p style="margin-top:24px;font-size:0.8rem;color:#aaa;">Version 1.0.0 | Developed by Panya &amp; Ada</p>
 </div>
 
 <div id="map-screen" class="screen">
-  <div class="map-header"><h2>แผนที่เส้นทาง <span>Road Trip Taiwan</span></h2></div>
+  <div class="map-header"><h2 id="map-title">แผนที่เส้นทาง Road Trip Taiwan</h2></div>
+  <div class="player-info-bar" id="player-info-bar">
+    <span id="info-name">👤</span>
+    <span id="info-meeting">📍</span>
+  </div>
   <div class="map-body">
     <div class="route-map">
-      <svg class="route-line" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M 5 55 Q 13 42 22 30 Q 32 18 42 60 Q 52 78 62 25 Q 72 12 82 55 Q 88 75 95 55" fill="none" stroke="#FFB7C5" stroke-width="1.2" stroke-dasharray="4,3" stroke-linecap="round"/></svg>
-      <div id="van-marker"><svg viewBox="0 0 60 45" width="45" height="34" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="8" width="50" height="28" rx="8" fill="#A8D8EA"/><rect x="5" y="8" width="50" height="14" rx="8" fill="#89C5D9"/><rect x="10" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><rect x="26" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><line x1="42" y1="10" x2="42" y2="34" stroke="#6BA5B8" stroke-width="1.5"/><circle cx="18" cy="36" r="7" fill="#4A4A4A"/><circle cx="18" cy="36" r="3" fill="#888"/><circle cx="42" cy="36" r="7" fill="#4A4A4A"/><circle cx="42" cy="36" r="3" fill="#888"/><rect x="48" y="18" width="6" height="8" rx="2" fill="#FFD93D"/></svg></div>
-      <div class="location-node" id="node-0" onclick="selectLocation(0)"><div class="node-icon">🏠</div><div class="node-name">ซีเหมินติง<small>Ximending</small></div><div class="node-stars" id="stars-0">☆☆☆</div></div>
-      <div class="location-node locked" id="node-1" onclick="selectLocation(1)"><div class="lock-icon">🔒</div><div class="node-name">อุทยานหินเยว่หลิว<small>Yehliu</small></div><div class="node-stars" id="stars-1"></div></div>
-      <div class="location-node locked" id="node-2" onclick="selectLocation(2)"><div class="lock-icon">🔒</div><div class="node-name">ท่าเรือเจิ้งปิ้น<small>Zhengbin</small></div><div class="node-stars" id="stars-2"></div></div>
-      <div class="location-node locked" id="node-3" onclick="selectLocation(3)"><div class="lock-icon">🔒</div><div class="node-name">หมู่บ้านจิ่วเฟิ่น<small>Jiufen</small></div><div class="node-stars" id="stars-3"></div></div>
-      <div class="location-node locked" id="node-4" onclick="selectLocation(4)"><div class="lock-icon">🔒</div><div class="node-name">หมู่บ้านสือเฟิ่น<small>Shifen</small></div><div class="node-stars" id="stars-4"></div></div>
+      <svg class="route-line" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M 5 55 Q 13 42 22 30 Q 32 18 42 60 Q 52 78 62 25 Q 72 12 82 55 Q 88 75 95 55" fill="none" stroke="#FFB7C5" stroke-width="1.2" stroke-dasharray="4,3" stroke-linecap="round"/></svg>
+      <div id="van-marker"><svg viewBox="0 0 60 45" width="45" height="34"><rect x="5" y="8" width="50" height="28" rx="8" fill="#A8D8EA"/><rect x="5" y="8" width="50" height="14" rx="8" fill="#89C5D9"/><rect x="10" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><rect x="26" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><circle cx="18" cy="36" r="7" fill="#4A4A4A"/><circle cx="18" cy="36" r="3" fill="#888"/><circle cx="42" cy="36" r="7" fill="#4A4A4A"/><circle cx="42" cy="36" r="3" fill="#888"/><rect x="48" y="18" width="6" height="8" rx="2" fill="#FFD93D"/></svg></div>
+      <div class="location-node" id="node-0" onclick="onNodeClick(0)"><div class="node-icon">🏠</div><div class="node-name" id="node-name-0">ซีเหมินติง<small>Ximending</small></div><div class="node-stars" id="stars-0">☆☆☆</div></div>
+      <div class="location-node locked" id="node-1" onclick="onNodeClick(1)"><div class="lock-icon">🔒</div><div class="node-name" id="node-name-1">อุทยานหินเยว่หลิว<small>Yehliu</small></div><div class="node-stars" id="stars-1"></div></div>
+      <div class="location-node locked" id="node-2" onclick="onNodeClick(2)"><div class="lock-icon">🔒</div><div class="node-name" id="node-name-2">ท่าเรือเจิ้งปิ้น<small>Zhengbin</small></div><div class="node-stars" id="stars-2"></div></div>
+      <div class="location-node locked" id="node-3" onclick="onNodeClick(3)"><div class="lock-icon">🔒</div><div class="node-name" id="node-name-3">หมู่บ้านจิ่วเฟิ่น<small>Jiufen</small></div><div class="node-stars" id="stars-3"></div></div>
+      <div class="location-node locked" id="node-4" onclick="onNodeClick(4)"><div class="lock-icon">🔒</div><div class="node-name" id="node-name-4">หมู่บ้านสือเฟิ่น<small>Shifen</small></div><div class="node-stars" id="stars-4"></div></div>
     </div>
   </div>
   <div class="stats-bar">
-    <div class="stat-item"><span>⭐</span> <span id="total-stars">0</span> ดาว</div>
-    <div class="stat-item"><span>📸</span> <span id="total-photos">0</span> ภาพ</div>
-    <div class="stat-item"><span>💰</span> <span id="total-coins">0</span> เหรียญ</div>
+    <div class="stat-item"><span>⭐</span> <span id="total-stars">0</span> <span id="lbl-stars">ดาว</span></div>
+    <div class="stat-item"><span>📸</span> <span id="total-photos">0</span> <span id="lbl-photos">ภาพ</span></div>
+    <div class="stat-item"><span>💰</span> <span id="total-coins">0</span> <span id="lbl-coins">เหรียญ</span></div>
   </div>
 </div>
 
 <div id="travel-screen" class="screen">
-  <div class="road-animation"><div class="road-line-travel"></div><div id="travel-van"><svg viewBox="0 0 60 45" width="60" height="45" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="8" width="50" height="28" rx="8" fill="#A8D8EA"/><rect x="5" y="8" width="50" height="14" rx="8" fill="#89C5D9"/><rect x="10" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><rect x="26" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><line x1="42" y1="10" x2="42" y2="34" stroke="#6BA5B8" stroke-width="1.5"/><circle cx="18" cy="36" r="7" fill="#4A4A4A"/><circle cx="18" cy="36" r="3" fill="#888"/><circle cx="42" cy="36" r="7" fill="#4A4A4A"/><circle cx="42" cy="36" r="3" fill="#888"/><rect x="48" y="18" width="6" height="8" rx="2" fill="#FFD93D"/></svg></div></div>
+  <div class="player-info-bar" id="travel-player-info">
+    <span id="travel-info-name">👤</span>
+    <span id="travel-info-meeting">📍</span>
+  </div>
+  <div class="road-animation"><div class="road-line-travel"></div><div id="travel-van"><svg viewBox="0 0 60 45" width="60" height="45"><rect x="5" y="8" width="50" height="28" rx="8" fill="#A8D8EA"/><rect x="5" y="8" width="50" height="14" rx="8" fill="#89C5D9"/><rect x="10" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><rect x="26" y="12" width="12" height="10" rx="3" fill="#FFF8F0"/><circle cx="18" cy="36" r="7" fill="#4A4A4A"/><circle cx="18" cy="36" r="3" fill="#888"/><circle cx="42" cy="36" r="7" fill="#4A4A4A"/><circle cx="42" cy="36" r="3" fill="#888"/><rect x="48" y="18" width="6" height="8" rx="2" fill="#FFD93D"/></svg></div></div>
   <p class="travel-text" id="travel-dest"></p>
   <div id="difficulty-select" style="display:none;margin:16px 0;text-align:center;">
-    <p style="font-size:0.9rem;color:#888;margin-bottom:12px;">เลือกระดับความยาก:</p>
+    <p id="diff-label" style="font-size:0.9rem;color:#888;margin-bottom:12px;">เลือกระดับความยาก:</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn-diff" data-diff="easy" onclick="selectDifficulty('easy')">🌱 Easy</button>
-      <button class="btn-diff" data-diff="hard" onclick="selectDifficulty('hard')">🔥 Hard</button>
+      <button class="btn-diff" id="btn-easy" onclick="selectDifficulty('easy')">🌱 Easy</button>
+      <button class="btn-diff" id="btn-hard" onclick="selectDifficulty('hard')">🔥 Hard</button>
     </div>
   </div>
   <div id="meeting-point-section" style="display:none;margin:12px 0;text-align:center;">
@@ -171,6 +185,10 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 </div>
 
 <div id="game-screen" class="screen">
+  <div class="player-info-bar" id="game-player-info">
+    <span id="game-info-name">👤</span>
+    <span id="game-info-meeting">📍</span>
+  </div>
   <div class="game-header">
     <button class="back-btn" onclick="backToMap()">←</button>
     <h2 id="game-title">เกม</h2>
@@ -181,138 +199,347 @@ h1, h2, h3 { font-family: 'Mitr', sans-serif; }
 </div>
 
 <div id="result-screen" class="screen">
+  <div class="player-info-bar" id="result-player-info">
+    <span id="result-info-name">👤</span>
+    <span id="result-info-meeting">📍</span>
+  </div>
   <div class="result-card">
     <h2 id="result-title">ผลเกม</h2>
     <p class="location-name" id="result-location">สถานที่</p>
     <div class="stars-earned" id="result-stars">⭐⭐⭐</div>
     <div class="photo-badge" id="photo-badge">📸 เก็บภาพแล้ว!</div>
-    <div class="knowledge-card"><p id="knowledge-text">ความรู้เกี่ยวกับที่นี่</p><p class="source" id="knowledge-source"></p></div>
+    <div class="knowledge-card"><p id="knowledge-text">ความรู้เกี่ยวกับที่นี่</p></div>
     <div class="promo-card">
-      <p>อยากไปจริงๆ ใช่ไหมล่ะ?</p>
+      <p id="promo-text">อยากไปจริงๆ ใช่ไหมล่ะ?</p>
       <div class="promo-btns">
-        <a href="https://www.gotaipei.net" target="_blank" class="promo-btn">🔎 ดูทริปจริง</a>
-        <a href="https://www.gotaipei.net" target="_blank" class="promo-btn">🚗 จองรถ</a>
+        <a href="https://www.gotaipei.net" target="_blank" class="promo-btn" id="promo-btn1">🔎 ดูทริปจริง</a>
+        <a href="https://www.gotaipei.net" target="_blank" class="promo-btn" id="promo-btn2">🚗 จองรถ</a>
       </div>
     </div>
   </div>
-  <button class="btn" onclick="backToMap()">ไปเที่ยวกันต่อ!</button>
+  <button class="btn" id="result-back-btn">ไปเที่ยวกันต่อ!</button>
 </div>
 
 <div class="item-popup" id="item-popup" onclick="if(event.target.id==='item-popup') closeItemPopup();">
   <div class="item-popup-card">
     <div class="popup-icon" id="popup-icon">🧋</div>
     <h3 id="popup-name">ชื่อสินค้า</h3>
-    <p id="popup-desc">รายละเอียดสินค้า</p>
+    <p id="popup-desc">รายละเอียด</p>
     <button class="popup-btn" id="popup-pickup">🧺 หยิบใส่ตะกร้า</button>
   </div>
 </div>
 
 <script>
+// ============================================================
+// i18n
+// ============================================================
+var LANGS = {
+  th: {
+    startSubtitle: 'Go Taipei พาเที่ยว 5 สถานที่ยอดฮิต',
+    namePlaceholder: 'ใส่ชื่อของคุณ...',
+    startBtn: 'เริ่มเดินทาง!',
+    mapTitle: 'แผนที่เส้นทาง Road Trip Taiwan',
+    lblStars: 'ดาว', lblPhotos: 'ภาพ', lblCoins: 'เหรียญ',
+    diffLabel: 'เลือกระดับความยาก:',
+    easyBtn: '🌱 Easy', hardBtn: '🔥 Hard',
+    meetingPlaceholder: 'ชื่อโรงแรมหรือจุดนัดพบ...',
+    btnFirstLoc: 'รถมาถึงแล้ว!',
+    btnOtherLoc: 'ไปกันเถอะ!',
+    priceTotal: 'ราคารวม:',
+    resultTitleWin: 'ภารกิจสำเร็จ!',
+    resultTitleLose: '⏰ หมดเวลา!',
+    photoBadge: '📸 เก็บภาพแล้ว!',
+    promoText: 'อยากไปจริงๆ ใช่ไหมล่ะ?',
+    promoBtn1: '🔎 ดูทริปจริง',
+    promoBtn2: '🚗 จองรถ',
+    resultBackWin: 'ไปเที่ยวกันต่อ!',
+    resultBackLose: 'กลับสู่แผนที่',
+    pickupBtn: '🧺 หยิบใส่ตะกร้า',
+    goalEasy: 'ภารกิจ : ซื้อของฝากให้เพื่อน 6 ชิ้น หยิบเลย!',
+    goalHard: 'ภารกิจ : ซื้อของฝากให้เพื่อน 6 ชิ้น หยิบเลย!',
+    priceNeed: 'ขาด ',
+    priceOver: 'เกินไปแล้ว ',
+    priceOK: ' — 🎉 ถึงจุด!',
+    priceSuffix: ' NTD',
+    basketEmpty: '🧺 ตะกร้าว่างเปล่า',
+    removeHint: 'คลิกเอาออก',
+    placeholderGame: 'รอเกมถัดไปที่จะสร้างนะคะ',
+    LOC: [
+      { nameTH: 'ซีเหมินติง', name: 'Ximending', travelMsg: 'เจอกันที่จุดนัดพบนะครับ! ✨', knowledge: 'ซีเหมินติง (Ximending) เป็นถนนช้อปปิ้งที่ขึ้นชื่อที่สุดในไต้หวัน เต็มไปด้วยร้านอาหาร ร้านค้า และแสงสียามค่ำคืน' },
+      { nameTH: 'อุทยานหินเยว่หลิว', name: 'Yehliu Geopark', travelMsg: 'เดินทางประมาณ 50 นาทีนะครับ! ✨', knowledge: 'อุทยานเยว่หลิวมีหินรูปร่างแปลกมากมาย รวมถึง Queens Head ที่ขึ้นชื่อ เกิดจากลมและน้ำทะเลกัดเซาะมานานหลายล้านปี' },
+      { nameTH: 'ท่าเรือเจิ้งปิ้น ตึกหลากสี', name: 'Zhengbin Port', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', knowledge: 'ท่าเรือเจิ้งปิ้นเคยเป็นท่าประมงขนาดใหญ่ที่สุดในไต้หวัน ตึกสีพาสเทลถ่ายรูปสวยมากในยามเย็น' },
+      { nameTH: 'หมู่บ้านจิ่วเฟิ่น', name: 'Jiufen Old Street', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', knowledge: 'หมู่บ้านจิ่วเฟิ่นเคยเป็นเมืองเหมืองทองในอดีต บ้านเรือนถูกสร้างไว้บนเนินเขาแคบๆ จนเป็นเอกลักษณ์' },
+      { nameTH: 'หมู่บ้านสือเฟิ่น', name: 'Shifen Old Street', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', knowledge: 'หมู่บ้านสือเฟิ่นมีน้ำตกสูง 20 เมตร เป็นจุดเด่นของอุทยาน และโคมลอยที่ปล่อยที่นี่เป็นของขวัญที่มีชื่อเสียง' }
+    ]
+  },
+  en: {
+    startSubtitle: 'Go Taipei takes you to 5 must-visit spots!',
+    namePlaceholder: 'Enter your name...',
+    startBtn: 'Start the trip!',
+    mapTitle: 'Route Map Road Trip Taiwan',
+    lblStars: 'stars', lblPhotos: 'photos', lblCoins: 'coins',
+    diffLabel: 'Select difficulty:',
+    easyBtn: '🌱 Easy', hardBtn: '🔥 Hard',
+    meetingPlaceholder: 'Hotel name or meeting point...',
+    btnFirstLoc: 'Van is here!',
+    btnOtherLoc: 'Let\'s go!',
+    priceTotal: 'Total:',
+    resultTitleWin: 'Mission Complete!',
+    resultTitleLose: '⏰ Time\'s up!',
+    photoBadge: '📸 Photo collected!',
+    promoText: 'Want to visit for real?',
+    promoBtn1: '🔎 View real trips',
+    promoBtn2: '🚗 Book a van',
+    resultBackWin: 'Continue exploring!',
+    resultBackLose: 'Back to map',
+    pickupBtn: '🧺 Add to basket',
+    goalEasy: 'Mission: Buy 6 souvenirs for friends. Go!',
+    goalHard: 'Mission: Buy 6 souvenirs for friends. Go!',
+    priceNeed: 'Need ',
+    priceOver: 'Over by ',
+    priceOK: ' — 🎉 Perfect!',
+    priceSuffix: ' NTD',
+    basketEmpty: '🧺 Basket is empty',
+    removeHint: 'Click to remove',
+    placeholderGame: 'Next mini-game coming soon!',
+    LOC: [
+      { nameTH: 'Ximending', name: 'Ximending', travelMsg: 'See you at the meeting point! ✨', knowledge: 'Ximending is Taiwan\'s most famous shopping district, full of restaurants, shops and bright night lights.' },
+      { nameTH: 'Yehliu Geopark', name: 'Yehliu Geopark', travelMsg: 'About 50 minutes away! ✨', knowledge: 'Yehliu Geopark features uniquely shaped rocks including the famous Queens Head, formed by wind and sea erosion over millions of years.' },
+      { nameTH: 'Zhengbin Port', name: 'Zhengbin Port', travelMsg: 'About 40 minutes away! ✨', knowledge: 'Zhengbin Port was once Taiwan\'s largest fishing port. The pastel-colored buildings make it a top photo spot at dusk.' },
+      { nameTH: 'Jiufen Old Street', name: 'Jiufen Old Street', travelMsg: 'About 40 minutes away! ✨', knowledge: 'Jiufen was once a gold mining town. Houses were built on the narrow hillside, creating a unique mountain town atmosphere.' },
+      { nameTH: 'Shifen Old Street', name: 'Shifen Old Street', travelMsg: 'About 40 minutes away! ✨', knowledge: 'Shifen is home to a 20-meter waterfall and famous sky lanterns. The area offers beautiful nature and local treats.' }
+    ]
+  }
+};
+
+// ============================================================
+// GAME DATA
+// ============================================================
 var LOCATIONS = [
-  { id: 0, name: 'Ximending', nameTH: 'ซีเหมินติง', icon: '🏠', stars: 0, completed: false, knowledge: 'ซีเหมินติง (Ximending) เป็นถนนช้อปปิ้งที่ขึ้นชื่อที่สุดในไต้หวัน เต็มไปด้วยร้านอาหาร ร้านค้า และแสงสียามค่ำคืน', travelMsg: 'เจอกันที่จุดนัดพบนะครับ! ✨', x: 2, y: 55 },
-  { id: 1, name: 'Yehliu Geopark', nameTH: 'อุทยานหินเยว่หลิว', icon: '🪨', stars: 0, completed: false, knowledge: 'อุทยานเยว่หลิวมีหินรูปร่างแปลกมากมาย รวมถึง Queens Head ที่ขึ้นชื่อ เกิดจากลมและน้ำทะเลกัดเซาะมานานหลายล้านปี', travelMsg: 'เดินทางประมาณ 50 นาทีนะครับ! ✨', x: 22, y: 30 },
-  { id: 2, name: 'Zhengbin Port', nameTH: 'ท่าเรือเจิ้งปิ้น ตึกหลากสี', icon: '⚓', stars: 0, completed: false, knowledge: 'ท่าเรือเจิ้งปิ้นเคยเป็นท่าประมงขนาดใหญ่ที่สุดในไต้หวัน ตึกสีพาสเทลถ่ายรูปสวยมากในยามเย็น', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', x: 42, y: 60 },
-  { id: 3, name: 'Jiufen Old Street', nameTH: 'หมู่บ้านจิ่วเฟิ่น', icon: '🏮', stars: 0, completed: false, knowledge: 'หมู่บ้านจิ่วเฟิ่นเคยเป็นเมืองเหมืองทองในอดีต บ้านเรือนถูกสร้างไว้บนเนินเขาแคบๆ จนเป็นเอกลักษณ์', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', x: 62, y: 25 },
-  { id: 4, name: 'Shifen Old Street', nameTH: 'หมู่บ้านสือเฟิ่น', icon: '💧', stars: 0, completed: false, knowledge: 'หมู่บ้านสือเฟิ่นมีน้ำตกสูง 20 เมตร เป็นจุดเด่นของอุทยาน และโคมลอยที่ปล่อยที่นี่เป็นของขวัญที่มีชื่อเสียง', travelMsg: 'เดินทางประมาณ 40 นาทีนะครับ! ✨', x: 82, y: 55 }
+  { id: 0, icon: '🏠', stars: 0, completed: false, x: 2, y: 55 },
+  { id: 1, icon: '🪨', stars: 0, completed: false, x: 22, y: 30 },
+  { id: 2, icon: '⚓', stars: 0, completed: false, x: 42, y: 60 },
+  { id: 3, icon: '🏮', stars: 0, completed: false, x: 62, y: 25 },
+  { id: 4, icon: '💧', stars: 0, completed: false, x: 82, y: 55 }
 ];
 
 var SHOP_ITEMS = [
-  { icon: '🧋', name: 'ชาไข่มุก', price: 60, desc: 'เครื่องดื่มยอดฮิตของไต้หวัน เนื้อนุ่มหนึบ', link: 'https://www.gotaipei.net' },
-  { icon: '🍗', name: 'ไก่ทอดไต้หวัน', price: 150, desc: 'เนื้อไก่ทอดชิ้นใหญ่ ผงโรยสูตรพิเศษ กรอบนอกนุ่มใน', link: 'https://www.gotaipei.net' },
-  { icon: '🥧', name: 'พายสับปะรด', price: 120, desc: 'ของฝากขึ้นชื่ออันดับ 1 ของไต้หวัน หอมและหวาน', link: 'https://www.gotaipei.net' },
-  { icon: '🍦', name: 'ไอศกรีมหมี', price: 80, desc: 'ไอศกรีมโฮมเมด หน้าตาน่ารัก', link: 'https://www.gotaipei.net' },
-  { icon: '🥟', name: 'ซาลาเปาไส้', price: 35, desc: 'ขนมจีนจีน หน้าต่างๆมีไส้ต่างกัน', link: 'https://www.gotaipei.net' },
-  { icon: '🍜', name: 'บะหมี่อาจง', price: 180, desc: 'ร้านดังมากของซีเหมินติง รสชาติคล้ายกระเพาะปลา+ราดหน้า', link: 'https://www.gotaipei.net' },
-  { icon: '🥮', name: 'เสี่ยวหลงเปา', price: 40, desc: 'ของกินยอดฮิต อร่อยมากตอนทานร้อนๆ', link: 'https://www.gotaipei.net' },
-  { icon: '🍯', name: 'นูกัส', price: 50, desc: 'ขนมเหนียวหนึบ มีรสหอมของนม ยอดฮิตในไต้หวัน', link: 'https://www.gotaipei.net' },
-  { icon: '🍪', name: 'แครกเกอร์นูกัส', price: 80, desc: 'อร่อยจนต้องต่อคิว ของว่างยอดนิยม', link: 'https://www.gotaipei.net' },
-  { icon: '🧃', name: 'น้ำผลไม้แก้ว', price: 45, desc: 'น้ำผลไม้สดๆ กดเองจากเครื่อง', link: 'https://www.gotaipei.net' },
-  { icon: '🥠', name: 'เค้กชาเขียว', price: 100, desc: 'ขนมเบเกอรี่ชาเขียวเนื้อนุ่ม', link: 'https://www.gotaipei.net' },
-  { icon: '🧸', name: 'ตุ๊กตาหมี', price: 200, desc: 'ของที่ระลึกน่ารัก มีหลายขนาด', link: 'https://www.gotaipei.net' }
+  { icon: '🧋', nameTH: 'ชาไข่มุก', nameEN: 'Bubble Milk Tea', price: 60, descTH: 'เครื่องดื่มยอดฮิตของไต้หวัน ไข่มุกนุ่มหนึบ', descEN: 'Taiwan\'s most popular drink with soft chewy pearls' },
+  { icon: '🍗', nameTH: 'ไก่ทอดไต้หวัน', nameEN: 'Taiwanese Fried Chicken', price: 150, descTH: 'เนื้อไก่ทอดชิ้นใหญ่ ผงโรยสูตรพิเศษ กรอบนอกนุ่มใน', descEN: 'Large crispy fried chicken with special seasoning, crispy outside juicy inside' },
+  { icon: '🥧', nameTH: 'พายสับปะรด', nameEN: 'Pineapple Cake', price: 120, descTH: 'ของฝากขึ้นชื่ออันดับ 1 ของไต้หวัน หอมและหวาน', descEN: 'Taiwan\'s #1 souvenir, fragrant and sweet' },
+  { icon: '🍦', nameTH: 'ไอติมถั่วตัดผักชี', nameEN: 'Peanut Ice Cream Roll', price: 80, descTH: 'ไอติม โรยถั่วตัดขูดและผักชี ห่อด้วยแผ่นแป้งโรตีสายไหม ต้องลอง!', descEN: 'Ice cream rolled with crushed peanuts & cilantro, wrapped in thin silk pancake — must try!' },
+  { icon: '🧈', nameTH: 'เต้าหู้เหม็น', nameEN: 'Stinky Tofu', price: 40, descTH: 'มือใหม่แนะนำแบบทอดนะ กลิ่นไม่แรงมาก', descEN: 'Beginners try fried — smell is not too strong' },
+  { icon: '🍜', nameTH: 'บะหมี่อาจง', nameEN: 'Ajiken Ramen', price: 180, descTH: 'ร้านดังมาก แห่งซีเหมินติง รสชาติคล้ายกระเพาะปลา+ราดหน้า', descEN: 'Famous in Ximending, flavors like fish maw soup + noodle sauce' },
+  { icon: '🥮', nameTH: 'เสี่ยวหลงเปา', nameEN: 'Xiaolongbao', price: 40, descTH: 'ของกินยอดฮิต อร่อยมากตอนทานร้อนๆ', descEN: 'Steaming hot dumplings, locals favorite' },
+  { icon: '🍯', nameTH: 'นูกัส', nameEN: 'Nougat', price: 50, descTH: 'ขนมเหนียวหนึบ มีรสหอมของนม ยอดฮิตในไต้หวัน', descEN: 'Chewy nougat with milky aroma, Taiwan\'s favorite' },
+  { icon: '🍪', nameTH: 'แครกเกอร์นูกัส', nameEN: 'Nougat Crackers', price: 80, descTH: 'อร่อยจนต้องต่อคิว ของว่างยอดนิยม', descEN: 'So delicious people queue for it, beloved snack' },
+  { icon: '🦑', nameTH: 'ปลาหมึกย่าง', nameEN: 'Grilled Squid', price: 90, descTH: 'หมึกตัวใหญ่ ทาซอสสูตรลับ ตัวเดียวไม่เคยพอ', descEN: 'Big squid with secret sauce glaze, one is never enough' },
+  { icon: '🍰', nameTH: 'เค้กไข่ไต้หวัน', nameEN: 'Taiwan Egg Cake', price: 70, descTH: 'เค้กเนื้อนุ่ม อร่อยจนลืมทางกลับบ้าน', descEN: 'Soft fluffy cake, so tasty you\'ll forget the way home' },
+  { icon: '🎲', nameTH: 'คีบตุ๊กตา', nameEN: 'Dice Game', price: 30, descTH: 'ชาเลนจ์สุดๆ', descEN: 'Ultimate challenge!' },
+  { icon: '🥒', nameTH: 'น้ำมะระ', nameEN: 'Bitter Melon Juice', price: 35, descTH: 'ฟังไม่ผิดนะ แต่เขากินกันจริงๆ ลองเถอะ ดีย์', descEN: 'Don\'t believe your ears — people really drink it! Try it, it\'s good!' },
+  { icon: '🍙', nameTH: 'ข้าวปั้นไต้หวัน', nameEN: 'Taiwanese Rice Ball', price: 55, descTH: 'ข้าวเหนียวปั้นยัดไส้ ปาท่องโก๋,ไข่ดาว,หมูหยอง กินหมดมีจุก!', descEN: 'Sticky rice stuffed with youtiao, fried egg & pork floss — every bite pops!' },
+  { icon: '🍖', nameTH: 'ข้าวหน้าหมูพะโล้', nameEN: 'Braised Pork Rice', price: 65, descTH: 'เมนูสามัญประจำบ้าน', descEN: 'Home-style braised pork over rice' }
 ];
 
 var DIFFICULTY = {
-  easy: { timer: 120, items: 6, showHint: true, label: 'Easy', desc: '6 ชิ้น, ดู hint ได้' },
-  hard: { timer: 90, items: 0, showHint: false, label: 'Hard', desc: 'ราคา 550-600 NTD', target: [550, 600] }
+  easy: { timer: 120, items: 6, label: 'Easy' },
+  hard: { timer: 180, label: 'Hard' }
 };
 
-var state = { currentScene: 'start', currentLocation: 0, totalStars: 0, totalPhotos: 0, totalCoins: 0, gameTimer: 60, timerInterval: null, currentGame: null, selectedItems: [], targetItems: [], difficulty: 'easy', playerName: '', meetingPoint: '' };
+// ============================================================
+// STATE
+// ============================================================
+var state = {
+  currentScene: 'start', currentLocation: 0, totalStars: 0, totalPhotos: 0,
+  totalCoins: 0, gameTimer: 60, timerInterval: null, currentGame: null,
+  selectedItems: [], targetItems: [], difficulty: 'easy', playerName: '',
+  meetingPoint: '', lang: 'th'
+};
+
+// ============================================================
+// UTIL
+// ============================================================
+function L() { return LANGS[state.lang]; }
+function el(id) { return document.getElementById(id); }
+function getItemName(i) { return state.lang === 'th' ? i.nameTH : i.nameEN; }
+function getItemDesc(i) { return state.lang === 'th' ? i.descTH : i.descEN; }
 
 function saveGame() {
   localStorage.setItem('roadtrip_save', JSON.stringify({
     locations: LOCATIONS.map(function(l) { return { id: l.id, stars: l.stars, completed: l.completed }; }),
-    totalStars: state.totalStars, totalPhotos: state.totalPhotos, totalCoins: state.totalCoins, currentLocation: state.currentLocation, difficulty: state.difficulty, playerName: state.playerName, meetingPoint: state.meetingPoint
+    totalStars: state.totalStars, totalPhotos: state.totalPhotos, totalCoins: state.totalCoins,
+    currentLocation: state.currentLocation, difficulty: state.difficulty,
+    playerName: state.playerName, meetingPoint: state.meetingPoint, lang: state.lang
   }));
 }
 
 function loadGame() {
-  var data = localStorage.getItem('roadtrip_save');
-  if (data) {
-    var saved = JSON.parse(data);
-    saved.locations.forEach(function(s) { var loc = LOCATIONS.find(function(l) { return l.id === s.id; }); if (loc) { loc.stars = s.stars; loc.completed = s.completed; } });
-    state.totalStars = saved.totalStars || 0;
-    state.totalPhotos = saved.totalPhotos || 0;
-    state.totalCoins = saved.totalCoins || 0;
-    state.currentLocation = saved.currentLocation || 0;
-    state.difficulty = saved.difficulty || 'easy';
-    state.playerName = saved.playerName || '';
-    state.meetingPoint = saved.meetingPoint || '';
-  }
-  document.getElementById('player-name-input').value = state.playerName || '';
-  if (state.playerName) {
-    var btn = document.getElementById('start-btn');
-    btn.disabled = false;
-    btn.style.opacity = '1';
-    btn.style.cursor = 'pointer';
-  }
+  var d = localStorage.getItem('roadtrip_save');
+  if (!d) return;
+  var s = JSON.parse(d);
+  s.locations.forEach(function(v) {
+    var l = LOCATIONS.find(function(x) { return x.id === v.id; });
+    if (l) { l.stars = v.stars; l.completed = v.completed; }
+  });
+  state.totalStars = s.totalStars || 0;
+  state.totalPhotos = s.totalPhotos || 0;
+  state.totalCoins = s.totalCoins || 0;
+  state.currentLocation = s.currentLocation || 0;
+  state.difficulty = s.difficulty || 'easy';
+  state.playerName = s.playerName || '';
+  state.meetingPoint = s.meetingPoint || '';
+  state.lang = s.lang || 'th';
 }
 
-function showScreen(screenId) {
+function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
-  document.getElementById(screenId).classList.add('active');
-  state.currentScene = screenId.replace('-screen', '');
+  el(id).classList.add('active');
+  state.currentScene = id.replace('-screen', '');
 }
 
+// ============================================================
+// LANG
+// ============================================================
+function setLang(lang) {
+  state.lang = lang;
+  saveGame();
+  applyLangUI();
+  updatePlayerInfo();
+  // Update dynamic content if on game screen
+  if (state.currentScene === 'game') {
+    var L = LANGS[lang];
+    // Update goal text
+    var goalEl = document.querySelector('.goal-text');
+    if (goalEl) {
+      goalEl.innerHTML = state.difficulty === 'hard' ? L.goalHard : L.goalEasy;
+    }
+    // Update basket empty label if basket is empty
+    var basket = el('basket');
+    if (basket && basket.querySelector('.basket-label')) {
+      basket.querySelector('.basket-label').textContent = L.basketEmpty;
+    }
+    // Update popup button if popup is visible
+    el('popup-pickup').textContent = L.pickupBtn;
+    // Update hard mode price label
+    var priceLabel = el('price-label');
+    if (priceLabel) {
+      priceLabel.textContent = '💰 ' + L.priceTotal;
+    }
+  }
+  // Update difficulty button + travel text if on travel screen
+  if (state.currentScene === 'travel') {
+    var L = LANGS[lang];
+    el('travel-ready-btn').textContent = state.currentGame && state.currentGame.id === 0 ? L.btnFirstLoc : L.btnOtherLoc;
+    var locD = L.LOC[state.currentGame.id];
+    el('travel-dest').innerHTML = '<span style="font-size:1.2rem;">🚐 ' + L.startBtn.replace('!', '') + ' <strong>' + state.playerName + '</strong></span><span style="display:block;font-size:0.9rem;color:#888;margin-top:8px;">' + (state.meetingPoint ? state.meetingPoint + ' ✨' : locD.travelMsg) + '</span>';
+  }
+}
+
+function applyLangUI() {
+  var lang = state.lang;
+  el('lang-th').classList.toggle('active', lang === 'th');
+  el('lang-en').classList.toggle('active', lang === 'en');
+  var L = LANGS[lang];
+  el('start-subtitle').textContent = L.startSubtitle;
+  el('player-name-input').placeholder = L.namePlaceholder;
+  el('start-btn').textContent = L.startBtn;
+  el('map-title').textContent = L.mapTitle;
+  el('lbl-stars').textContent = L.lblStars;
+  el('lbl-photos').textContent = L.lblPhotos;
+  el('lbl-coins').textContent = L.lblCoins;
+  el('diff-label').textContent = L.diffLabel;
+  el('btn-easy').textContent = L.easyBtn;
+  el('btn-hard').textContent = L.hardBtn;
+  el('meeting-point-input').placeholder = L.meetingPlaceholder;
+  el('popup-pickup').textContent = L.pickupBtn;
+  el('promo-text').textContent = L.promoText;
+  el('promo-btn1').textContent = L.promoBtn1;
+  el('promo-btn2').textContent = L.promoBtn2;
+  // Node labels
+  for (var i = 0; i < 5; i++) {
+    var nameEl = el('node-name-' + i);
+    if (nameEl) {
+      var loc = L.LOC[i];
+      nameEl.innerHTML = loc.nameTH + '<small>' + loc.name + '</small>';
+    }
+  }
+}
+
+function applyDiffUI() {
+  el('btn-easy').classList.toggle('selected', state.difficulty === 'easy');
+  el('btn-hard').classList.toggle('selected', state.difficulty === 'hard');
+}
+
+function updatePlayerInfo() {
+  var name = state.playerName ? '👤 ' + state.playerName : '👤';
+  var meet = state.meetingPoint ? '📍 ' + state.meetingPoint : '📍';
+  // Map
+  el('info-name').textContent = name;
+  el('info-meeting').textContent = meet;
+  // Travel
+  el('travel-info-name').textContent = name;
+  el('travel-info-meeting').textContent = meet;
+  // Game
+  el('game-info-name').textContent = name;
+  el('game-info-meeting').textContent = meet;
+  // Result
+  el('result-info-name').textContent = name;
+  el('result-info-meeting').textContent = meet;
+}
+
+// ============================================================
+// MAP
+// ============================================================
 function updateMapUI() {
-  document.getElementById('total-stars').textContent = state.totalStars;
-  document.getElementById('total-photos').textContent = state.totalPhotos;
-  document.getElementById('total-coins').textContent = state.totalCoins;
-  var van = document.getElementById('van-marker');
+  el('total-stars').textContent = state.totalStars;
+  el('total-photos').textContent = state.totalPhotos;
+  el('total-coins').textContent = state.totalCoins;
+  var van = el('van-marker');
   var loc = LOCATIONS[state.currentLocation];
   van.style.left = loc.x + '%';
   van.style.top = loc.y + '%';
+  var F = '\u2605', E = '\u2606';
+  var L = LANGS[state.lang];
   LOCATIONS.forEach(function(l, i) {
-    var node = document.getElementById('node-' + i);
+    var node = el('node-' + i);
+    if (!node) return;
+    var locL = L.LOC[i];
     node.classList.remove('locked', 'completed', 'current');
     if (l.completed) {
       node.classList.add('completed');
-      node.innerHTML = '<div class="node-icon">' + l.icon + '</div><div class="node-name">' + l.nameTH + '<small>' + l.name + '</small></div><div class="node-stars">' + '\u2605'.repeat(l.stars) + '\u2606'.repeat(3 - l.stars) + '</div>';
+      node.innerHTML = '<div class="node-icon">' + l.icon + '</div><div class="node-name" id="node-name-' + i + '">' + locL.nameTH + '<small>' + locL.name + '</small></div><div class="node-stars" id="stars-' + i + '">' + F.repeat(l.stars) + E.repeat(3 - l.stars) + '</div>';
     } else if (i <= state.currentLocation) {
       node.classList.add('current');
-      node.innerHTML = '<div class="node-icon">' + l.icon + '</div><div class="node-name">' + l.nameTH + '<small>' + l.name + '</small></div><div class="node-stars">' + '\u2605'.repeat(l.stars) + '\u2606'.repeat(3 - l.stars) + '</div>';
+      node.innerHTML = '<div class="node-icon">' + l.icon + '</div><div class="node-name" id="node-name-' + i + '">' + locL.nameTH + '<small>' + locL.name + '</small></div><div class="node-stars" id="stars-' + i + '">' + F.repeat(l.stars) + E.repeat(3 - l.stars) + '</div>';
     } else {
       node.classList.add('locked');
-      node.innerHTML = '<div class="lock-icon">🔒</div><div class="node-name">' + l.nameTH + '<small>' + l.name + '</small></div><div class="node-stars"></div>';
+      node.innerHTML = '<div class="lock-icon">🔒</div><div class="node-name" id="node-name-' + i + '">' + locL.nameTH + '<small>' + locL.name + '</small></div><div class="node-stars" id="stars-' + i + '"></div>';
     }
   });
 }
 
-function selectLocation(idx) {
+function onNodeClick(idx) {
   if (idx > state.currentLocation) return;
   state.currentLocation = idx;
   state.currentGame = LOCATIONS[idx];
-  startTravel(state.currentGame);
+  startTravel();
 }
 
-function startTravel(loc) {
+// ============================================================
+// TRAVEL
+// ============================================================
+function startTravel() {
+  var L = LANGS[state.lang];
+  var locD = L.LOC[state.currentGame.id];
   showScreen('travel-screen');
-  document.getElementById('travel-dest').innerHTML = '<span style="font-size:1.2rem;">🚐 เดินทางไปรับคุณ<strong>' + state.playerName + '</strong></span><span style="display:block;font-size:0.9rem;color:#888;margin-top:8px;">' + (state.meetingPoint ? state.meetingPoint + ' ✨' : loc.travelMsg) + '</span>';
-  document.getElementById('difficulty-select').style.display = 'block';
-  document.getElementById('meeting-point-section').style.display = 'none';
-  document.getElementById('meeting-point-input').value = state.meetingPoint || '';
-  document.getElementById('travel-ready-btn').style.display = 'none';
-  updateDifficultyButtons();
-  var van = document.getElementById('travel-van');
+  el('travel-dest').innerHTML = '<span style="font-size:1.2rem;">🚐 ' + L.startBtn.replace('!', '') + ' <strong>' + state.playerName + '</strong></span><span style="display:block;font-size:0.9rem;color:#888;margin-top:8px;">' + (state.meetingPoint ? state.meetingPoint + ' ✨' : locD.travelMsg) + '</span>';
+  el('difficulty-select').style.display = 'block';
+  el('meeting-point-section').style.display = 'none';
+  el('meeting-point-input').value = state.meetingPoint || '';
+  el('travel-ready-btn').style.display = 'none';
+  applyDiffUI();
+  updatePlayerInfo();
+  var van = el('travel-van');
   van.style.transition = 'none';
   van.style.left = '0%';
   van.classList.remove('animating');
@@ -323,158 +550,177 @@ function startTravel(loc) {
 }
 
 function selectDifficulty(diff) {
+  var L = LANGS[state.lang];
   state.difficulty = diff;
-  updateDifficultyButtons();
-  document.getElementById('meeting-point-section').style.display = 'block';
-  var btn = document.getElementById('travel-ready-btn');
-  btn.textContent = state.currentGame && state.currentGame.id === 0 ? 'รถมาถึงแล้ว!' : 'ไปกันเถอะ!';
+  state.meetingPoint = el('meeting-point-input').value.trim();
+  applyDiffUI();
+  el('meeting-point-section').style.display = 'block';
+  var btn = el('travel-ready-btn');
+  btn.textContent = state.currentGame.id === 0 ? L.btnFirstLoc : L.btnOtherLoc;
   btn.style.display = 'inline-block';
+  updatePlayerInfo();
 }
 
-function updateDifficultyButtons() {
-  document.querySelectorAll('.btn-diff').forEach(function(btn) {
-    btn.style.background = btn.dataset.diff === state.difficulty ? '#FFB7C5' : '#eee';
-    btn.style.color = btn.dataset.diff === state.difficulty ? '#fff' : '#333';
-  });
-}
-
-function startMiniGame(loc) {
-  state.meetingPoint = document.getElementById('meeting-point-input').value.trim();
+// ============================================================
+// GAME
+// ============================================================
+function startMiniGame() {
+  state.meetingPoint = el('meeting-point-input').value.trim();
+  saveGame();
+  updatePlayerInfo();
   showScreen('game-screen');
-  document.getElementById('game-title').textContent = loc.name + ' Mini Game';
-  document.getElementById('game-location-tag').innerHTML = loc.nameTH + ' <small>' + loc.name + '</small>';
-  if (loc.id === 0) { startShoppingGame(); }
-  else { startPlaceholderGame(loc); }
+  var L = LANGS[state.lang];
+  var locD = L.LOC[state.currentGame.id];
+  el('game-title').textContent = locD.nameTH + ' Mini Game';
+  el('game-location-tag').innerHTML = locD.nameTH + ' <small>' + locD.name + '</small>';
+  if (state.currentGame.id === 0) startShoppingGame();
+  else startPlaceholderGame();
+}
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
 }
 
 function startShoppingGame() {
   var diff = DIFFICULTY[state.difficulty];
-  var shuffled = SHOP_ITEMS.slice().sort(function() { return Math.random() - 0.5; });
-  state.targetItems = shuffled.slice(0, diff.items);
   state.selectedItems = [];
   state.gameTimer = diff.timer;
-  var gameArea = document.getElementById('game-area');
   var isHard = state.difficulty === 'hard';
-
+  var L = LANGS[state.lang];
+  // Shuffle twice for different order: once for display, once for targets
+  // Shuffle once, then pick 6 random targets from anywhere in shuffled array
+  var allShuffled = shuffle(SHOP_ITEMS);
+  var targetItems = shuffle(allShuffled).slice(0, diff.items); // pick 6 random from 15
+  var displayItems = allShuffled; // show all 15
+  var gameArea = el('game-area');
   var goalHTML;
   if (isHard) {
-    goalHTML = '<p class="goal-text">🧺 หยิบของราคารวม <strong>550-600 NTD</strong> ใส่ตะกร้า!</p><div id="basket-total" style="background:#FFE8EE;padding:10px 16px;border-radius:12px;margin-bottom:16px;font-size:1.1rem;">💰 ราคารวม: <strong id="price-display">0</strong> NTD <span id="price-status" style="font-size:0.8rem;color:#888;"> — ยังไม่ถึง</span></div>';
+    goalHTML = '<p class="goal-text">' + L.goalHard + '</p><div id="basket-total" style="background:#FFE8EE;padding:10px 16px;border-radius:12px;margin-bottom:16px;font-size:1.1rem;"><span id="price-label">💰 ' + L.priceTotal + '</span> <strong id="price-display">0</strong> NTD <span id="price-status" style="font-size:0.8rem;color:#888;"></span></div>';
   } else {
-    goalHTML = diff.showHint ? '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า:</p><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">' + state.targetItems.map(function(t) { return '<span style="background:#FFE8EE;padding:6px 12px;border-radius:20px;font-size:1.1rem;" title="' + t.name + '">' + t.icon + ' <span style="font-size:0.8rem;color:#4A4A4A;">' + t.name + '</span></span>'; }).join('') + '</div>' : '<p class="goal-text">หยิบของฝากไต้หวันใส่ตะกร้า (' + diff.items + ' ชิ้น)!</p>';
+    state.targetItems = targetItems;
+    goalHTML = '<p class="goal-text">' + L.goalEasy + '</p><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">' + state.targetItems.map(function(t) { return '<span style="background:#FFE8EE;padding:6px 12px;border-radius:20px;font-size:1.1rem;">' + t.icon + ' <span style="font-size:0.8rem;color:#4A4A4A;">' + getItemName(t) + '</span></span>'; }).join('') + '</div>';
   }
-
-  gameArea.innerHTML = goalHTML + '<div class="shop-grid" id="shop-grid"></div><div class="basket-zone" id="basket"><span class="basket-label">🧺 ตะกร้าว่างเปล่า</span></div>';
-  var grid = document.getElementById('shop-grid');
-  var allItems = SHOP_ITEMS.slice().sort(function() { return Math.random() - 0.5; });
-  allItems.forEach(function(item) {
+  gameArea.innerHTML = goalHTML + '<div class="shop-grid" id="shop-grid"></div><div class="basket-zone" id="basket"><span class="basket-label">' + L.basketEmpty + '</span></div>';
+  var grid = el('shop-grid');
+  displayItems.forEach(function(item) {
     var div = document.createElement('div');
     div.className = 'shop-item';
     div.textContent = isHard ? item.icon + ' ' + item.price : item.icon;
-    div.title = item.name + (isHard ? ' (' + item.price + ' NTD)' : '');
+    div.title = getItemName(item) + (isHard ? ' (' + item.price + ' NTD)' : '');
     div.style.fontSize = isHard ? '1rem' : '2rem';
-    div.onclick = function() { selectShopItem(div, item); };
-    div.ondblclick = function() { showItemPopup(item, true); };
+    div.onclick = function() { openItemPopup(item, div); };
     grid.appendChild(div);
   });
+  if (isHard) updatePriceDisplay();
   startTimer();
 }
 
-function renderBasket() {
+function openItemPopup(item, gridEl) {
+  el('popup-icon').textContent = item.icon;
+  el('popup-name').textContent = getItemName(item) + ' — ' + item.price + ' NTD';
+  el('popup-desc').textContent = getItemDesc(item);
+  el('popup-pickup').style.display = 'inline-block';
+  el('popup-pickup').onclick = function() {
+    closeItemPopup();
+    addToBasket(item, gridEl);
+  };
+  el('item-popup').classList.add('show');
+}
+
+function closeItemPopup() {
+  el('item-popup').classList.remove('show');
+}
+
+function addToBasket(item, gridEl) {
+  if (gridEl && gridEl.classList.contains('matched')) return;
   var isHard = state.difficulty === 'hard';
-  var basket = document.getElementById('basket');
-  if (state.selectedItems.length === 0) {
-    basket.innerHTML = '<span class="basket-label">🧺 ตะกร้าว่างเปล่า</span>';
-  } else if (isHard) {
-    var total = state.selectedItems.reduce(function(s, i) { return s + i.price; }, 0);
-    var inRange = total >= 550 && total <= 600;
-    basket.innerHTML = state.selectedItems.map(function(s) {
-      return '<span onclick="removeFromBasket(\'' + s.icon + '\')" title="คลิกเอาออก: ' + s.name + ' (' + s.price + ' NTD)" style="cursor:pointer;">' + s.icon + ' <span style="font-size:0.7rem;">' + s.price + '</span></span>';
-    }).join('') + '<span style="font-size:0.8rem;color:rgba(255,255,255,0.85);margin-left:8px;">= ' + total + ' NTD</span>';
-    var priceDisplay = document.getElementById('price-display');
-    var priceStatus = document.getElementById('price-status');
-    if (priceDisplay) priceDisplay.textContent = total;
-    if (priceStatus) {
-      if (inRange) {
-        priceStatus.textContent = ' — 🎉 ถึงจุด!';
-        priceStatus.style.color = '#00b894';
-      } else if (total < 550) {
-        priceStatus.textContent = ' — ยังไม่ถึง (ขาด ' + (550 - total) + ')';
-        priceStatus.style.color = '#FF6B6B';
-      } else {
-        priceStatus.textContent = ' — เกินไปแล้ว! (' + (total - 600) + ' NTD)';
-        priceStatus.style.color = '#FF6B6B';
-      }
-    }
-    if (inRange) {
-      clearInterval(state.timerInterval);
-      playSound('win');
-      setTimeout(function() { endGame(true); }, 500);
-    }
+  if (isHard) {
+    playSound('correct');
+    if (gridEl) gridEl.classList.add('matched');
+    state.selectedItems.push(item);
+    renderBasket();
   } else {
-    basket.innerHTML = state.selectedItems.map(function(s) { return '<span title="' + s.name + '">' + s.icon + '</span>'; }).join('') + '<span style="font-size:0.7rem;color:rgba(255,255,255,0.7);margin-left:8px;">' + state.selectedItems.length + '/' + state.targetItems.length + '</span>';
-    if (state.selectedItems.length === state.targetItems.length) {
-      clearInterval(state.timerInterval);
-      playSound('win');
-      setTimeout(function() { endGame(true); }, 500);
+    var isTarget = state.targetItems.some(function(t) { return t.icon === item.icon; });
+    if (isTarget) {
+      playSound('correct');
+      if (gridEl) gridEl.classList.add('matched');
+      state.selectedItems.push(item);
+      renderBasket();
+    } else {
+      playSound('wrong');
     }
   }
 }
 
-function removeFromBasket(icon) {
+function renderBasket() {
+  var L = LANGS[state.lang];
+  var isHard = state.difficulty === 'hard';
+  var basket = el('basket');
+  if (state.selectedItems.length === 0) {
+    basket.innerHTML = '<span class="basket-label">' + L.basketEmpty + '</span>';
+    return;
+  }
+  if (isHard) {
+    var total = state.selectedItems.reduce(function(s, i) { return s + i.price; }, 0);
+    basket.innerHTML = state.selectedItems.map(function(s) {
+      return '<span onclick="removeItem(\'' + s.icon + '\')" title="' + L.removeHint + ': ' + getItemName(s) + ' (' + s.price + ' NTD)" style="cursor:pointer;">' + s.icon + ' <span style="font-size:0.7rem;">' + s.price + '</span></span>';
+    }).join('') + '<span style="font-size:0.8rem;color:rgba(255,255,255,0.85);margin-left:8px;">= ' + total + ' NTD</span>';
+    updatePriceDisplay();
+    if (total >= 550 && total <= 600) {
+      clearInterval(state.timerInterval);
+      playSound('win');
+      setTimeout(endGame, 500);
+    }
+  } else {
+    basket.innerHTML = state.selectedItems.map(function(s) { return '<span title="' + getItemName(s) + '">' + s.icon + '</span>'; }).join('') + '<span style="font-size:0.7rem;color:rgba(255,255,255,0.7);margin-left:8px;">' + state.selectedItems.length + '/' + state.targetItems.length + '</span>';
+    if (state.selectedItems.length === state.targetItems.length) {
+      clearInterval(state.timerInterval);
+      playSound('win');
+      setTimeout(endGame, 500);
+    }
+  }
+}
+
+function removeItem(icon) {
   var idx = state.selectedItems.findIndex(function(i) { return i.icon === icon; });
   if (idx > -1) {
     state.selectedItems.splice(idx, 1);
-    var gridItems = document.querySelectorAll('.shop-item');
-    gridItems.forEach(function(g) {
-      if (g.textContent.indexOf(icon) !== -1) {
-        g.classList.remove('matched', 'selected');
-      }
+    document.querySelectorAll('.shop-item').forEach(function(g) {
+      if (g.textContent.indexOf(icon) !== -1) g.classList.remove('matched');
     });
     renderBasket();
     playSound('wrong');
   }
 }
 
-function selectShopItem(el, item) {
-  var popup = document.getElementById('item-popup');
-  document.getElementById('popup-icon').textContent = item.icon;
-  document.getElementById('popup-name').textContent = item.name + (item.price ? ' — ' + item.price + ' NTD' : '');
-  document.getElementById('popup-desc').textContent = item.desc;
-  var pickupBtn = document.getElementById('popup-pickup');
-  pickupBtn.style.display = 'inline-block';
-  pickupBtn.onclick = function() { closeItemPopup(); addToBasket(item, el); };
-  popup.classList.add('show');
-}
-
-function addToBasket(item, el) {
-  if (el && el.classList.contains('matched')) return;
-  var isHard = state.difficulty === 'hard';
-  if (isHard) {
-    // Hard mode: any item can be added, just add it
-    playSound('correct');
-    if (el) { el.classList.add('matched'); }
-    state.selectedItems.push(item);
-    renderBasket();
+function updatePriceDisplay() {
+  var L = LANGS[state.lang];
+  var total = state.selectedItems.reduce(function(s, i) { return s + i.price; }, 0);
+  var display = el('price-display');
+  var status = el('price-status');
+  if (!display || !status) return;
+  display.textContent = total;
+  if (total >= 550 && total <= 600) {
+    status.textContent = L.priceOK;
+    status.style.color = '#00b894';
+  } else if (total < 550) {
+    status.textContent = L.priceNeed + (550 - total) + L.priceSuffix;
+    status.style.color = '#FF6B6B';
   } else {
-    // Easy mode: only target items
-    var isTarget = state.targetItems.some(function(t) { return t.icon === item.icon; });
-    if (el) el.classList.add('selected');
-    if (isTarget) {
-      playSound('correct');
-      if (el) { el.classList.add('matched'); el.classList.remove('selected'); }
-      state.selectedItems.push(item);
-      renderBasket();
-    } else {
-      playSound('wrong');
-      if (el) setTimeout(function() { el.classList.remove('selected'); }, 300);
-    }
+    status.textContent = L.priceOver + (total - 600) + L.priceSuffix;
+    status.style.color = '#FF6B6B';
   }
 }
 
-function startPlaceholderGame(loc) {
+function startPlaceholderGame() {
+  var L = LANGS[state.lang];
   state.gameTimer = 10;
-  var gameArea = document.getElementById('game-area');
-  gameArea.innerHTML = '<p class="goal-text">🎮 <strong>' + loc.name + '</strong> mini-game</p><p style="margin:20px 0;color:#888;">รอเกมถัดไปที่จะสร้างนะคะ</p><p style="font-size:2rem;">' + loc.icon + '</p>';
+  el('game-area').innerHTML = '<p class="goal-text">🎮 <strong>' + L.LOC[state.currentGame.id].nameTH + '</strong> Mini Game</p><p style="margin:20px 0;color:#888;">' + L.placeholderGame + '</p><p style="font-size:2rem;">' + state.currentGame.icon + '</p>';
   startTimer();
 }
 
@@ -484,58 +730,61 @@ function startTimer() {
   state.timerInterval = setInterval(function() {
     state.gameTimer--;
     updateTimerDisplay();
-    if (state.gameTimer <= 0) { clearInterval(state.timerInterval); endGame(false); }
+    if (state.gameTimer <= 0) { clearInterval(state.timerInterval); endGame(); }
   }, 1000);
 }
 
 function updateTimerDisplay() {
-  var el = document.getElementById('game-timer');
-  el.textContent = state.gameTimer;
-  el.classList.toggle('warning', state.gameTimer <= 10);
+  var e = el('game-timer');
+  e.textContent = state.gameTimer;
+  e.classList.toggle('warning', state.gameTimer <= 10);
 }
 
-function endGame(won) {
+function endGame() {
   clearInterval(state.timerInterval);
-  var loc = state.currentGame;
+  var won = state.gameTimer > 0;
   var stars = won ? 3 : 0;
-  if (won) { state.totalCoins += 50; }
-  loc.stars = Math.max(loc.stars, stars);
-  if (won && !loc.completed) { loc.completed = true; state.totalPhotos++; state.currentLocation = Math.min(state.currentLocation + 1, LOCATIONS.length - 1); }
+  if (won) state.totalCoins += 50;
+  state.currentGame.stars = Math.max(state.currentGame.stars, stars);
+  if (won && !state.currentGame.completed) {
+    state.currentGame.completed = true;
+    state.totalPhotos++;
+    state.currentLocation = Math.min(state.currentLocation + 1, LOCATIONS.length - 1);
+  }
   state.totalStars = LOCATIONS.reduce(function(sum, l) { return sum + l.stars; }, 0);
   saveGame();
-  showResult(loc, stars, won);
+  showResult();
 }
 
-function showResult(loc, stars, won) {
+function showResult() {
   showScreen('result-screen');
-  document.getElementById('result-title').textContent = won ? 'ภารกิจสำเร็จ!' : '⏰ หมดเวลา!';
-  document.getElementById('result-location').textContent = loc.nameTH;
-  document.getElementById('result-stars').innerHTML = '<span class="' + (stars >= 1 ? 'filled' : 'empty') + '">⭐</span>' + '<span class="' + (stars >= 2 ? 'filled' : 'empty') + '">⭐</span>' + '<span class="' + (stars >= 3 ? 'filled' : 'empty') + '">⭐</span>';
-  document.getElementById('photo-badge').style.display = won ? 'inline-flex' : 'none';
-  document.getElementById('knowledge-text').textContent = loc.knowledge;
-  document.getElementById('knowledge-source').textContent = '📍 ' + loc.name;
+  // Force apply lang after screen is shown
+  applyLangUI();
+  var L = LANGS[state.lang];
+  var locD = L.LOC[state.currentGame.id];
+  el('result-title').textContent = state.gameTimer > 0 ? L.resultTitleWin : L.resultTitleLose;
+  el('result-location').textContent = locD.nameTH;
+  el('result-stars').innerHTML =
+    '<span class="' + (state.currentGame.stars >= 1 ? 'filled' : 'empty') + '">⭐</span>' +
+    '<span class="' + (state.currentGame.stars >= 2 ? 'filled' : 'empty') + '">⭐</span>' +
+    '<span class="' + (state.currentGame.stars >= 3 ? 'filled' : 'empty') + '">⭐</span>';
+  el('photo-badge').style.display = state.currentGame.completed ? 'inline-flex' : 'none';
+  el('knowledge-text').textContent = locD.knowledge;
+  el('result-back-btn').textContent = state.gameTimer > 0 ? L.resultBackWin : L.resultBackLose;
 }
 
 function backToMap() {
   clearInterval(state.timerInterval);
   loadGame();
+  applyLangUI();
   updateMapUI();
+  updatePlayerInfo();
   showScreen('map-screen');
 }
 
-function showItemPopup(item, showLink) {
-  var popup = document.getElementById('item-popup');
-  document.getElementById('popup-icon').textContent = item.icon;
-  document.getElementById('popup-name').textContent = item.name;
-  document.getElementById('popup-desc').textContent = item.desc;
-  var pickupBtn = document.getElementById('popup-pickup');
-  if (showLink) { pickupBtn.style.display = 'none'; }
-  else { pickupBtn.style.display = 'inline-block'; pickupBtn.onclick = function() { closeItemPopup(); addToBasket(item, null); }; }
-  popup.classList.add('show');
-}
-
-function closeItemPopup() { document.getElementById('item-popup').classList.remove('show'); }
-
+// ============================================================
+// SOUND
+// ============================================================
 function playSound(type) {
   try {
     var ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -574,20 +823,40 @@ function playSound(type) {
   } catch(e) {}
 }
 
-function startGame() {
-  var enteredName = document.getElementById('player-name-input').value.trim();
-  state.playerName = enteredName;
-  saveGame();
+// ============================================================
+// INIT
+// ============================================================
+function initGame() {
   loadGame();
-  updateMapUI();
-  showScreen('map-screen');
+  applyLangUI();
+  applyDiffUI();
+  updatePlayerInfo();
+  var btn = el('start-btn');
+  if (state.playerName) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  }
 }
 
-document.getElementById('start-btn').addEventListener('click', startGame);
-document.getElementById('player-name-input').addEventListener('input', function() {
-  var val = this.value.trim();
-  var btn = document.getElementById('start-btn');
-  if (val.length > 0) {
+el('start-btn').addEventListener('click', function() {
+  var name = el('player-name-input').value.trim();
+  if (!name) return;
+  state.playerName = name;
+  saveGame();
+  updatePlayerInfo();
+  applyLangUI();
+  updateMapUI();
+  showScreen('map-screen');
+});
+
+el('travel-ready-btn').addEventListener('click', function() {
+  if (state.currentGame) startMiniGame();
+});
+
+el('player-name-input').addEventListener('input', function() {
+  var btn = el('start-btn');
+  if (this.value.trim()) {
     btn.disabled = false;
     btn.style.opacity = '1';
     btn.style.cursor = 'pointer';
@@ -597,9 +866,12 @@ document.getElementById('player-name-input').addEventListener('input', function(
     btn.style.cursor = 'not-allowed';
   }
 });
-document.getElementById('travel-ready-btn').addEventListener('click', function() { if (state.currentGame) startMiniGame(state.currentGame); });
 
-loadGame();
+el('result-back-btn').addEventListener('click', function() {
+  backToMap();
+});
+
+window.addEventListener('load', initGame);
 </script>
 </body>
 </html>
