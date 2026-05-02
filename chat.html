@@ -40,10 +40,8 @@
 .chat-input-area textarea { flex: 1; resize: none; border: 1.5px solid #ddd; border-radius: 20px; padding: 10px 14px; font-size: 14px; font-family: inherit; outline: none; max-height: 80px; transition: border-color 0.2s; }
 .chat-input-area textarea:focus { border-color: #ff6b35; }
 .chat-send { background: linear-gradient(135deg, #ff6b35, #ff8c5a); border: none; border-radius: 50%; width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; flex-shrink: 0; }
-.booking-id-badge { background: linear-gradient(135deg, #ff6b35, #feca57); color: #fff; border-radius: 8px; padding: 8px 14px; font-size: 18px; font-weight: bold; text-align: center; letter-spacing: 2px; margin: 8px 0; }
 .waiting-badge { background: #fff3ee; border: 1.5px solid #ff6b35; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #2c3e50; margin-top: 8px; line-height: 1.7; }
 .fallback-badge { background: #fff3cd; border: 1.5px solid #ffc107; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #856404; margin-top: 8px; line-height: 1.7; }
-.fallback-badge a { color: #0056b3; }
 @media (max-width: 480px) {
   .chat-launcher { bottom: 16px; right: 16px; width: 54px; height: 54px; font-size: 24px; }
   .chat-popup { width: 100%; height: 100vh; bottom: 0; right: 0; border-radius: 0; position: fixed; }
@@ -54,34 +52,33 @@
 <button class="chat-launcher" id="chatLauncher">&#x1F4AC;</button>
 <div class="chat-popup" id="chatPopup">
   <div class="chat-header">
-    <div><div class="chat-header-title">Go Taipei Bot</div><div class="chat-header-sub">&#x0E1C;&#x0E38;&#x0E01;&#x0E31;&#x0E14;&#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;</div></div>
+    <div><div class="chat-header-title">Go Taipei Bot</div><div class="chat-header-sub">Go Taipei</div></div>
     <button class="chat-close" id="chatClose">&#x2715;</button>
   </div>
   <div class="chat-messages" id="chatMessages"></div>
   <div class="chat-input-area">
-    <textarea id="chatInput" placeholder="&#x0E1E;&#x0E34;&#x0E21;&#x0E1E;&#x0E29;&#x0E32;&#x0E07;&#x0E02;&#x0E49;&#x0E32;&#x0E07;..." rows="1"></textarea>
+    <textarea id="chatInput" placeholder="พิมพ์คำถาม..." rows="1"></textarea>
     <button class="chat-send" id="chatSend">&#x25C4;</button>
   </div>
 </div>
 <script>
 (function() {
-  var TELEGRAM_BOT_TOKEN = '8714915394:AAED4nzv9L8WMK_H24_UzUVIKWpkSZyr0Cw';
-  var TELEGRAM_CHAT_ID = '-5138516559';
-  var API_TELEGRAM = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-  var TIMEOUT_MS = 8000;
+  // Google AppsScript URL - ส่งข้อมูลไปที่นี่
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbzZgQOD8BX8g0MpJXyBc6vz_1lHSMsDOO1ra2kBwxLsJkeAkK9tDQ_5Xt9oQQv9fG6IWQ/exec';
 
   var currentStep = 'welcome';
   var bookingData = {};
   var pendingEscalation = null;
   var isSubmitting = false;
+  var popupOpen = false;
 
   var tours = [
-    { id: 'jiufen-yehliu',  label: '1. &#x0E08;&#x0E34;&#x0E48;&#x0E30;&#x0E40;&#x0E1F;&#x0E38;&#x0E48;, &#x0E17;&#x0E48;&#x0E32;&#x0E40;&#x0E23;&#x0E37;&#x0E48;&#x0E2A;&#x0E34;&#x0E49;&#x0E1A;&#x0E34;&#x0E19;, &#x0E40;&#x0E27;&#x0E48;&#x0E48;&#x0E2B;&#x0E25;&#x0E34;&#x0E27;, &#x0E2A;&#x0E37;&#x0E48;&#x0E2A;&#x0E40;&#x0E1F;&#x0E38;&#x0E48;' },
-    { id: 'sunmoonlake',    label: '2. &#x0E0B;&#x0E31;&#x0E19;&#x0E21;&#x0E39;&#x0E19;&#x0E40;&#x0E25;&#x0E04; (Sun Moon Lake)' },
-    { id: 'citytour',       label: '3. &#x0E17;&#x0E31;&#x0E23;&#x0E4C;&#x0E43;&#x0E19;&#x0E44;&#x0E17;&#x0E35;&#x0E49; (Taipei City Tour)' },
-    { id: 'yangmingshan',  label: '4. &#x0E2D;&#x0E22;&#x0E32;&#x0E07;&#x0E2B;&#x0E34;&#x0E07;&#x0E0B;&#x0E32;&#x0E19;, &#x0E40;&#x0E1B;&#x0E48;&#x0E22;&#x0E42;&#x0E27;&#x0E48;, &#x0E15;&#x0E31;&#x0E49;&#x0E19;&#x0E2A;&#x0E38;&#x0E48;&#x0E22;' },
-    { id: 'alishan',        label: '5. &#x0E2D;&#x0E38;&#x0E17;&#x0E22;&#x0E32;&#x0E19;&#x0E2D;&#x0E32;&#x0E25;&#x0E35;&#x0E0B;&#x0E32;&#x0E19; (Alishan) 2 &#x0E27;&#x0E31;&#x0E19; 1 &#x0E04;&#x0E37;&#x0E19;' },
-    { id: 'carrental',     label: '6. &#x0E40;&#x0E0A;&#x0E48;&#x0E32;&#x0E23;&#x0E16;&#x0E40;&#x0E17;&#x0E35;&#x0E48;&#x0E04;&#x0E49;&#x0E32;&#x0E07;&#x0E04;&#x0E37;&#x0E19;&#x0E19;&#x0E2D;&#x0E01;&#x0E44;&#x0E17;&#x0E35;&#x0E49;' },
+    { id: 'jiufen-yehliu',  label: '1. จิ่วเฟิ่น, ท่าเรือเจิ้งปิน, เยว่หลิว, สือเฟิ่น' },
+    { id: 'sunmoonlake',    label: '2. ซันมูนเลค (Sun Moon Lake)' },
+    { id: 'citytour',       label: '3. ทัวร์ในไทเป (Taipei City Tour)' },
+    { id: 'yangmingshan',  label: '4. หยางหมิงซาน, เป่ยโถว, ตั้นสุ่ย' },
+    { id: 'alishan',        label: '5. อุทยานอาลีซาน (Alishan) 2 วัน 1 คืน' },
+    { id: 'carrental',     label: '6. เช่ารถเที่ยวค้างคืนนอกไทเป' },
   ];
 
   var launcher = document.getElementById('chatLauncher');
@@ -91,7 +88,6 @@
   var input    = document.getElementById('chatInput');
   var sendBtn  = document.getElementById('chatSend');
 
-  var popupOpen = false;
   launcher.addEventListener('click', function() {
     popupOpen = !popupOpen;
     popup.classList.toggle('open', popupOpen);
@@ -127,32 +123,30 @@
   function showFallback(type) {
     var html = '';
     if (type === 'submit') {
-      html = '<div class="fallback-badge">&#x26A0; &#x0E02;&#x0E2D;&#x0E1A;&#x0E44;&#x0E21;&#x0E48;&#x0E2A;&#x0E32;&#x0E21;&#x0E32;&#x0E28;&#x0E44;&#x0E1A;&#x0E23;&#x0E30;&#x0E14;&#x0E31;&#x0E1A;&#x0E44;&#x0E14;&#x0E49;&#x0E43;&#x0E19;&#x0E02;&#x0E8D;&#x0E32;&#x0E19;&#x0E4C;&#x0E19;&#x0E34;&#x0E49;&#x0E07;\n\n' +
-        '&#x1F4DE; &#x0E17;&#x0E35;&#x0E48;&#x0E15;&#x0E34;&#x0E14;&#x0E15;&#x0E48;&#x0E2D;&#x0E07;&#x0E42;&#x0E25;&#x0E01;&#x0E32;&#x0E23;&#x0E08;&#x0E31;&#x0E14;&#x0E07;&#x0E04;&#x0E38;&#x0E13;&#x0E44;&#x0E1E;&#x0E19;&#x0E14;&#x0E35;:\n' +
-        '&#x2022; <strong>WhatsApp:</strong> <a href="https://wa.me/886875198224">087-519-8224</a>\n' +
-        '&#x2022; <strong>Facebook:</strong> <a href="https://m.me/gotaipei">Go Taipei</a>\n' +
-        '&#x2022; <strong>LINE:</strong> @966kmony\n\n' +
-        '&#x1F4F1; &#x0E84;&#x0E23;&#x0E15;&#x0E4C;&#x0E14;&#x0E44;&#x0E23;&#x0E1F;&#x0E31;&#x0E15;&#x0E4C;: +886 96-881-7739</div>';
+      html = '<div class="fallback-badge">⚠️ ขออภัยไม่สามารถส่งข้อมูลได้ในขณะนี้\n\n' +
+        '📱 กรุณาติดต่อทาง LINE ด้วยตนเอง:\n' +
+        ' <strong>LINE:</strong> @966kmony\n' +
+        ' • <strong>WhatsApp:</strong> 087-519-8224\n' +
+        ' • <strong>Facebook:</strong> Go Taipei\n\n' +
+        '📞 ตลอด24ชม.: +886 96-881-7739</div>';
     } else if (type === 'pending') {
-      html = '<div class="fallback-badge">&#x26A0; &#x0E02;&#x0E2D;&#x0E1A;&#x0E44;&#x0E21;&#x0E48;&#x0E2A;&#x0E32;&#x0E21;&#x0E32;&#x0E28;&#x0E44;&#x0E1A;&#x0E23;&#x0E30;&#x0E14;&#x0E31;&#x0E1A;&#x0E44;&#x0E14;&#x0E49;&#x0E43;&#x0E19;&#x0E02;&#x0E8D;&#x0E32;&#x0E19;&#x0E4C;&#x0E19;&#x0E34;&#x0E49;&#x0E07;\n\n' +
-        '&#x1F4DE; &#x0E01;&#x0E23;&#x0E38;&#x0E07;&#x0E15;&#x0E34;&#x0E14;&#x0E15;&#x0E48;&#x0E2D;&#x0E07;&#x0E17;&#x0E35;&#x0E48;:\n' +
-        '&#x2022; <strong>WhatsApp:</strong> <a href="https://wa.me/886875198224">087-519-8224</a>\n' +
-        '&#x2022; <strong>Facebook:</strong> <a href="https://m.me/gotaipei">Go Taipei</a>\n' +
-        '&#x2022; <strong>LINE:</strong> @966kmony</div>';
+      html = '<div class="fallback-badge">⚠️ ขออภัยไม่สามารถส่งข้อมูลได้ในขณะนี้\n\n' +
+        '📱 กรุณาติดต่อทาง LINE ด้วยตนเอง:\n' +
+        ' <strong>LINE:</strong> @966kmony\n' +
+        ' • <strong>WhatsApp:</strong> 087-519-8224\n' +
+        ' • <strong>Facebook:</strong> Go Taipei</div>';
     }
     return html;
   }
 
-  function sendToTelegram(text, onSuccess, onFallback) {
+  function sendToBackend(text, onSuccess, onFallback) {
     var controller = new AbortController();
-    var timer = setTimeout(function() { controller.abort(); }, TIMEOUT_MS);
+    var timer = setTimeout(function() { controller.abort(); }, 10000);
 
-    fetch(API_TELEGRAM, {
+    fetch(GAS_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'chat_id=' + encodeURIComponent(TELEGRAM_CHAT_ID) +
-            '&text=' + encodeURIComponent(text) +
-            '&parse_mode=HTML',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text }),
       signal: controller.signal,
     }).then(function(r) {
       clearTimeout(timer);
@@ -166,39 +160,46 @@
 
   function sendWelcome() {
     currentStep = 'welcome';
-    sendBot('&#x0E2A;&#x0E27;&#x0E31;&#x0E14;&#x0E14;&#x0E35;&#x0E04;&#x0E48;&#x0E32; &#x1F49; &#x0E40;&#x0E2D;&#x0E14;&#x0E49;&#x0E32;&#x0E04;&#x0E37;&#x0E19;&#x0E17;&#x0E35;&#x0E48;&#x0E1C;&#x0E39;&#x0E49;&#x0E0A;&#x0E48;&#x0E27;&#x0E07;&#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;&#x0E02;&#x0E2D;&#x0E07; Go Taipei &#x0E04;&#x0E48;&#x0E32;\n' +
-      '&#x1F3E7; &#x0E23;&#x0E31;&#x0E1A;&#x0E1C;&#x0E39;&#x0E49; &#x0E08;&#x0E2D;&#x0E07; &#x0E41;&#x0E25;&#x0E30; &#x0E2B;&#x0E31;&#x0E27;&#x0E07;&#x0E08;&#x0E31;&#x0E23;&#x0E13;&#x0E4C;\n' +
-      '&#x1F697; &#x0E40;&#x0E0A;&#x0E48;&#x0E32;&#x0E23;&#x0E16;&#x0E1E;&#x0E23;&#x0E49;&#x0E32;&#x0E07;&#x0E04;&#x0E38;&#x0E13;&#x0E02;&#x0E31;&#x0E1A;\n' +
-      '&#x1F4CB; &#x0E41;&#x0E1A;&#x0E1F;&#x0E2D;&#x0E23;&#x0E4C;&#x0E21;&#x0E4C;&#x0E01;&#x0E4C; &#x0E2F;&#x0E23;&#x0E34;&#x0E1E;&#x0E34;&#x0E15;&#x0E4C;\n\n' +
-      '&#x1F4F1; &#x0E2B;&#x0E32;&#x0E01;&#x0E21;&#x0E35;&#x0E04;&#x0E33;&#x0E16;&#x0E36;&#x0E07;&#x0E40;&#x0E23;&#x0E47;&#x0E1A;&#x0E14;&#x0E48;&#x0E35;&#x0E19; &#x0E15;&#x0E34;&#x0E14;&#x0E15;&#x0E48;&#x0E2D;&#x0E07;&#x0E17;&#x0E32;&#x0E07; LINE: @966kmony &#x0E2F;&#x0E23;&#x0E34;&#x0E1E;&#x0E34;&#x0E15;&#x0E4C; &#x0E04;&#x0E48;&#x0E32; &#x0E14;&#x0E39;&#x0E41;&#x0E15;&#x0E48; &#x0E44;&#x0E21;&#x0E48;&#x0E2B;&#x0E23;&#x0E38;&#x0E48;&#x0E07;&#x0E19;&#x0E30;');
-    sendQuickReplies(['&#x1F4CB; &#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;', '&#x1F4B0; &#x0E23;&#x0E32;&#x0E04;&#x0E32;&#x0E40;&#x0E17;&#x0E48;&#x0E32;', '&#x1F697; &#x0E1B;&#x0E23;&#x0E30;&#x0E40;&#x0E2D;&#x0E19;&#x0E20;&#x0E32;&#x0E23;&#x0E30;', '&#x267F; &#x0E2A;&#x0E34;&#x0E17;&#x0E34;&#x0E1E;&#x0E34;&#x0E29;&#x0E2A;']);
+    sendBot('สวัสดีค่ะ ยินดีต้อนรับสู่ Go Taipei ค่ะ\n\n' +
+      'ทัวร์ยอดนิยม:\n' +
+      '• จิ่วเฟิ่น + เยว่หลิว\n' +
+      '• ซันมูนเลค\n' +
+      '• ทัวร์ในไทเป\n' +
+      '• อลีซาน 2 วัน 1 คืน\n\n' +
+      'ดูรายละเอียดเพิ่มเติมได้ที่ gotaipei.net ค่ะ\n\n' +
+      '📱 หากมีคำถามด่วน ติดต่อทาง LINE: @966kmony ได้เลยนะคะ ไม่ต้องรอนานค่ะ');
+    sendQuickReplies(['📋 จองทัวร์', '💰 ราคาเท่าไหร่', '🚗 ประเภทรถ', '♿ สิทธิพิเศษ']);
   }
 
   window.handleQR = function(label) {
     sendUser(label);
-    if (label.indexOf('&#x1F4CB;') !== -1) {
+    if (label.indexOf('จอง') !== -1) {
       startBooking();
-    } else if (label.indexOf('&#x1F4B0;') !== -1) {
-      sendBot('&#x1F4B0; &#x0E23;&#x0E32;&#x0E04;&#x0E32;&#x0E40;&#x0E23;&#x0E34;&#x0E48;&#x0E21;&#x0E15;&#x0E49;&#x0E19;&#x0E49;&#x0E33; (&#x0E23;&#x0E30;&#x0E1E;&#x0E24;&#x0E29;&#x0E0E;&#x0E35;&#x0E23;&#x0E30;&#x0E1A;&#x0E23;&#x0E34;&#x0E01;&#x0E31;&#x0E14;):\n\n' +
-        '&#x2022; &#x0E08;&#x0E34;&#x0E48;&#x0E30;: &#x0E3F;4,500-5,000 &#x0E17;&#x0E35;&#x0E48;&#x0E22;&#x0E32;&#x0E04;&#x0E07;&#x0E48;&#x0E30;&#x0E19;\n' +
-        '&#x2022; &#x0E0B;&#x0E31;&#x0E19;&#x0E21;&#x0E39;&#x0E19;&#x0E40;&#x0E25;&#x0E04;: &#x0E3F;7,000-9,000 &#x0E17;&#x0E35;&#x0E48;&#x0E22;&#x0E32;&#x0E04;&#x0E07;&#x0E48;&#x0E30;&#x0E19;\n' +
-        '&#x2022; &#x0E2D;&#x0E38;&#x0E17;&#x0E22;&#x0E32;&#x0E19;: &#x0E3F;7,000/&#x0E27;&#x0E31;&#x0E19;\n\n' +
-        '&#x1F4B0; &#x0E23;&#x0E32;&#x0E04;&#x0E32;&#x0E41;&#x0E22;&#x0E48;&#x0E15;&#x0E32;&#x0E15;&#x0E34;&#x0E14;&#x0E35;&#x0E1C;&#x0E24;&#x0E1C;&#x0E25;&#x0E37;&#x0E2D;&#x0E01;&#x0E32;&#x0E23;&#x0E23;&#x0E30;&#x0E14;&#x0E31;&#x0E1A;&#x0E23;&#x0E16;');
-      sendQuickReplies(['&#x1F4CB; &#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;', '&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; LINE']);
-    } else if (label.indexOf('&#x1F697;') !== -1) {
-      sendBot('&#x1F697; &#x0E1B;&#x0E23;&#x0E30;&#x0E40;&#x0E2D;&#x0E19;&#x0E20;&#x0E32;&#x0E23;&#x0E30;:\n\n' +
-        '&#x2022; &#x0E40;&#x0E01;&#x0ECA;&#x0E07; 4 &#x0E17;&#x0E35;&#x0E48;&#x0E19;&#x0E31;&#x0E48;: Toyota Cross / Altis\n' +
-        '&#x2022; &#x0E15;&#x0E39;&#x0E49; 7-9 &#x0E17;&#x0E35;&#x0E48;&#x0E19;&#x0E31;&#x0E48;: VW Caravelle / Benz Vito / H1\n' +
-        '&#x2022; &#x0E21;&#x0E34;&#x0E19;&#x0E34;&#x0E1A;&#x0E31;&#x0E2A;: &#x0E44;&#x0E21;&#x0E48;&#x0E41;&#x0E1C;&#x0E48;&#x0E30; 20 &#x0E04;&#x0E19;\n\n' +
-        '&#x26A0; &#x0E04;&#x0E38;&#x0E13;&#x0E02;&#x0E31;&#x0E1A;&#x0E1E;&#x0E39;&#x0E14;&#x0E44;&#x0E17;&#x0E44; &#x0E44;&#x0E21;&#x0E48;&#x0E44;&#x0E01;&#x0E14; (&#x0E08;&#x0E33;&#x0E19;&#x0E31;&#x0E27;&#x0E07;&#x0E08;&#x0E31;&#x0E23;&#x0E13;&#x0E4C; &#x0E15;&#x0E49;&#x0E2D;&#x0E07;&#x0E27;&#x0E48;&#x0E32;&#x0E07;&#x0E41;&#x0E1A;&#x0E48;&#x0E32;&#x0E15;&#x0E49;&#x0E2D;&#x0E07; &#x0E44;&#x0E1B;&#x0E47;&#x0E19; &#x0E2B;&#x0E23;&#x0E38;&#x0E48;&#x0E07; &#x0E2B;&#x0E23;&#x0E38;&#x0E48;&#x0E07;&#x0E19;&#x0E30;)\n' +
-        '&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; LINE: @966kmony');
-      sendQuickReplies(['&#x1F4CB; &#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;', '&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; LINE']);
-    } else if (label.indexOf('&#x267F;') !== -1) {
-      sendBot('&#x267F; &#x0E2A;&#x0E34;&#x0E17;&#x0E34;&#x0E1E;&#x0E34;&#x0E29;&#x0E2A;:\n\n' +
-        '&#x2022; &#x0E27;&#x0E35;&#x0E25;&#x0E41;&#x0E0A;&#x0E23;&#x0E4C;: &#x0E23;&#x0E2D;&#x0E07;&#x0E23;&#x0E31;&#x0E1A; (&#x0E41;&#x0E1A;&#x0E1F;&#x0E2D;&#x0E23;&#x0E4C;&#x0E21;&#x0E4C;&#x0E01;&#x0E4C;)\n' +
-        '&#x2022; &#x0E04;&#x0E32;&#x0E23;&#x0E4C;&#x0E0B;&#x0E35;&#x0E15;: &#x0E23;&#x0E2D;&#x0E07;&#x0E23;&#x0E31;&#x0E1A; (&#x0E41;&#x0E1A;&#x0E1F;&#x0E2D;&#x0E23;&#x0E4C;&#x0E21;&#x0E4C;&#x0E01;&#x0E4C;)\n' +
-        '&#x26A0; &#x0E01;&#x0E23;&#x0E38;&#x0E07;&#x0E20;&#x0E32;&#x0E28;&#x0E41;&#x0E08;&#x0E49;&#x0E25;&#x0E48;&#x0E32;&#x0E07;&#x0E25;&#x0E48;&#x0E07;&#x0E2B;&#x0E19;&#x0E19;&#x0E32;&#x0E15;&#x0E2D;&#x0E19;&#x0E14;&#x0E35;');
-      sendQuickReplies(['&#x1F4CB; &#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;', '&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; LINE']);
+    } else if (label.indexOf('ราคา') !== -1) {
+      sendBot('ราคาทัวร์ (ราคาต่อคัน รวมน้ำมัน ทางด่วน คนขับ):\n\n' +
+        '• จิ่วเฟิ่น: 4,500-5,000 บาท\n' +
+        '• ซันมูนเลค: 7,000-9,000 บาท\n' +
+        '• ทัวร์ในไทเป: 4,500-5,000 บาท\n' +
+        '• หยางหมิงซาน: 7,000-8,500 บาท\n' +
+        '• อลีซาน: 7,000-8,500 บาท/วัน\n\n' +
+        'ราคาข้างต้นเป็นราคาประมาณ สำหรับรถเก๋ง (4 ท่าน) ค่ะ');
+      sendQuickReplies(['📋 จองทัวร์', '📱 ติดต่อ LINE']);
+    } else if (label.indexOf('รถ') !== -1) {
+      sendBot('ประเภทรถ:\n\n' +
+        '• รถเก๋ง 4 ที่นั่ง: Toyota Cross / Altis\n' +
+        '• รถตู้ 7-9 ที่นั่ง: VW Caravelle / Benz Vito / H1\n' +
+        '• มินิบัส: ไม่แน่นอน 20 คน\n\n' +
+        'คนขับพูดไทยได้ (รถตู้) ค่ะ รถเก๋งพูดอังกฤษเป็นหลัก\n' +
+        'หมายเหตุ: ไม่บังคับทิป ตามความสมัครใจค่ะ\n\n' +
+        '📱 สอบถามเพิ่มเติม LINE: @966kmony');
+      sendQuickReplies(['📋 จองทัวร์', '📱 ติดต่อ LINE']);
+    } else if (label.indexOf('สิทธิ') !== -1 || label.indexOf('พิเศษ') !== -1) {
+      sendBot('สิทธิพิเศษ:\n\n' +
+        '• วีลแชร์: รองรับ (แจ้งล่วงหน้าค่ะ)\n' +
+        '• คาร์ซีท: มีให้บริการ (แจ้งล่วงหน้าค่ะ)\n' +
+        '• สัตว์เลี้ยง: ไม่แนะนำในรถตู้\n\n' +
+        'กรุณาแจ้งล่วงหน้าอย่างน้อย 1 วันค่ะ');
+      sendQuickReplies(['📋 จองทัวร์', '📱 ติดต่อ LINE']);
     }
   };
 
@@ -209,29 +210,28 @@
       return '<option value="' + t.id + '">' + t.label + '</option>';
     }).join('');
     var html = '<div class="booking-form">' +
-      '<label>&#x0E0A;&#x0E37;&#x0E48;&#x0E1C;&#x0E39;&#x0E49;&#x0E08;&#x0E2D;&#x0E07; *</label>' +
-      '<input type="text" id="bf-name" placeholder="&#x0E0A;&#x0E37;&#x0E48;&#x0E1C;&#x0E48;-&#x0E19;&#x0E32;&#x0E21;&#x0E2A;&#x0E01;&#x0E38;&#x0E25;&#x0E4C;" />' +
-      '<label>&#x0E27;&#x0E31;&#x0E19;&#x0E17;&#x0E35;&#x0E48;&#x0E15;&#x0E49;&#x0E2D;&#x0E07;&#x0E31;&#x0E14;&#x0E40;&#x0E14;&#x0E34;&#x0E07; *</label>' +
+      '<label>ชื่อ-นามสกุล *</label>' +
+      '<input type="text" id="bf-name" placeholder="ชื่อ-นามสกุล" />' +
+      '<label>วันที่ต้องการเดินทาง *</label>' +
       '<input type="date" id="bf-date" />' +
-      '<label>&#x0E08;&#x0E33;&#x0E19;&#x0E49;&#x0E19; *</label>' +
+      '<label>จำนวน *</label>' +
       '<input type="number" id="bf-pax" placeholder="1" min="1" />' +
-      '<label>&#x0E42;&#x0E1B;&#x0E23;&#x0E41;&#x0E01;&#x0E23;&#x0E21;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;</label>' +
+      '<label>โปรแกรมทัวร์</label>' +
       '<select id="bf-tour">' + tourOptions + '</select>' +
-      '<label>&#x0E1B;&#x0E23;&#x0E30;&#x0E40;&#x0E2D;&#x0E19;&#x0E20;&#x0E32;&#x0E23;&#x0E30;&#x0E17;&#x0E35;&#x0E48;</label>' +
+      '<label>ประเภทรถ</label>' +
       '<div class="radio-group">' +
-        '<label><input type="radio" name="bf-vehicle" value="sedan" checked> &#x0E40;&#x0E01;&#x0ECA;&#x0E07; (1-4 &#x0E04;&#x0E19;)</label>' +
-        '<label><input type="radio" name="bf-vehicle" value="van"> &#x0E15;&#x0E39;&#x0E49; (5-8 &#x0E04;&#x0E19;)</label>' +
+        '<label><input type="radio" name="bf-vehicle" value="sedan" checked> เก๋ง (1-4 คน)</label>' +
+        '<label><input type="radio" name="bf-vehicle" value="van"> ตู้ (5-8 คน)</label>' +
       '</div>' +
-      '<label>&#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07;&#x0E40;&#x0E1E;&#x0E35;&#x0E22;&#x0E1A; (&#x0E16;&#x0E49;&#x0E32;&#x0E44;&#x0E21;&#x0E48;)</label>' +
-      '<textarea id="bf-note" placeholder="&#x0E04;&#x0E33;&#x0E16;&#x0E36;&#x0E07; &#x0E2A;&#x0E35;&#x0E48;&#x0E2A;&#x0E2D;&#x0E1A;... (&#x0E16;&#x0E49;&#x0E32;&#x0E44;&#x0E21;&#x0E48; &#x0E2A;&#x0E19;&#x0E38;&#x0E48;&#x0E32;&#x0E07; &#x0E04;&#x0E38;&#x0E13;&#x0E02;&#x0E31;&#x0E1A;)"></textarea>' +
-      '<button class="submit-btn" id="bf-submit" onclick="submitBooking()">&#x1F4CB; &#x0E2A;&#x0E48;&#x0E07;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;&#x0E08;&#x0E2D;&#x0E07;</button>' +
+      '<label>หมายเหตุ (ไม่บังคับ)</label>' +
+      '<textarea id="bf-note" placeholder="รายละเอียดเพิ่มเติม..."></textarea>' +
+      '<button class="submit-btn" id="bf-submit" onclick="submitBooking()">ส่งข้อมูลจอง</button>' +
       '</div>';
-    sendBot('&#x1F4CB; &#x0E01;&#x0E23;&#x0E38;&#x0E07;&#x0E01;&#x0E23;&#x0E34;&#x0E01;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25; &#x0E14;&#x0E49;&#x0E32;&#x0E19;&#x0E04;&#x0E48;&#x0E32;:', html);
+    sendBot('กรุณากรอกข้อมูลจองทัวร์ค่ะ:', html);
   }
 
   window.submitBooking = function() {
     if (isSubmitting) return;
-
     bookingData = {
       name:    document.getElementById('bf-name').value.trim(),
       date:    document.getElementById('bf-date').value,
@@ -240,57 +240,47 @@
       vehicle: (document.querySelector('input[name="bf-vehicle"]:checked') || {value:'sedan'}).value,
       note:    document.getElementById('bf-note').value.trim(),
     };
-
     if (!bookingData.name || !bookingData.date || !bookingData.pax) {
-      sendBot('&#x0E01;&#x0E23;&#x0E38;&#x0E07;&#x0E01;&#x0E23;&#x0E34;&#x0E01;&#x0E02;&#x0E49;&#x0E2D;&#x0E0A;&#x0E37;&#x0E48;&#x0E1C; &#x0E27;&#x0E31;&#x0E19;&#x0E17;&#x0E35;&#x0E48; &#x0E41;&#x0E25;&#x0E30;&#x0E08;&#x0E33;&#x0E19;&#x0E49;&#x0E19; &#x0E43;&#x0E2B;&#x0E49;&#x0E04;&#x0E23;&#x0E1A;&#x0E04;&#x0E48;&#x0E32;');
+      sendBot('กรุณากรอกชื่อ วันที่ และจำนวน ให้ครบถ้วนค่ะ');
       return;
     }
-
     var btn = document.getElementById('bf-submit');
     btn.disabled = true;
-    btn.textContent = '&#x23F3; &#x0E01;&#x0E33;&#x0E25;&#x0E31;&#x0E1A;&#x0E2A;&#x0E48;&#x0E07...';
+    btn.textContent = 'กำลังส่ง...';
     isSubmitting = true;
-
     var tourObj = tours.find(function(t){ return t.id === bookingData.tour; });
-    var vehicleLabel = { sedan: '&#x0E40;&#x0E01;&#x0ECA;&#x0E07;', van: '&#x0E15;&#x0E39;&#x0E49;' }[bookingData.vehicle] || '&#x0E40;&#x0E01;&#x0ECA;&#x0E07;';
-
-    var telegramText = '&#x1F4EB; [&#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;&#x0E08;&#x0E32;&#x0E01;&#x0E40;&#x0E27;&#x0E47;&#x0E1A;&#x0E44;&#x0E17;&#x0E2B;&#x0E35;&#x0E49;]\n\n' +
-      '&#x2022; &#x0E0A;&#x0E37;&#x0E48;&#x0E1C;&#x0E48;: ' + bookingData.name + '\n' +
-      '&#x2022; &#x0E17;&#x0E31;&#x0E23;&#x0E4C;: ' + (tourObj ? tourObj.label : bookingData.tour) + '\n' +
-      '&#x2022; &#x0E27;&#x0E31;&#x0E19;&#x0E17;&#x0E35;&#x0E48;: ' + bookingData.date + '\n' +
-      '&#x2022; &#x0E08;&#x0E33;&#x0E19;&#x0E49;&#x0E19;: ' + bookingData.pax + ' &#x0E04;&#x0E19;\n' +
-      '&#x2022; &#x0E23;&#x0E16;: ' + vehicleLabel +
-      (bookingData.note ? '\n&#x2022; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;: ' + bookingData.note : '');
-
-    sendToTelegram(telegramText,
+    var vehicleLabel = { sedan: 'เก๋ง', van: 'ตู้' }[bookingData.vehicle] || 'เก๋ง';
+    var telegramText = '📋 [จองทัวร์จากเว็บไซต์]\n\n' +
+      '• ชื่อ: ' + bookingData.name + '\n' +
+      '• ทัวร์: ' + (tourObj ? tourObj.label : bookingData.tour) + '\n' +
+      '• วันที่: ' + bookingData.date + '\n' +
+      '• จน.: ' + bookingData.pax + ' คน\n' +
+      '• รถ: ' + vehicleLabel +
+      (bookingData.note ? '\n• หมายเหตุ: ' + bookingData.note : '');
+    sendToBackend(telegramText,
       function() {
-        // Success
         currentStep = 'confirm_booking';
-        var summary = '&#x2705; &#x0E23;&#x0E31;&#x0E1A;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;&#x0E41;&#x0E25;&#x0E49;&#x0E04;&#x0E48;&#x0E32; &#xD83D;&#xDE0A;\n\n' +
-          '&#x1F4DD; <strong>Booking ID &#x0E08;&#x0E30;&#x0E16;&#x0E39;&#x0E01;&#x0E04;&#x0E38;&#x0E13;&#x0E43;&#x0E20;&#x0E48;&#x0E32;&#x0E07;&#x0E2B;&#x0E25;&#x0E31;&#x0E01; 5-10 &#x0E19;&#x0E32;&#x0E17;&#x0E35;</strong>\n\n' +
-          '&#x1F4DE; &#x0E04;&#x0E38;&#x0E13;&#x0E08;&#x0E30;&#x0E44;&#x0E14;&#x0E49;&#x0E23;&#x0E31;&#x0E1A;&#x0E15;&#x0E34;&#x0E14;&#x0E15;&#x0E48;&#x0E2D;&#x0E08;&#x0E32;&#x0E01;&#x0E17;&#x0E35;&#x0E49;&#x0E40;&#x0E1E;&#x0E35;&#x0E22;&#x0E1A; LINE &#x0E2F;&#x0E23;&#x0E34;&#x0E1E;&#x0E34;&#x0E15;&#x0E4C; &#x0E04;&#x0E48;&#x0E32;';
-        sendBot(summary);
-        sendQuickReplies(['&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; LINE', '&#x0E08;&#x0E2D;&#x0E07;&#x0E2D;&#x0E35;&#x0E23;&#x0E1A;&#x0E1A;&#x0E4C;']);
+        sendBot('✅ รับข้อมูลแล้วค่ะ\n\n' +
+          '📋 Booking ID จะส่งให้ท่านทาง LINE ภายใน 5-10 นาที\n\n' +
+          '📱 ขอบคุณค่ะ ทาง LINE จะติดต่อกลับภายในไม่กี่ชั่วโมงค่ะ');
+        sendQuickReplies(['📱 ติดต่อ LINE', 'จองอื่นอีก']);
         isSubmitting = false;
         btn.disabled = false;
-        btn.textContent = '&#x1F4CB; &#x0E2A;&#x0E48;&#x0E07;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;&#x0E08;&#x0E2D;&#x0E07;';
+        btn.textContent = 'ส่งข้อมูลจอง';
       },
       function() {
-        // Fallback - bot unreachable
         currentStep = 'confirm_booking';
-        sendBot('&#x2705; &#x0E23;&#x0E31;&#x0E1A;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;&#x0E41;&#x0E25;&#x0E49;&#x0E04;&#x0E48;&#x0E32; &#xD83D;&#xDE0A;');
+        sendBot('✅ รับข้อมูลแล้วค่ะ');
         sendBot('', showFallback('submit'));
         isSubmitting = false;
         btn.disabled = false;
-        btn.textContent = '&#x1F4CB; &#x0E2A;&#x0E48;&#x0E07;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;&#x0E08;&#x0E2D;&#x0E07;';
+        btn.textContent = 'ส่งข้อมูลจอง';
       }
     );
   };
 
   function handlePendingReply(text) {
     var pe = pendingEscalation;
-    var lower = text.toLowerCase();
-
     if (pe.neededFields.indexOf('date') !== -1 && !pe.answers.date) {
       if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
         pe.answers.date = text;
@@ -303,65 +293,56 @@
         pe.neededFields.splice(pe.neededFields.indexOf('date'), 1);
       }
       if (!pe.answers.date) {
-        sendBot('&#x0E23;&#x0E30;&#x0E40;&#x0E25;&#x0E48;&#x0E32; &#x0E27;&#x0E31;&#x0E19;&#x0E17;&#x0E35;&#x0E48;&#x0E44;&#x0E21;&#x0E48;&#x0E16;&#x0E39;&#x0E01; &#x0E23;&#x0E38;&#x0E07;&#x0E20;&#x0E32;&#x0E28; (&#x0E15;&#x0E31;&#x0E4A;&#x0E32;&#x0E19; &#x0E44;&#x0E14;&#x0E49; &#x0E44;&#x0E21;&#x0E48;)');
+        sendBot('รบกวนระบุวันที่ในรูปแบบ วว/ดด/ปป (เช่น 05/15/2025) ได้ไหมคะ');
         return;
       }
     }
-
     if (pe.neededFields.indexOf('pax') !== -1 && !pe.answers.pax) {
       var num = parseInt(text);
       if (!isNaN(num) && num > 0) {
         pe.answers.pax = num;
         pe.neededFields.splice(pe.neededFields.indexOf('pax'), 1);
       } else {
-        sendBot('&#x0E01;&#x0E23;&#x0E38;&#x0E07;&#x0E01;&#x0E23;&#x0E34;&#x0E01;&#x0E02;&#x0E49;&#x0E2D;&#x0E08;&#x0E33;&#x0E19;&#x0E49;&#x0E19; &#x0E40;&#x0E1B;&#x0E47;&#x0E19;&#x0E15;&#x0E31;&#x0E27;&#x0E15;&#x0E31;&#x0E27;&#x0E40;&#x0E14;&#x0E34;&#x0E07; &#x0E44;&#x0E21;&#x0E48; &#x0E04;&#x0E48;&#x0E32;');
+        sendBot('กรุณาระบุจำนวนเป็นตัวเลข ไม่ใช่ตัวอักษรค่ะ');
         return;
       }
     }
-
     if (pe.neededFields.indexOf('tour') !== -1 && !pe.answers.tour) {
       var num = parseInt(text);
       if (num >= 1 && num <= 6) {
         pe.answers.tour = tours[num - 1].id;
         pe.neededFields.splice(pe.neededFields.indexOf('tour'), 1);
       } else {
-        sendBot('&#x0E01;&#x0E23;&#x0E38;&#x0E07;&#x0E01;&#x0E23;&#x0E34;&#x0E01;&#x0E02;&#x0E49;&#x0E2D;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;&#x0E17;&#x0E35;&#x0E48; &#x0E97;&#x0E35;&#x0E48;&#x0E44;&#x0E2B;&#x0E19;? (&#x0E40;&#x0E1E;&#x0E34;&#x0E48;&#x0E07;&#x0E1A;&#x0E17;&#x0E35;&#x0E48; 1-6)');
+        sendBot('กรุณาเลือกทัวร์หมายเลข 1-6 ค่ะ');
         return;
       }
     }
-
     if (pe.neededFields.length > 0) {
       var nextField = pe.neededFields[0];
       var prompts = {
-        date: '&#x0E27;&#x0E31;&#x0E19;&#x0E17;&#x0E35;&#x0E48;&#x0E15;&#x0E49;&#x0E2D;&#x0E07;&#x0E31;&#x0E14;&#x0E40;&#x0E14;&#x0E34;&#x0E07; (&#x0E44;&#x0E14;&#x0E49; &#x0E44;&#x0E21;&#x0E49;)',
-        pax:  '&#x0E08;&#x0E33;&#x0E19;&#x0E49;&#x0E19; &#x0E01;&#x0E35;&#x0E48;',
-        tour: '&#x0E17;&#x0E31;&#x0E23;&#x0E4C;&#x0E17;&#x0E35;&#x0E48;&#x0E97;&#x0E35;&#x0E48;? (&#x0E40;&#x0E1E;&#x0E34;&#x0E48;&#x0E07;&#x0E1A;&#x0E17;&#x0E35;&#x0E48; 1-6)',
+        date: 'วันที่ต้องการเดินทาง (เช่น 05/15/2025)',
+        pax:  'จำนวนผู้โดยสารกี่คน',
+        tour: 'ทัวร์ที่สนใจหมายเลขไหน? (1-6)',
       };
-      sendBot('&#x0E22;&#x0E31;&#x0E07;&#x0E02;&#x0E32;&#x0E23;&#x0E32;&#x0E04;&#x0E32;&#x0E44;&#x0E14;&#x0E49;&#x0E43;&#x0E19;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;:\n' + prompts[nextField]);
+      sendBot('ขออีกข้อมูลนะคะ:\n' + prompts[nextField]);
       return;
     }
-
-    // All info collected - send escalation to Telegram
     var tourObj = tours.find(function(t){ return t.id === pe.answers.tour; });
     currentStep = 'confirm_booking';
-
-    var waitingHtml = '<div class="waiting-badge">&#x23F3; &#x0E02;&#x0E23;&#x0E2D;&#x0E2D;&#x0E30;&#x0E30;&#x0E04;&#x0E48;&#x0E32; &#x0E23;&#x0E2D;&#x0E2A;&#x0E31;&#x0E01;&#x0E4C;&#x0E23;&#x0E48;&#x0E07;&#x0E19;&#x0E35;&#x0E49;&#x0E44;&#x0E14;&#x0E49;&#x0E40;&#x0E25;&#x0E22;&#x0E04;&#x0E48;&#x0E32; &#x0E40;&#x0E2D;&#x0E14;&#x0E49;&#x0E32;&#x0E08;&#x0E30;&#x0E01;&#x0E25;&#x0E31;&#x0E1A;&#x0E21;&#x0E32;&#x0E15;&#x0E2D;&#x0E1A;&#x0E43;&#x0E2B;&#x0E25;&#x0E30;&#x0E04;&#x0E48;&#x0E32;\n\n' +
-      '&#x1F4DD; <strong>&#x0E04;&#x0E38;&#x0E13;&#x0E08;&#x0E30;&#x0E44;&#x0E14;&#x0E49;&#x0E23;&#x0E31;&#x0E1A;&#x0E15;&#x0E34;&#x0E14;&#x0E15;&#x0E48;&#x0E2D;&#x0E08;&#x0E32;&#x0E01;&#x0E17;&#x0E35;&#x0E49;&#x0E40;&#x0E1E;&#x0E35;&#x0E22;&#x0E1A; LINE &#x0E2F;&#x0E23;&#x0E34;&#x0E1E;&#x0E34;&#x0E15;&#x0E4C; &#x0E04;&#x0E48;&#x0E32;</strong></div>';
+    var waitingHtml = '<div class="waiting-badge">⏳ ขออนุญาตเช็คข้อมูลสักครู่นะคะ ทาง LINE จะติดต่อกลับภายในไม่กี่ชั่วโมงค่ะ\n\n' +
+      '📱 หากต้องการติดต่อเร่งด่วน กดติดต่อทาง LINE ได้เลยค่ะ: @966kmony</div>';
     sendBot('', waitingHtml);
-    sendQuickReplies(['&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; LINE', '&#x1F4CB; &#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;']);
-
-    var telegramText = '&#x1F4AC; [Escalation &#x0E08;&#x0E32;&#x0E01;&#x0E40;&#x0E27;&#x0E47;&#x0E1A;&#x0E44;&#x0E17;&#x0E2B;&#x0E35;&#x0E49;]\n\n' +
-      '&#x2753; &#x0E25;&#x0E39;&#x0E01;&#x0E04;&#x0E16;&#x0E36;&#x0E07;:\n"' + pe.question + '"\n\n' +
-      '&#x2022; &#x0E27;&#x0E31;&#x0E19;&#x0E17;&#x0E35;&#x0E48;: ' + (pe.answers.date || '&#x0E22;&#x0E31;&#x0E07;&#x0E44;&#x0E21;&#x0E48;&#x0E23;&#x0E30;&#x0E08;&#x0E01;') + '\n' +
-      '&#x2022; &#x0E08;&#x0E33;&#x0E19;&#x0E49;&#x0E19;: ' + (pe.answers.pax || '&#x0E22;&#x0E31;&#x0E07;&#x0E44;&#x0E21;&#x0E48;&#x0E23;&#x0E30;&#x0E08;&#x0E01;') + ' &#x0E04;&#x0E19;\n' +
-      '&#x2022; &#x0E17;&#x0E31;&#x0E23;&#x0E4C;: ' + (tourObj ? tourObj.label : '&#x0E22;&#x0E31;&#x0E07;&#x0E44;&#x0E21;&#x0E48;&#x0E23;&#x0E30;&#x0E08;&#x0E01;') + '\n\n' +
-      '&#x26A0; &#x0E04;&#x0E33;&#x0E16;&#x0E36;&#x0E07;&#x0E19;&#x0E35;&#x0E49;&#x0E44;&#x0E21;&#x0E48;&#x0E21;&#x0E35;&#x0E43;&#x0E19; FAQ\n\n' +
-      '&#x2193; &#x0E01;&#x0E23;&#x0E38;&#x0E07;&#x0E1A;&#x0E2A;&#x0E04;&#x0E25;&#x0E49;&#x0E32;&#x0E07;&#x0E2D;&#x0E34;&#x0E07;&#x0E40;&#x0E17;&#x0E35;&#x0E48;&#x0E17;&#x0E35;&#x0E48;&#x0E17;&#x0E31;&#x0E23;&#x0E4C; &#x0E43;&#x0E1A;&#x0E07;&#x0E32;&#x0E1C;&#x0E35;&#x0E49; &#x0E04;&#x0E48;&#x0E32; &#x0E1A;&#x0E2D;&#x0E01; &#x0E40;&#x0E1E;&#x0E34;&#x0E48;&#x0E07;&#x0E1A;&#x0E2A;&#x0E04;&#x0E25;&#x0E49;&#x0E32;&#x0E07;&#x0E1A;&#x0E25;&#x0E34;&#x0E07;&#x0E2D;&#x0E48;&#x0E38;&#x0E30; &#x0E04;&#x0E48;&#x0E32;';
-
-    sendToTelegram(telegramText,
+    sendQuickReplies(['📱 ติดต่อ LINE', '📋 จองทัวร์']);
+    var telegramText = '🔷 [Escalation จากเว็บไซต์]\n\n' +
+      '❓ ลูกค้าถาม:\n"' + pe.question + '"\n\n' +
+      '• วันที่: ' + (pe.answers.date || 'ยังไม่ระบุ') + '\n' +
+      '• จน.: ' + (pe.answers.pax || 'ยังไม่ระบุ') + ' คน\n' +
+      '• ทัวร์: ' + (tourObj ? tourObj.label : 'ยังไม่ระบุ') + '\n\n' +
+      '⚠️ คำถามนี้ไม่มีใน FAQ\n\n' +
+      '↓ กรุณาตอบลูกค้าทางไลน์ ค่ะ';
+    sendToBackend(telegramText,
       function() { pendingEscalation = null; },
       function() {
-        // Fallback
         sendBot('', showFallback('pending'));
         pendingEscalation = null;
       }
@@ -372,43 +353,34 @@
     text = text.trim();
     if (!text) return;
     sendUser(text);
-
     if (currentStep === 'booking') {
-      sendBot('&#x0E01;&#x0E23;&#x0E38;&#x0E07;&#x0E01;&#x0E23;&#x0E34;&#x0E01;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;&#x0E43;&#x0E19;&#x0E41;&#x0E1A;&#x0E1F;&#x0E2D;&#x0E23;&#x0E4C;&#x0E21;&#x0E4C;&#x0E01;&#x0E4C;&#x0E14;&#x0E49;&#x0E32;&#x0E19;&#x0E04;&#x0E48;&#x0E32; &#x0E2F;&#x0E23;&#x0E34;&#x0E1E;&#x0E34;&#x0E15;&#x0E4C; "&#x0E08;&#x0E2D;&#x0E07;" &#x0E40;&#x0E1E;&#x0E34;&#x0E48;&#x0E07;&#x0E1A;&#x0E23;&#x0E34;&#x0E01;&#x0E08;&#x0E2D;&#x0E07;&#x0E43;&#x0E2B;&#x0E21;&#x0E48;');
+      sendBot('กรุณากรอกข้อมูลในแบบฟอร์มข้างบนค่ะ กด "ส่งข้อมูลจอง" เลยค่ะ');
       return;
     }
-
     if (currentStep === 'confirm_booking') {
-      if (text.indexOf('&#x0E08;&#x0E2D;&#x0E07;') !== -1 || text.indexOf('&#x0E40;&#x0E23;&#x0E34;&#x0E48;') !== -1) {
+      if (text.indexOf('จอง') !== -1 || text.indexOf('เพิ่ม') !== -1) {
         currentStep = 'welcome';
         sendWelcome();
       } else {
-        sendBot('&#x0E21;&#x0E35;&#x0E2D;&#x0E30;&#x0E44;&#x0E14;&#x0E49;&#x0E2A;&#x0E2D;&#x0E1A;&#x0E16;&#x0E36;&#x0E07;&#x0E40;&#x0E1E;&#x0E34;&#x0E48;&#x0E21;&#x0E40;&#x0E1E;&#x0E34;&#x0E21; &#x0E44;&#x0E14;&#x0E49;&#x0E40;&#x0E25;&#x0E22;&#x0E04;&#x0E48;&#x0E32; &#xD83D;&#xDE0A;');
-        sendQuickReplies(['&#x1F4CB; &#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;', '&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; LINE']);
+        sendBot('มีอะไรให้ช่วยเพิ่มเติมไหมคะ? ขอบคุณค่ะ');
+        sendQuickReplies(['📋 จองทัวร์', '📱 ติดต่อ LINE']);
       }
       return;
     }
-
     if (currentStep === 'pending_info') {
       handlePendingReply(text);
       return;
     }
-
-    if (text.indexOf('&#x0E08;&#x0E2D;&#x0E07;') !== -1 || text.indexOf('&#x0E40;&#x0E23;&#x0E34;&#x0E48;') !== -1) {
+    if (text.indexOf('จอง') !== -1 || text.indexOf('เช่า') !== -1) {
       startBooking();
-    } else if (text.indexOf('&#x0E02;&#x0E2D;&#x0E1A;&#x0E04;&#x0E38;&#x0E08;') !== -1 || text.toLowerCase().indexOf('thank') !== -1) {
-      sendBot('&#x0E22;&#x0E34;&#x0E19;&#x0E14;&#x0E35;&#x0E04;&#x0E48;&#x0E32; &#xD83D;&#xDE0A; &#x0E21;&#x0E35;&#x0E2D;&#x0E30;&#x0E44;&#x0E14;&#x0E49;&#x0E2A;&#x0E2D;&#x0E1A;&#x0E16;&#x0E36;&#x0E07;&#x0E40;&#x0E1E;&#x0E34;&#x0E48;&#x0E21;&#x0E40;&#x0E1E;&#x0E34;&#x0E21; &#x0E44;&#x0E14;&#x0E49;&#x0E40;&#x0E25;&#x0E22;&#x0E04;&#x0E48;&#x0E32;');
-      sendQuickReplies(['&#x1F4CB; &#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;', '&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; LINE']);
+    } else if (text.indexOf('ขอบคุณ') !== -1 || text.toLowerCase().indexOf('thank') !== -1) {
+      sendBot('ขอบคุณค่ะ มีอะไรให้ช่วยเพิ่มเติมไหมคะ?');
+      sendQuickReplies(['📋 จองทัวร์', '📱 ติดต่อ LINE']);
     } else {
-      // Unknown question - collect info then escalate
       currentStep = 'pending_info';
-      pendingEscalation = {
-        question: text,
-        neededFields: ['date', 'pax', 'tour'],
-        answers: {}
-      };
-      sendBot('&#x0E02;&#x0E23;&#x0E2D;&#x0E2D;&#x0E19;&#x0E38;&#x0E24;&#x0E32;&#x0E40;&#x0E0A;&#x0E48;&#x0E04;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;&#x0E2A;&#x0E31;&#x0E01;&#x0E4C;&#x0E23;&#x0E48;&#x0E07;&#x0E19;&#x0E35;&#x0E49;&#x0E19;&#x0E30;&#x0E04;&#x0E48;&#x0E32; &#x0E02;&#x0E23;&#x0E32;&#x0E04;&#x0E32;&#x0E44;&#x0E14;&#x0E49;&#x0E43;&#x0E19;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;:\n' +
-        '&#x2022; &#x0E27;&#x0E31;&#x0E19;&#x0E17;&#x0E35;&#x0E48;&#x0E15;&#x0E49;&#x0E2D;&#x0E07;&#x0E31;&#x0E14;&#x0E40;&#x0E14;&#x0E34;&#x0E07; (&#x0E44;&#x0E14;&#x0E49; &#x0E44;&#x0E21;&#x0E49;)');
+      pendingEscalation = { question: text, neededFields: ['date', 'pax', 'tour'], answers: {} };
+      sendBot('ขออนุญาตเช็คข้อมูลสักครู่นะคะ รบกวนแจ้งข้อมูลเพิ่มเติมหน่อยนะคะ:\n' +
+        '• วันที่ต้องการเดินทาง (เช่น 05/15/2025)');
       input.focus();
     }
   }
@@ -428,7 +400,6 @@
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 80) + 'px';
   });
-
 })();
 </script>
 </body>
