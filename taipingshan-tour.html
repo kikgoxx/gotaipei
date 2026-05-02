@@ -375,5 +375,12 @@ footer { background: var(--bg); border-top: 1px solid var(--border); padding: 24
   </div>
 </footer>
 
+<!-- Chat Widget -->
+<button id="chatWidgetBtn" onclick="toggleChatWidget()" style="position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#ff6b35,#feca57);border:none;cursor:pointer;box-shadow:0 4px 20px #ff6b3555;z-index:99998;display:flex;align-items:center;justify-content:center;font-size:28px;transition:transform 0.2s;" aria-label="Open chat">💬</button>
+<iframe src="chat.html" id="chatWidgetFrame" style="display:none;position:fixed;bottom:96px;right:24px;width:360px;height:520px;border:none;border-radius:16px;box-shadow:0 8px 40px #0003;z-index:99999;" loading="lazy"></iframe>
+<script>
+function toggleChatWidget(){var f=document.getElementById('chatWidgetFrame'),b=document.getElementById('chatWidgetBtn');if(f.style.display==='none'){f.style.display='block';b.textContent='✕';b.style.transform='rotate(45deg)'}else{f.style.display='none';b.textContent='💬';b.style.transform='none'}}
+</script>
+
 </body>
 </html>
