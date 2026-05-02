@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -91,12 +91,14 @@
   var input    = document.getElementById('chatInput');
   var sendBtn  = document.getElementById('chatSend');
 
+  var popupOpen = false;
   launcher.addEventListener('click', function() {
-    popup.classList.toggle('open');
-    launcher.classList.toggle('active');
-    if (popup.classList.contains('open') && messages.children.length === 0) sendWelcome();
+    popupOpen = !popupOpen;
+    popup.classList.toggle('open', popupOpen);
+    if (popupOpen && messages.children.length === 0) sendWelcome();
   });
   closeBtn.addEventListener('click', function() {
+    popupOpen = false;
     popup.classList.remove('open');
     launcher.classList.remove('active');
   });
@@ -168,7 +170,7 @@
       '&#x1F3E7; &#x0E23;&#x0E31;&#x0E1A;&#x0E1C;&#x0E39;&#x0E49; &#x0E08;&#x0E2D;&#x0E07; &#x0E41;&#x0E25;&#x0E30; &#x0E2B;&#x0E31;&#x0E27;&#x0E07;&#x0E08;&#x0E31;&#x0E23;&#x0E13;&#x0E4C;\n' +
       '&#x1F697; &#x0E40;&#x0E0A;&#x0E48;&#x0E32;&#x0E23;&#x0E16;&#x0E1E;&#x0E23;&#x0E49;&#x0E32;&#x0E07;&#x0E04;&#x0E38;&#x0E13;&#x0E02;&#x0E31;&#x0E1A;\n' +
       '&#x1F4CB; &#x0E41;&#x0E1A;&#x0E1F;&#x0E2D;&#x0E23;&#x0E4C;&#x0E21;&#x0E4C;&#x0E01;&#x0E4C; &#x0E2F;&#x0E23;&#x0E34;&#x0E1E;&#x0E34;&#x0E15;&#x0E4C;\n\n' +
-      '&#x1F4F1; &#x0E2B;&#x0E49;&#x0E32;&#x0E07;&#x0E16;&#x0E36;&#x0E07; &#x0E97;&#x0E35;&#x0E48;&#x0E40;&#x0E1E;&#x0E35;&#x0E22;&#x0E1A; &#x0E2A;&#x0E27;&#x0E31;&#x0E14;&#x0E14;&#x0E35; LINE: @966kmony');
+      '&#x1F4F1; &#x0E2B;&#x0E32;&#x0E01;&#x0E21;&#x0E35;&#x0E04;&#x0E33;&#x0E16;&#x0E36;&#x0E07;&#x0E40;&#x0E23;&#x0E47;&#x0E1A;&#x0E14;&#x0E48;&#x0E35;&#x0E19; &#x0E15;&#x0E34;&#x0E14;&#x0E15;&#x0E48;&#x0E2D;&#x0E07;&#x0E17;&#x0E32;&#x0E07; LINE: @966kmony &#x0E2F;&#x0E23;&#x0E34;&#x0E1E;&#x0E34;&#x0E15;&#x0E4C; &#x0E04;&#x0E48;&#x0E32; &#x0E14;&#x0E39;&#x0E41;&#x0E15;&#x0E48; &#x0E44;&#x0E21;&#x0E48;&#x0E2B;&#x0E23;&#x0E38;&#x0E48;&#x0E07;&#x0E19;&#x0E30;');
     sendQuickReplies(['&#x1F4CB; &#x0E08;&#x0E2D;&#x0E07;&#x0E17;&#x0E31;&#x0E23;&#x0E4C;', '&#x1F4B0; &#x0E23;&#x0E32;&#x0E04;&#x0E32;&#x0E40;&#x0E17;&#x0E48;&#x0E32;', '&#x1F697; &#x0E1B;&#x0E23;&#x0E30;&#x0E40;&#x0E2D;&#x0E19;&#x0E20;&#x0E32;&#x0E23;&#x0E30;', '&#x267F; &#x0E2A;&#x0E34;&#x0E17;&#x0E34;&#x0E1E;&#x0E34;&#x0E29;&#x0E2A;']);
   }
 
